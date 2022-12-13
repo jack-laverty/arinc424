@@ -19,7 +19,7 @@ class Airport:
     def __init__(self):
         return
 
-    def parse_record(self, r, section):
+    def read(self, r, section):
         self.record["Record Type"]                      = r[0]
         self.record["Customer / Area Code"]             = r[1:4]
         self.record["Airport ICAO Identifier"]          = r[6:10]

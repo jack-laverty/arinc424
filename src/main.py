@@ -33,9 +33,9 @@ if __name__ == "__main__":
         print("Record Type:", section.decode())
         if section.is_navaid():
             nr = nav.Navaid()
-            nr.parse_record(line, section)
+            nr.read(line, section)
         elif section.is_airport():
             ap = airport.Airport()
-            ap.parse_record(line, section)
+            ap.read(line, section)
             w.write(ap.json(False))
 
