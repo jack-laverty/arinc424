@@ -1,6 +1,7 @@
 import os
 import sys
 import records.navaid as nav
+import records.airport as airport
 import sections
 import json
 
@@ -26,11 +27,15 @@ if __name__ == "__main__":
         
         if 'YPTN' not in line:
             continue
-        
-        section, subsection = sections.parse_section(line)
-        if section == 'Navaid':
+
+        section = sections.Section()
+        section.read(line)
+        print("Record Type:", section.decode())
+        if section.is_navaid():
             nr = nav.Navaid()
-            nr.parse_record(line)
-            # nr.dump()
-            w.write(nr.json())
-            print(nr.json(False))
+            nr.parse_record(line, section)
+        elif section.is_airport():
+            ap = airport.Airport()
+            ap.parse_record(line, section)
+            w.write(ap.json(False))
+

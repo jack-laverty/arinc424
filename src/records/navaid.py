@@ -99,10 +99,10 @@ class Navaid:
     def parse_station_declination(self, data):
         self.record["Station Declination"] = data.strip() if data.strip() != '' else '<Blank>'
 
-    def parse_record(self, r):
+    def parse_record(self, r, section):
         self.parse_record_type(r[0])
         self.parse_cycle_date(r[128:132])
-        self.record["Section Code"], self.record["Subsection Code"] = sections.parse_section(r)
+        self.record["Section Code"], self.record["Subsection Code"] = section.section[0], section.section[0]
         if self.parse_continuation(r[21]) < 2:
             self.record["Customer / Area Code"]    = r[1:4]
             self.record["Airport ICAO Identifier"] = r[6:10]

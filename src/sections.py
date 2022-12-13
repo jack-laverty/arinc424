@@ -1,75 +1,72 @@
 from collections import defaultdict
 
-def parse_section(line):
+class Section:
 
-    def def_value():
-        return "<UNKNOWN>"
-      
-    section, subsection = '',''
-    sect = defaultdict(def_value)
-    sub = defaultdict(def_value)
+    section = ''
 
-    sect['A'] = 'MORA'
-    sect['D'] = 'Navaid'
-    sect['E'] = 'Enroute'
-    sect['H'] = 'Heliport'
-    sect['P'] = 'Airport'
-    sect['R'] = 'Company Routes'
-    sect['T'] = 'Tables'
-    sect['U'] = 'Airspace'
+    def read(self, line):
+        self.section += line[4]
+        if self.section == 'D':
+            self.section += line[5]
+        elif self.section == 'P':
+            self.section += line[12]
+        elif self.section == 'E':
+            self.section += line[5]
 
-    if line[4] == 'A':
-        sub['A'] = 'Grid MORA'
-    elif line[4] == 'D':
-        sub[' '] = 'VHF Navaid'
-        sub['D'] = 'NDB Navaid'
-    elif line[4] == 'E':
-        sub['A'] = 'Waypoints'
-        sub['M'] = 'Airway Markers'
-        sub['P'] = 'Holding Patterns'
-        sub['R'] = 'Airways and Routes'
-        sub['T'] = 'Preferred Routes'
-        sub['U'] = 'Airway Restrictions'
-        sub['V'] = 'Communications'
-    elif line[4] == 'H':
-        sub['A'] = 'Pads'
-        sub['C'] = 'Terminal Waypoints'
-        sub['D'] = 'SIDs'
-        sub['E'] = 'STARs'
-        sub['F'] = 'Approach Procedures'
-        sub['K'] = 'TAA'
-        sub['S'] = 'MSA'
-        sub['V'] = 'Communications'
-    elif line[4] == 'P':
-        sub['A'] = 'Reference Points'
-        sub['B'] = 'Gates'
-        sub['C'] = 'Terminal Waypoints'
-        sub['D'] = 'SIDs'
-        sub['E'] = 'STARs'
-        sub['F'] = 'Approach Procedures'
-        sub['G'] = 'Runways'
-        sub['I'] = 'Localizer/Glideslope'
-        sub['K'] = 'TAA'
-        sub['L'] = 'MLS'
-        sub['M'] = 'Localizer Marker'
-        sub['N'] = 'Terminal NDB'
-        sub['P'] = 'Path Point'
-        sub['R'] = 'Flt Planning ARR/DEP'
-        sub['S'] = 'MSA'
-        sub['T'] = 'GLS Station'
-        sub['V'] = 'Communications'
-    elif line[4] == 'R':
-        sub[' '] = 'Company Routes'
-        sub['A'] = 'Alternate Records'
-    elif line[4] == 'T':
-        sub['C'] = 'Crusing Tables'
-        sub['G'] = 'Geographical Reference'
-        sub['N'] = 'RNAV Name Table'
-    elif line[4] == 'U':
-        sub['C'] = 'Controller Airspace'
-        sub['F'] = 'FIR/UIR'
-        sub['R'] = 'Restrictive Airspace'
+    def decode(self):
+        def def_value():
+            return "UNKNOWN: " + "'" + self.section + "'"
+        sections = defaultdict(def_value)
+        sections['AA'] = 'Grid MORA'
+        sections['D '] = 'VHF Navaid'
+        sections['DD'] = 'NDB Navaid'
+        sections['EA'] = 'Waypoint'
+        sections['EM'] = 'Airways Marker'
+        sections['EP'] = 'Holding Patterns'
+        sections['ER'] = 'Airways and Routes'
+        sections['ET'] = 'Preferred Routes'
+        sections['EU'] = 'Airway Restrictions'
+        sections['EV'] = 'Communications'
+        sections['HA'] = 'Heliport Pads'
+        sections['HC'] = 'Heliport Terminal Waypoint'
+        sections['HD'] = 'Heliport SIDs'
+        sections['HE'] = 'Heliport STARs'
+        sections['HF'] = 'Heliport Approach Procedure'
+        sections['HK'] = 'Heliport TAA'
+        sections['HS'] = 'Heliport MSA'
+        sections['HV'] = 'Heliport Communication'
+        sections['PA'] = 'Airport Reference Point'
+        sections['PB'] = 'Airport Gates'
+        sections['PC'] = 'Airport Terminal Waypoint'
+        sections['PD'] = 'Airport SID'
+        sections['PE'] = 'Airport STAR'
+        sections['PF'] = 'Airport Approach Procedure'
+        sections['PG'] = 'Airport Runway'
+        sections['PI'] = 'Airport Localizer/Glideslope'
+        sections['PK'] = 'Airport TAA'
+        sections['PL'] = 'Airport MLS'
+        sections['PM'] = 'Airport Localizer Marker'
+        sections['PN'] = 'Airport Terminal'
+        sections['PP'] = 'Airport Path'
+        sections['PR'] = 'Airport Flt Planning ARR/DEP'
+        sections['PS'] = 'Airport MSA'
+        sections['PT'] = 'Airport GLS Station'
+        sections['PV'] = 'Airport Communication'
+        sections['R '] = 'Company Route'
+        sections['RA'] = 'Alternate Record'
+        sections['TC'] = 'Crusing Table'
+        sections['TG'] = 'Geographical Reference'
+        sections['TN'] = 'RNAV Name Table'
+        sections['UC'] = 'Controller Airspace'
+        sections['UF'] = 'Airspace FIR/UIR'
+        sections['UR'] = 'Restrictive Airspace'
+        return sections[self.section]
+    
+    def is_airport(self):
+        return self.section[0] == 'P'
+    
+    def is_navaid(self):
+        return self.section[0] == 'D'
 
-    section = sect[line[4]]
-    subsection = sub[line[5]]
-    return section, subsection
+    def is_enroute(self):
+        return self.section[0] == 'E'

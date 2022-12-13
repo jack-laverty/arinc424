@@ -13,6 +13,8 @@ Records that are partially complete, or of the wrong format, will be flagged and
 
 ## Dependencies
 * Python3
+* PyMongo (Optional)
+    * https://pymongo.readthedocs.io/en/stable/installation.html
 
 ## Supported Versions
 * ARINC-424-18
