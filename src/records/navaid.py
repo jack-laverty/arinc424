@@ -102,7 +102,7 @@ class Navaid:
     def parse_record(self, r, section):
         self.parse_record_type(r[0])
         self.parse_cycle_date(r[128:132])
-        self.record["Section Code"], self.record["Subsection Code"] = section.section[0], section.section[0]
+        self.record["Section Code"], self.record["Subsection Code"] = section.code[0], section.code[0]
         if self.parse_continuation(r[21]) < 2:
             self.record["Customer / Area Code"]    = r[1:4]
             self.record["Airport ICAO Identifier"] = r[6:10]

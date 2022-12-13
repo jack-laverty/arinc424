@@ -2,20 +2,20 @@ from collections import defaultdict
 
 class Section:
 
-    section = ''
+    code = ''
 
     def read(self, line):
-        self.section += line[4]
-        if self.section == 'D':
-            self.section += line[5]
-        elif self.section == 'P':
-            self.section += line[12]
-        elif self.section == 'E':
-            self.section += line[5]
+        self.code += line[4]
+        if self.code == 'D':
+            self.code += line[5]
+        elif self.code == 'P':
+            self.code += line[12]
+        elif self.code == 'E':
+            self.code += line[5]
 
     def decode(self):
         def def_value():
-            return "UNKNOWN: " + "'" + self.section + "'"
+            return "UNKNOWN: " + "'" + self.code + "'"
         sections = defaultdict(def_value)
         sections['AA'] = 'Grid MORA'
         sections['D '] = 'VHF Navaid'
@@ -60,13 +60,13 @@ class Section:
         sections['UC'] = 'Controller Airspace'
         sections['UF'] = 'Airspace FIR/UIR'
         sections['UR'] = 'Restrictive Airspace'
-        return sections[self.section]
+        return sections[self.code]
     
     def is_airport(self):
-        return self.section[0] == 'P'
+        return self.code[0] == 'P'
     
     def is_navaid(self):
-        return self.section[0] == 'D'
+        return self.code[0] == 'D'
 
     def is_enroute(self):
-        return self.section[0] == 'E'
+        return self.code[0] == 'E'

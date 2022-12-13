@@ -25,9 +25,9 @@ class Airport:
         self.record["Airport ICAO Identifier"]          = r[6:10]
         self.record["ICAO Code"]                        = r[10:12]
         self.record["Cycle Date"]                       = r[128:132]
-        self.record["Section Code"], self.record["Subsection Code"] = section.section[0], section.section[1]
+        self.record["Section Code"], self.record["Subsection Code"] = section.code[0], section.code[1]
 
-        if section.section == AIRPORT_RECORD:
+        if section.code == AIRPORT_RECORD:
             self.record["Continuation Records Number"]          = r[21]
             if int(self.record["Continuation Records Number"]) < 2:
                 self.record["ATA/IATA Designator"]              = r[13:16]
@@ -60,7 +60,7 @@ class Airport:
                 self.record["Notes"]                            = r[23:92]
                 self.record["Reserved (Expansion)"]             = r[92:123] if r[92:123].strip() != '' else '<Blank>' 
                 self.record["File Record No"]                   = r[123:128]
-        elif section.section == AIRPORT_COMMUNICATIONS_RECORD:
+        elif section.code == AIRPORT_COMMUNICATIONS_RECORD:
             self.record["Continuation Records Number"]          = r[25]
             if int(self.record["Continuation Records Number"]) < 2:
                 self.record["Communications Type"]              = r[13:16]
@@ -97,24 +97,24 @@ class Airport:
                 self.record["Narrative"]                        = r[27:87]
                 self.record["Reserved (Expansion)"]             = r[87:123] if r[87:123].strip() != '' else '<Blank>' 
                 self.record["File Record No"]                   = r[123:128]
-        elif section.section == AIRPORT_STAR_RECORD:
+        elif section.code == AIRPORT_STAR_RECORD:
                 pass
-        elif section.section == AIRPORT_APPROACH_RECORD:
+        elif section.code == AIRPORT_APPROACH_RECORD:
                 pass
-        elif section.section == AIRPORT_RUNWAY_RECORD:
+        elif section.code == AIRPORT_RUNWAY_RECORD:
                 pass
-        elif section.section == AIRPORT_MSA_RECORD:
+        elif section.code == AIRPORT_MSA_RECORD:
                 pass
-        elif section.section == AIRPORT_LOCALIZER_GLIDESLOPE_RECORD:
+        elif section.code == AIRPORT_LOCALIZER_GLIDESLOPE_RECORD:
                 pass
-        elif section.section == AIRPORT_WAYPOINT_RECORD:
+        elif section.code == AIRPORT_WAYPOINT_RECORD:
                 pass
-        elif section.section == AIRPORT_SID_RECORD:
+        elif section.code == AIRPORT_SID_RECORD:
                 pass
-        elif section.section == AIRPORT_ILS_MARKER:
+        elif section.code == AIRPORT_ILS_MARKER:
                 pass
         else:
-            print("Unsupported Airport Record", section.section)
+            print("Unsupported Airport Record", section.code)
 
     def dump(self):
         for k, v in self.record.items():
