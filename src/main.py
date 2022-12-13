@@ -24,25 +24,27 @@ if __name__ == "__main__":
                 config.search = line[1]
     f.close()
 
+    # try to open the input file
     if config.input != '':
         f = open(config.input)
     else:
         print("invalid .config: no input file")
         exit()
 
+    # create an output folder
     dir = os.path.join("..", "output")
     if not os.path.exists(dir):
         os.mkdir(dir)
 
+    # create an output file
     w = open(dir + "\\" + config.search + ".json", 'w')
+
+    # read the records
     for line in f.readlines():
-        
         if line.startswith('S' or 'T') == False:
             continue
-        
         if config.search not in line:
             continue
-
         section = sections.Section()
         section.read(line)
         print("Record Type:", section.decode())
@@ -53,4 +55,3 @@ if __name__ == "__main__":
             ap = airport.Airport()
             ap.read(line, section)
             w.write(ap.json(False))
-
