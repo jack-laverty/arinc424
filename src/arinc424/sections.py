@@ -1,14 +1,18 @@
 from collections import defaultdict
 
+NAVAID      = 'D'
+AIRPORT     = 'P'
+SOMETHING   = 'E'
+
 class Section:
 
     code = ''
 
     def read(self, line):
         self.code += line[4]
-        if self.code == 'D':
+        if self.code == NAVAID:
             self.code += line[5]
-        elif self.code == 'P':
+        elif self.code == AIRPORT:
             self.code += line[12]
         elif self.code == 'E':
             self.code += line[5]
