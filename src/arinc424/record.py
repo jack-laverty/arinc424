@@ -30,7 +30,7 @@ class Record():
     def read(self, line):
 
         if line.startswith('S' or 'T') == False: # TODO: dodgy
-            return
+            return -1
 
         section = sec.Section()
         section.read(line)
@@ -45,3 +45,6 @@ class Record():
 
             case _:
                 print("invalid section")
+                return -1
+        
+        return 0
