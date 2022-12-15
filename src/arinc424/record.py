@@ -1,3 +1,8 @@
+
+from .records import airport
+from .records import navaid
+
+import arinc424.sections as sections
 import json
 
 class Record():
@@ -21,3 +26,13 @@ class Record():
     def decode(self):
         for k, v in self.fields.items():
             print("{:<26}: {}".format(k, v))
+
+    def read(self, line):
+        if line.startswith('S' or 'T') == False:
+            return None
+        section = sections.Section()
+        section.read(line)
+        if section.is_navaid():
+            self.fields = navaid.read_fields(section, line)
+        elif section.is_airport():
+            self.fields = airport.read_fields(section, line)
