@@ -1,5 +1,5 @@
-import records.airport as airport
-import records.navaid as navaid
+from records import airport
+from records import navaid
 import utils.sections
 import utils.record
 
