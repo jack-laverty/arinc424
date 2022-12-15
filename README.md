@@ -1,33 +1,74 @@
 # ARINC 424 Tool
 An open-source tool for parsing and decoding ARINC-424, the international standard file format for aircraft navigation data.
 
-## Getting Started
+## Installation
+
 * Clone the repository
-* Install the dependencies
+* Install the package [from local source](https://packaging.python.org/en/latest/tutorials/installing-packages/#installing-from-a-local-src-tree)
 
-### Dependencies
-* Python3
-* PyMongo (Optional)
-    * https://pymongo.readthedocs.io/en/stable/installation.html
+This library is still under development. One day it will be good enough to distribute through a package manager. That day is not today.
 
-## Usage
+### Requirements
+* Python 3.11 or greater
+
+## Getting Started
+
+### Importing the library
+```Python
+import arinc424.record as a424
+```
 
 ### Reading a record
-Include the module, instantiate an object, and provide the read() function with an ARINC-424 record in string format. If the string is a valid ARINC-424 record, the **read()** function returns a [Record](#record-class)
+Create a record object. Use the **read()** method to read an ARINC-424 record in string format.
+
+```Python
+record = a424.Record()
+record.read(line)
+```
 
 ### Printing a record
-After creating a record object, **[obj].print()** can be called to print a record.
+After creating a record object and reading a record, **dump()** can be called to print the record to the console.
+
+```Python
+record.dump()
+```
+
+```console
+foo@bar:~$ python3 test.py
+
+Record Type               : S
+Customer / Area Code      : FOO
+Airport ICAO Identifier   : BAR
+.
+.
+.
+and so on
+```
 
 ### Writing a record to a file
-After creating a record object, **[obj].write(f)** can be called append the record output to a file. As with printing a record, the record can be written to a file in any of the output formats.
+
+```Python
+f = open("output.txt", "w")
+
+# writes the fields as they are
+f.write(record.dump())
+
+# writes the record in single-line JSON format
+f.write(record.json())
+```
+
+### Decoding a record
+Similar to dump(), but each value in the key-value pair is decoded to be human readable without referencing the ARINC-424 spec.
+```Python
+record.decode()
+```
 
 ## Details
 
-### Record Class
-When an ARINC-424 record is read, the result is stored in a **Record**.
+### Record Module
+When an ARINC-424 record is read, the result is stored in a **Record** object.
 
 **Record** objects hold information about that record, such as what *type* of record it is, what *fields* the record contains, and what values are in those fields.
-
 
 ### Output Formats
 **Record** objects can output the data they hold. The data can be output in a several formats.
