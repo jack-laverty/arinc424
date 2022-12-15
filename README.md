@@ -26,8 +26,8 @@ record = a424.Record()
 record.read(line)
 ```
 
-### Printing a record
-After creating a record object and reading a record, **dump()** can be called to print the record to the console.
+### Viewing a record
+After [reading a record](#reading-a-record), **dump()** will print the record to the console.
 
 ```Python
 record.dump()
@@ -58,7 +58,7 @@ f.write(record.json())
 ```
 
 ### Decoding a record
-Similar to dump(), but each value in the key-value pair is decoded to be human readable without referencing the ARINC-424 spec.
+Similar to **dump()**, but each value in the key-value pair is decoded to be human readable without referencing the ARINC-424 spec.
 ```Python
 record.decode()
 ```
@@ -71,6 +71,7 @@ When an ARINC-424 record is read, the result is stored in a **Record** object.
 **Record** objects hold information about that record, such as what *type* of record it is, what *fields* the record contains, and what values are in those fields.
 
 ### Output Formats
+
 **Record** objects can output the data they hold. The data can be output in a several formats.
 
 * decoded - the most human readable format
