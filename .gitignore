@@ -1,2 +1,4 @@
 *.config
 /output
+/input
+__pycache__/

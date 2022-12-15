@@ -13,7 +13,7 @@ An open-source tool for parsing and decoding ARINC-424, the international standa
 ## Usage
 
 ### Reading a record
-Include the module, instantiate an object, and provide the read() function with an ARINC-424 record in string format. If the string is a valid ARINC-424 record, the **read()** function returns a "Record" object.
+Include the module, instantiate an object, and provide the read() function with an ARINC-424 record in string format. If the string is a valid ARINC-424 record, the **read()** function returns a [Record](#record-class)
 
 ### Printing a record
 After creating a record object, **[obj].print()** can be called to print a record.
@@ -22,7 +22,9 @@ After creating a record object, **[obj].print()** can be called to print a recor
 After creating a record object, **[obj].write(f)** can be called append the record output to a file. As with printing a record, the record can be written to a file in any of the output formats.
 
 ## Details
-When an ARINC-424 record is read, the result is stored in a **Record** object.
+
+### Record Class
+When an ARINC-424 record is read, the result is stored in a **Record**.
 
 **Record** objects hold information about that record, such as what *type* of record it is, what *fields* the record contains, and what values are in those fields.
 
