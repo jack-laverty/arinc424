@@ -1,5 +1,5 @@
 from collections import defaultdict
-import sections
+import utils.sections
 import json
 
 AIRPORT_RECORD                          = 'PA'
@@ -15,8 +15,8 @@ AIRPORT_ILS_MARKER                      = 'PM'
 
 class Airport:
 
-    record = {}
     def __init__(self):
+        self.record = {}
         return
 
     def read(self, r, section):
@@ -49,8 +49,8 @@ class Airport:
                 self.record["Daylight Indicator"]               = r[84]
                 self.record["Magnetic/True Indicator"]          = r[85]
                 self.record["Datum Code"]                       = r[86:89]
-                self.record["Reserved (Expansion)"]             = r[16:18] if r[16:18].strip() != '' else '<Blank>' 
-                self.record["Reserved (Expansion) 2"]           = r[89:93] if r[89:93].strip() != '' else '<Blank>' 
+                self.record["Reserved (Expansion)"]             = r[16:18]
+                self.record["Reserved (Expansion) 2"]           = r[89:93]
                 self.record["Airport Name"]                     = r[93:123]
                 self.record["File Record No"]                   = r[123:128]
             else:
@@ -58,7 +58,7 @@ class Airport:
                 self.record["ICAO Code"]                        = r[19:21]
                 self.record["Application Type"]                 = r[22]
                 self.record["Notes"]                            = r[23:92]
-                self.record["Reserved (Expansion)"]             = r[92:123] if r[92:123].strip() != '' else '<Blank>' 
+                self.record["Reserved (Expansion)"]             = r[92:123]
                 self.record["File Record No"]                   = r[123:128]
         elif section.code == AIRPORT_COMMUNICATIONS_RECORD:
             self.record["Continuation Records Number"]          = r[25]

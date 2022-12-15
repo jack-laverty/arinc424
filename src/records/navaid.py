@@ -1,11 +1,11 @@
-import sections
+import utils.sections
 import json
-import decoder
+import utils.decoder
 
 class Navaid:
 
-    record = {}
     def __init__(self):
+        self.record = {}
         return
 
     def read(self, r, section):
@@ -43,7 +43,7 @@ class Navaid:
 
     def dump(self, readable=True):
         if readable:
-            decode = decoder.Decoder()
+            decode = utils.decoder.Decoder()
             print(decode.navaid_class(self.record["Class"]))
         else:
             for k, v in self.record.items():

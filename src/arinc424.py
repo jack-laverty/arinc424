@@ -2,7 +2,7 @@ import os
 import sys
 import records.navaid as nav
 import records.airport as airport
-import sections
+import utils.sections
 import json
 
 class Config():
@@ -50,7 +50,7 @@ if __name__ == "__main__":
             continue
         if config.search not in line and config.search != None:
             continue
-        section = sections.Section()
+        section = utils.sections.Section()
         section.read(line)
         # print("Record Type:", section.decode())
         if section.is_navaid():
