@@ -1,6 +1,8 @@
 # ARINC-424
 
 [![build](https://github.com/jack-laverty/arinc424/actions/workflows/build.yml/badge.svg)](https://github.com/jack-laverty/arinc424/actions/workflows/build.yml)
+![alt text](https://img.shields.io/badge/status-work%20in%20progress-orange)
+
 
 An open-source tool for parsing and decoding ARINC-424, the international standard file format for aircraft navigation data.
 
@@ -9,9 +11,6 @@ An open-source tool for parsing and decoding ARINC-424, the international standa
 * Python 3.10 or greater
 * Clone the repository
 * Install the package [from local source](https://packaging.python.org/en/latest/tutorials/installing-packages/#installing-from-a-local-src-tree)
-
-### Disclaimer
-This library is still [under development](#future-updates). One day it will be good enough to distribute through a package manager. That day is not today.
 
 ## Getting Started
 
@@ -79,12 +78,6 @@ When an ARINC-424 record is read, the result is stored in a **Record** object.
 * decoded - the most human readable format
 * JSON (single line) - useful for importing the records to a database
 * raw data - the unmodified string from which the record object was created
-
-### Future Updates
-
-As you may have noticed, the library only supports VHF NAVAID records. This was done to fasttrack the development of a proof of concept python package. Translating every structure for the large number of record variations is tedious work, and I wanted the framework in place before I dive in.
-
-A lot of the record variations are tightly coupled, especially the primary records and their respective continuation records. It raises issues of code duplication, file length, multi-class modules and so on.
 
 ### Supported Versions
 * ARINC-424-18
