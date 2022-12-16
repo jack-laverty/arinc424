@@ -1,4 +1,7 @@
-# ARINC 424
+# ARINC-424
+
+[![build](https://github.com/jack-laverty/arinc424/actions/workflows/build.yml/badge.svg)](https://github.com/jack-laverty/arinc424/actions/workflows/build.yml)
+
 An open-source tool for parsing and decoding ARINC-424, the international standard file format for aircraft navigation data.
 
 ## Installation
