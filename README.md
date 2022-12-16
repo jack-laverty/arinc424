@@ -1,15 +1,13 @@
-# ARINC 424 Tool
+# ARINC 424
 An open-source tool for parsing and decoding ARINC-424, the international standard file format for aircraft navigation data.
 
 ## Installation
 
+* Python 3.11 or greater
 * Clone the repository
 * Install the package [from local source](https://packaging.python.org/en/latest/tutorials/installing-packages/#installing-from-a-local-src-tree)
 
 This library is still under development. One day it will be good enough to distribute through a package manager. That day is not today.
-
-### Requirements
-* Python 3.11 or greater
 
 ## Getting Started
 

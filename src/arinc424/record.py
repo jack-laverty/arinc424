@@ -1,17 +1,31 @@
-
+from collections import defaultdict
 from .records import airport
 from .records import navaid
-
-import arinc424.sections as sec
 import json
 
 class Record():
 
     def __init__(self):
-        self.type = 'Unknown'
+        self.code = 'Unknown'
         self.raw_string = ''
         self.fields = {}
         self.continuation = False
+
+    def read(self, line):
+        if line.startswith('S' or 'T') == False: # TODO: dodgy
+            return -1
+        self.code += line[4]
+        match self.code[0]:
+            case 'D':
+                self.code += line[5]
+                self.fields = navaid.read_fields(self.code, line)
+            case 'P':
+                self.code += line[12]
+                self.fields = airport.read_fields(self.code, line)
+            case _:
+                print("unsupported section code")
+                return 0
+        return 0
 
     def dump(self):
         for k, v in self.fields.items():
@@ -24,27 +38,7 @@ class Record():
             return json.dumps(self.record, sort_keys=True, indent=4, separators=(',', ': '))
 
     def decode(self):
-        # TODO: this
+        # TODO: the actual useful thing that this software needs to do
+        # for k, v in self.fields.items():
+        #     print("{:<26}: {}".format(k, decode(v, v.data_type)))
         pass
-
-    def read(self, line):
-
-        if line.startswith('S' or 'T') == False: # TODO: dodgy
-            return -1
-
-        section = sec.Section()
-        section.read(line)
-
-        match section.code[0]:
-
-            case sec.NAVAID:
-                self.fields = navaid.read_fields(section, line)
-
-            case sec.AIRPORT:
-                self.fields = airport.read_fields(section, line)
-
-            case _:
-                print("invalid section")
-                return -1
-        
-        return 0
