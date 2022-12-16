@@ -1,7 +1,7 @@
-from collections import defaultdict
 from .records import airport
 from .records import navaid
 import json
+
 
 class Record():
 
@@ -12,7 +12,7 @@ class Record():
         self.continuation = False
 
     def read(self, line):
-        if line.startswith('S' or 'T') == False: # TODO: dodgy
+        if line.startswith('S' or 'T') is False:
             return -1
         self.code += line[4]
         match self.code[0]:
@@ -35,7 +35,10 @@ class Record():
         if single_line:
             return json.dumps(self.record)
         else:
-            return json.dumps(self.record, sort_keys=True, indent=4, separators=(',', ': '))
+            return json.dumps(self.record,
+                              sort_keys=True,
+                              indent=4,
+                              separators=(',', ': '))
 
     def decode(self):
         # TODO: the actual useful thing that this software needs to do
