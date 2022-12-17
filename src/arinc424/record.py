@@ -9,19 +9,22 @@ class Record():
         self.code = ''
         self.raw_string = ''
         self.fields = {}
-        self.continuation = False
 
     def read(self, line):
         if line.startswith('S' or 'T') is False:
+            print("no record found")
             return 0
+
         self.code += line[4]
         match self.code[0]:
             case 'D':
                 self.code += line[5]
-                self.continuation = (int(line[21]) < 2)
-                if self.continuation is True:
+                if self.code == 'D ':
                     vhf = navaid.VHFNavaid()
-                    self.fields = vhf.read_primary(line)
+                    print(vhf.find_type(line))
+                # elif self.code == 'DB':
+                #     ndb = navaid.NDBNavaid()
+                #     print(ndb.find_type(line)
             case 'P':
                 self.code += line[12]
                 self.fields = airport.read_fields(self.code, line)

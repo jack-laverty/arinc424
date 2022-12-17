@@ -9,7 +9,7 @@ class TestVHFNavaid(unittest.TestCase):
             for idx, line in enumerate(f.readlines()):
                 record = a424.Record()
                 self.assertEqual(record.read(line), 0)
-                print("\n\nRecord", idx)
+                print("\nLine", idx)
                 record.dump()
 
 

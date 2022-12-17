@@ -1,8 +1,18 @@
 
 class VHFNavaid():
 
-    def find_type():
-        pass
+    def find_type(self, line):
+        if int(line[21]) < 2:
+            # continuation record # 0 = primary record with no continuation
+            # continuation record # 1 = primary record with continuation
+            return 'VHF Navaid Primary Record'
+        else:
+            # continuation record # 2 or greater = continuation record
+            return 'VHF Navaid Continuation Record'
+
+        # TODO: how do you determine what type of continuation record it is?
+        # parse the rest of the record and try to line it up with one of the
+        # continuation record structures? kind of annoying, no?
 
     def read_primary(self, r):
         fields = {}
