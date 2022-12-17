@@ -2,14 +2,15 @@ import arinc424.record as a424
 import unittest
 
 
-class TestRecordMethods(unittest.TestCase):
+class TestVHFNavaid(unittest.TestCase):
 
     def test_read(self):
-        line = 'SSPAD        AA    NZ123480VFU  S51201670E112344910\
-    S12016630E174412016E0200120162     FUDAUCKLAND\
-                      874487407'
-        record = a424.Record()
-        self.assertEqual(record.read(line), 0)
+        with open('./example_data/vhf_navaid.txt') as f:
+            for idx, line in enumerate(f.readlines()):
+                record = a424.Record()
+                self.assertEqual(record.read(line), 0)
+                print("\n\nRecord", idx)
+                record.dump()
 
 
 if __name__ == '__main__':
