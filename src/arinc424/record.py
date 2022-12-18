@@ -8,7 +8,7 @@ class Record():
     def __init__(self):
         self.code = ''
         self.raw_string = ''
-        self.fields = {}
+        self.fields = []
 
     def read(self, line):
         if line.startswith('S' or 'T') is False:
@@ -18,10 +18,11 @@ class Record():
         self.code += line[4]
         match self.code[0]:
             case 'D':
+                vhf = navaid.VHFNavaid()
                 self.code += line[5]
                 if self.code == 'D ':
-                    vhf = navaid.VHFNavaid()
-                    print(vhf.find_type(line))
+                    self.fields = vhf.read(line)
+                    self.dump()
                 # elif self.code == 'DB':
                 #     ndb = navaid.NDBNavaid()
                 #     print(ndb.find_type(line)
@@ -34,8 +35,8 @@ class Record():
         return 0
 
     def dump(self):
-        for k, v in self.fields.items():
-            print("{:<26}: {}".format(k, v))
+        for i in self.fields:
+            print("{:<26}: {}".format(i[0], i[1]))
 
     def json(self, single_line=True):
         if single_line:

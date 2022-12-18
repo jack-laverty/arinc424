@@ -1,19 +1,6 @@
 
 class VHFNavaid():
 
-    def find_type(self, line):
-        if int(line[21]) < 2:
-            # continuation record # 0 = primary record with no continuation
-            # continuation record # 1 = primary record with continuation
-            return 'VHF Navaid Primary Record'
-        else:
-            # continuation record # 2 or greater = continuation record
-            return 'VHF Navaid Continuation Record'
-
-        # TODO: how do you determine what type of continuation record it is?
-        # parse the rest of the record and try to line it up with one of the
-        # continuation record structures? kind of annoying, no?
-
     def read_primary(self, r):
         fields = []
         fields.append(["Record Type",                   r[0]])
@@ -108,7 +95,7 @@ class VHFNavaid():
     # the Primary Record that are changed. Used in conjunction
     # with flight_plan0.
     def read_flight_plan1(self, section, r):
-        fields = {}
+        fields = []
         fields.append(["Record Type",                   r[0]])
         fields.append(["Customer / Area Code",          r[1:4]])
         fields.append(["Section Code",                  r[4]])
@@ -135,7 +122,7 @@ class VHFNavaid():
         fields.append(["VOR Name",                      r[93:123]])
         fields.append(["File Record No",                r[123:128]])
         fields.append(["Cycle Date",                    r[128:132]])
-        return fields   
+        return fields
 
     def read_lim(self, r):
         fields = []
@@ -182,3 +169,29 @@ class VHFNavaid():
         fields.append(["File Record No",                r[123:128]])
         fields.append(["Cycle Date",                    r[128:132]])
         return fields
+
+    def read(self, line):
+        if int(line[21]) < 2:
+            # continuation record # 0 = primary record with no continuation
+            # continuation record # 1 = primary record with continuation
+            print('VHF Navaid Primary Record')
+            return self.read_primary(line)
+        else:
+            # continuation record # 2 or greater = continuation record
+            # figuring out which continuation record it is
+            # based on blank space... super dirty but it gets the job done
+            if len(set(line[32:74])) == 1:
+                print('VHF Navaid Simulation Record')
+                return self.read_sim(line)
+            elif len(set(line[43:123])) == 1:
+                print('VHF Navaid Flight Plan (0) Record')
+                return self.read_flight_plan0(line)
+            elif len(set(line[92:123])) == 1:
+                print('VHF Navaid Continuation Record')
+                return self.read_cont(line)
+            elif len(set(line[108:123])) == 1:
+                print('VHF Navaid Limitation Record')
+                return self.read_lim(line)
+            else:
+                print('VHF Navaid Flight Plan (1) Record')
+                return self.read_flight_plan1(line)
