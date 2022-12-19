@@ -1,4 +1,3 @@
-from .records import airport
 from .records import navaid
 import json
 
@@ -22,13 +21,11 @@ class Record():
                 self.code += line[5]
                 if self.code == 'D ':
                     self.fields = vhf.read(line)
-                    self.dump()
+                    # self.dump()
+                    self.decode()
                 # elif self.code == 'DB':
                 #     ndb = navaid.NDBNavaid()
                 #     print(ndb.find_type(line)
-            case 'P':
-                self.code += line[12]
-                self.fields = airport.read_fields(self.code, line)
             case _:
                 print("unsupported section code", self.code[0])
                 return 0
@@ -38,6 +35,10 @@ class Record():
         for i in self.fields:
             print("{:<26}: {}".format(i[0], i[1]))
 
+    def decode(self):
+        for i in self.fields:
+            print("{:<26}: {}".format(i[0], i[2](i[1])))
+
     def json(self, single_line=True):
         if single_line:
             return json.dumps(self.record)
@@ -46,9 +47,3 @@ class Record():
                               sort_keys=True,
                               indent=4,
                               separators=(',', ': '))
-
-    def decode(self):
-        # TODO: the actual useful thing that this software needs to do
-        # for k, v in self.fields.items():
-        #     print("{:<26}: {}".format(k, decode(v, v.data_type)))
-        pass
