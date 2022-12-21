@@ -4,6 +4,10 @@ import json
 
 class Record():
 
+    field_idx = 0
+    value_idx = 1
+    decode_fn_idx = 2
+
     def __init__(self):
         self.code = ''
         self.raw_string = ''
@@ -33,11 +37,13 @@ class Record():
 
     def dump(self):
         for i in self.fields:
-            print("{:<26}: {}".format(i[0], i[1]))
+            print("{:<26}: {}".format(i[self.field_idx], i[self.value_idx]))
 
     def decode(self):
         for i in self.fields:
-            print("{:<26}: {}".format(i[0], i[2](i[1])))
+            print("{:<26}: {}".format(i[self.field_idx],
+                                      i[self.decode_fn_idx]
+                                      (i[self.value_idx])))
 
     def json(self, single_line=True):
         if single_line:
