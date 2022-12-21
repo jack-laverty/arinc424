@@ -48,7 +48,7 @@ sections['UR'] = 'Restrictive Airspace'
 
 def freq(val):
     if (val.isnumeric()):
-        return float(val)/100
+        return "{:.2f}".format(float(val)/100)
     else:
         return val
 
@@ -90,11 +90,8 @@ def text(val):
     return val.strip() if val.strip() != '' else '<Blank>'
 
 
-def nclass(val):
+def facility(val):
     facility = defaultdict(None)
-    power = defaultdict(None)
-    info = defaultdict(None)
-    collocation = defaultdict(None)
     facility['V'] = 'VOR'
     facility[' '] = ''
     facility['D'] = 'DME'
@@ -103,25 +100,34 @@ def nclass(val):
     facility['I'] = 'ILS/DME or ILS/TACAN'
     facility['N'] = 'MLS/DME/N'
     facility['P'] = 'MLS/DME/P'
+    return str(facility[val[0]] + facility[val[1]])
+
+
+def power(val):
+    power = defaultdict(None)
     power['T'] = 'Terminal'
     power['L'] = 'Low Altitude'
     power['H'] = 'High Altitude'
     power['U'] = 'Undefined'
     power['C'] = 'ILS/TACAN'
+    return str(power[val])
+
+
+def info(val):
+    info = defaultdict(None)
     info['D'] = 'Biased ILS/DME or ILS/TACAN'
     info['A'] = 'Automatic Transcribed Weather Broadcast'
     info['B'] = 'Scheduled Weather Broadcast'
     info['W'] = 'No Voice on Frequency'
     info[' '] = 'Voice on Frequency'
+    return str(info[val])
+
+
+def colloc(val):
+    collocation = defaultdict(None)
     collocation[' '] = 'Collocated Navaids'
     collocation['N'] = 'Non-Collocated Navaids'
-
-    return {
-            "Facility":     facility[val[0]] + facility[val[1]],
-            "Power":        power[val[2]],
-            "Info":         info[val[3]],
-            "Collocation":  collocation[val[4]],
-    }
+    return str(collocation[val])
 
 
 def section(val):
@@ -135,3 +141,13 @@ def record(val):
         return 'Tailored'
     else:
         return 'Error: invalid record type'
+
+
+def cont(val):
+    match val:
+        case '0':
+            return 'Primary record'
+        case '1':
+            return 'Primary record, with continuation'
+        case _:
+            return 'Continuation record: ' + str(val)

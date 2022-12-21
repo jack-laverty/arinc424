@@ -17,9 +17,9 @@ class Record():
         self.code += line[4]
         match self.code[0]:
             case 'D':
-                vhf = navaid.VHFNavaid()
                 self.code += line[5]
                 if self.code == 'D ':
+                    vhf = navaid.VHFNavaid()
                     self.fields = vhf.read(line)
                     # self.dump()
                     self.decode()
