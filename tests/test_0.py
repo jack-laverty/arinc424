@@ -5,7 +5,7 @@ import unittest
 class TestVHFNavaid(unittest.TestCase):
 
     def test_read(self):
-        with open('./example_data/vhf_navaid.txt') as f:
+        with open('./tests/example_data/vhf_navaid.txt') as f:
             for idx, line in enumerate(f.readlines()):
                 print("\nLine", idx)
                 record = a424.Record()
