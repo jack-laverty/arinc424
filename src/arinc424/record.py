@@ -1,4 +1,4 @@
-from .records import navaid
+from .records import vhf_navaid
 import json
 
 
@@ -23,7 +23,7 @@ class Record():
             case 'D':
                 self.code += line[5]
                 if self.code == 'D ':
-                    vhf = navaid.VHFNavaid()
+                    vhf = vhf_navaid.VHFNavaid()
                     self.fields = vhf.read(line)
                     # self.dump()
                     self.decode()
@@ -41,9 +41,13 @@ class Record():
 
     def decode(self):
         for i in self.fields:
-            print("{:<26}: {}".format(i[self.field_idx],
-                                      i[self.decode_fn_idx]
-                                      (i[self.value_idx])))
+            try:
+                print("{:<26}: {}".format(i[self.field_idx],
+                                          i[self.decode_fn_idx]
+                                          (i[self.value_idx])))
+            except IndexError:
+                print("GOT ONE")
+                print(self.fields)
 
     def json(self, single_line=True):
         if single_line:

@@ -75,11 +75,13 @@ def gps(val):
     if val.strip() == '':
         return '<Blank>'
     else:
-        return ' '.join([val[1:x-6],
-                        val[x-6:x-4],
-                        val[x-4:x-2],
-                        val[x-2:x],
-                        val[0]])
+        return "{:03} {:02} {:02} {:02} {}".format(
+            int(val[1:x-6]),
+            int(val[x-6:x-4]),
+            int(val[x-4:x-2]),
+            int(val[x-2:x]),
+            val[0]
+        )
 
 
 # frequency protection
@@ -100,7 +102,7 @@ def facility(val):
     facility['I'] = 'ILS/DME or ILS/TACAN'
     facility['N'] = 'MLS/DME/N'
     facility['P'] = 'MLS/DME/P'
-    return str(facility[val[0]] + facility[val[1]])
+    return ' '.join([facility[val[0]], facility[val[1]]]).strip()
 
 
 def power(val):
@@ -146,8 +148,48 @@ def record(val):
 def cont(val):
     match val:
         case '0':
-            return 'Primary record'
+            return 'Primary Record'
         case '1':
-            return 'Primary record, with continuation'
+            return 'Primary Record (with Cont.)'
         case _:
-            return 'Continuation record: ' + str(val)
+            return str(val) + ' - Continuation'
+
+
+def app(val):
+    match val:
+        case 'A':
+            return 'Standard ARINC Continuation containing\
+notes or other formatted data'
+        case 'B':
+            return 'Combined Controlling Agency/Call Sign\
+and formatted Time of Operation'
+        case 'C':
+            return 'Call Sign/Controlling Agency Continuation'
+        case 'E':
+            return 'Primary Record Extension'
+        case 'L':
+            return 'VHF Navaid Limitation Continuation'
+        case 'N':
+            return 'A Sector Narrative Continuation'
+        case 'T':
+            return 'A Time of Operations Continuation\
+"formatted time data"'
+        case 'U':
+            return 'A Time of Operations Continuation\
+"Narrative time data"'
+        case 'V':
+            return 'A Time of Operations Continuation,\
+Start/End Date'
+        case 'P':
+            return 'A Flight Planning Application Continuation'
+        case 'Q':
+            return 'A Flight Planning Application Primary Data\
+Continuation'
+        case 'S':
+            return 'Simulation Application Continuation'
+        case 'W':
+            return 'An Airport or Heliport Procedure Data\
+Continuation with SBAS use authorization\
+information'
+        case _:
+            return 'Unknown Application Type: ' + str(val)

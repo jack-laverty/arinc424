@@ -44,7 +44,7 @@ class VHFNavaid():
         fields.append(["VOR Identifier",          r[13:17],   decode.text])
         fields.append(["ICAO Code (2)",           r[19:21],   decode.text])
         fields.append(["Continuation Records No", r[21],      decode.cont])
-        fields.append(["Application Type",        r[22],      decode.text])
+        fields.append(["Application Type",        r[22],      decode.app])
         fields.append(["Notes",                   r[23:92],   decode.text])
         fields.append(["Reserved (Expansion)",    r[92:123],  decode.text])
         fields.append(["File Record No",          r[123:128], decode.text])
@@ -61,7 +61,7 @@ class VHFNavaid():
         fields.append(["VOR Identifier",           r[13:17],   decode.text])
         fields.append(["ICAO Code (2)",            r[19:21],   decode.text])
         fields.append(["Continuation Records No",  r[21],      decode.cont])
-        fields.append(["Application Type",         r[22],      decode.text])
+        fields.append(["Application Type",         r[22],      decode.app])
         fields.append(["Facility Characteristics", r[27:32],   decode.text])
         fields.append(["Reserved (Spacing)",       r[32:74],   decode.text])
         fields.append(["File Record No",           r[123:128], decode.text])
@@ -72,7 +72,7 @@ class VHFNavaid():
     # UIR within which the VHF NAVAID defined in the
     # Primary Record is located and the Start/End validity
     # dates/times of the Primary Record.
-    def read_flight_plan0(self, section, r):
+    def read_flight_plan0(self, r):
         fields = []
         fields.append(["Record Type",             r[0],       decode.record])
         fields.append(["Customer / Area Code",    r[1:4],     decode.text])
@@ -82,7 +82,7 @@ class VHFNavaid():
         fields.append(["VOR Identifier",          r[13:17],   decode.text])
         fields.append(["ICAO Code (2)",           r[19:21],   decode.text])
         fields.append(["Continuation Records No", r[21],      decode.cont])
-        fields.append(["Application Type",        r[22],      decode.text])
+        fields.append(["Application Type",        r[22],      decode.app])
         fields.append(["FIR Identifier",          r[23:27],   decode.text])
         fields.append(["UIR Identifier",          r[28:31],   decode.text])
         fields.append(["Start/End Indicator",     r[32],      decode.text])
@@ -95,7 +95,7 @@ class VHFNavaid():
     # This Continuation Record is used to indicate the fields of
     # the Primary Record that are changed. Used in conjunction
     # with flight_plan0.
-    def read_flight_plan1(self, section, r):
+    def read_flight_plan1(self, r):
         fields = []
         fields.append(["Record Type",             r[0],       decode.record])
         fields.append(["Customer / Area Code",    r[1:4],     decode.text])
@@ -105,7 +105,7 @@ class VHFNavaid():
         fields.append(["VOR Identifier",          r[13:17],   decode.text])
         fields.append(["ICAO Code (2)",           r[19:21],   decode.text])
         fields.append(["Continuation Records No", r[21],      decode.cont])
-        fields.append(["Application Type",        r[22],      decode.text])
+        fields.append(["Application Type",        r[22],      decode.app])
         fields.append(["Frequency",               r[22:27],   decode.text])
         fields.append(["Class",                   r[27:32],   decode.text])
         fields.append(["VOR Latitude",            r[32:41],   decode.text])
@@ -134,7 +134,7 @@ class VHFNavaid():
         fields.append(["VOR Identifier",          r[13:17],   decode.text])
         fields.append(["ICAO Code (2)",           r[19:21],   decode.text])
         fields.append(["Continuation Records No", r[21],      decode.cont])
-        fields.append(["Application Type",        r[22],      decode.text])
+        fields.append(["Application Type",        r[22],      decode.app])
         fields.append(["Navaid Limitation Code",  r[23],      decode.text])
         fields.append(["Component Affected Indicator", r[24], decode.text])
         fields.append(["Sequence Number",         r[25:27],   decode.text])
@@ -173,24 +173,13 @@ class VHFNavaid():
         if int(line[21]) < 2:
             # continuation record # 0 = primary record with no continuation
             # continuation record # 1 = primary record with continuation
-            print('VHF Navaid Primary Record')
             return self.read_primary(line)
         else:
-            # continuation record # 2 or greater = continuation record
-            # figuring out which continuation record it is
-            # based on blank space... super dirty but it gets the job done
-            if len(set(line[32:74])) == 1:
-                print('VHF Navaid Simulation Record')
-                return self.read_sim(line)
-            elif len(set(line[43:123])) == 1:
-                print('VHF Navaid Flight Plan (0) Record')
-                return self.read_flight_plan0(line)
-            elif len(set(line[92:123])) == 1:
-                print('VHF Navaid Continuation Record')
-                return self.read_cont(line)
-            elif len(set(line[108:123])) == 1:
-                print('VHF Navaid Limitation Record')
-                return self.read_lim(line)
-            else:
-                print('VHF Navaid Flight Plan (1) Record')
-                return self.read_flight_plan1(line)
+            match line[22]:
+                case 'P':
+                    return self.read_flight_plan0(line)
+                case 'S':
+                    return self.read_sim(line)
+                case _:
+                    print("ERROR: invalid application type", line[22])
+                    return []
