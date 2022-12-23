@@ -3,7 +3,6 @@
 
 NDB NAVAID (DB)
 (With Simulation and Flight Planning Continuations)
-
 SUSADB       ARU   K2102150H MW N41281600W120332500                       E0180           NASALTURAS                       019768110
 SUSADB       ARU   K22S     U21                                                                                            019788110
 SUSADB       ARU   K23PKZSEKZSE                                                                                            019798110

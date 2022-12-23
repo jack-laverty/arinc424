@@ -3,7 +3,7 @@ from collections import defaultdict
 sections = defaultdict(None)
 sections['AA'] = 'Grid MORA'
 sections['D '] = 'VHF Navaid'
-sections['DD'] = 'NDB Navaid'
+sections['DB'] = 'NDB Navaid'
 sections['EA'] = 'Waypoint'
 sections['EM'] = 'Airways Marker'
 sections['EP'] = 'Holding Patterns'
@@ -92,8 +92,12 @@ def text(val):
     return val.strip() if val.strip() != '' else '<Blank>'
 
 
+def def_val():
+    return "<Unsupported>"
+
+
 def facility(val):
-    facility = defaultdict(None)
+    facility = defaultdict(def_val)
     facility['V'] = 'VOR'
     facility[' '] = ''
     facility['D'] = 'DME'
@@ -106,7 +110,7 @@ def facility(val):
 
 
 def power(val):
-    power = defaultdict(None)
+    power = defaultdict(def_val)
     power['T'] = 'Terminal'
     power['L'] = 'Low Altitude'
     power['H'] = 'High Altitude'
@@ -116,7 +120,7 @@ def power(val):
 
 
 def info(val):
-    info = defaultdict(None)
+    info = defaultdict(def_val)
     info['D'] = 'Biased ILS/DME or ILS/TACAN'
     info['A'] = 'Automatic Transcribed Weather Broadcast'
     info['B'] = 'Scheduled Weather Broadcast'
@@ -126,7 +130,7 @@ def info(val):
 
 
 def colloc(val):
-    collocation = defaultdict(None)
+    collocation = defaultdict(def_val)
     collocation[' '] = 'Collocated Navaids'
     collocation['N'] = 'Non-Collocated Navaids'
     return str(collocation[val])

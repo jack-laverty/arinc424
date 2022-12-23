@@ -1,4 +1,5 @@
 from .records import vhf_navaid
+from .records import ndb_navaid
 import json
 
 
@@ -17,16 +18,19 @@ class Record():
         if line.startswith('S' or 'T') is False:
             return None
 
+        rec = None
         self.code += line[4]
         match self.code[0]:
             case 'D':
                 self.code += line[5]
                 if self.code == 'D ':
-                    vhf = vhf_navaid.VHFNavaid()
-                    self.fields = vhf.read(line)
+                    rec = vhf_navaid.VHFNavaid()
+                elif self.code == 'DB':
+                    rec = ndb_navaid.NDBNavaid()
             case _:
                 print("unsupported section code", self.code[0])
                 return None
+        self.fields = rec.read(line)
         return 0
 
     def dump(self):
