@@ -15,8 +15,7 @@ class Record():
 
     def read(self, line):
         if line.startswith('S' or 'T') is False:
-            print("no record found")
-            return 0
+            return None
 
         self.code += line[4]
         match self.code[0]:
@@ -25,14 +24,9 @@ class Record():
                 if self.code == 'D ':
                     vhf = vhf_navaid.VHFNavaid()
                     self.fields = vhf.read(line)
-                    # self.dump()
-                    self.decode()
-                # elif self.code == 'DB':
-                #     ndb = navaid.NDBNavaid()
-                #     print(ndb.find_type(line)
             case _:
                 print("unsupported section code", self.code[0])
-                return 0
+                return None
         return 0
 
     def dump(self):
@@ -46,8 +40,8 @@ class Record():
                                           i[self.decode_fn_idx]
                                           (i[self.value_idx])))
             except IndexError:
-                print("GOT ONE")
-                print(self.fields)
+                return 1
+        return 0
 
     def json(self, single_line=True):
         if single_line:

@@ -33,29 +33,29 @@ SUSAD        EPH   K1111260VTHA N47224100W119252230    N47224100W119252230E02100
 SUSAD        EPH   K12PKZSEKZSE                                                                                            016498613
 SUSAD        EPH   K13S    UY                                             E019301250                                       016508411
 SUSAD        MOD   K2111460VDH  N37373880W120572560    N37373880W120572560E0170078602  571NASMODESTO                       017398606
-zzzzSUSAD        MOD   K22PKZOAKZOA                                                                                            017418613
-zzzzSUSAD        MOD   K13S    UY                                             E015800090                                       017428608
-zzzzSUSAD        MVA   K2111510VTHA N38335535W118015484    N38335535W118015484E0170078602  476NASMINA                          017438306
-zzzzSUSAD        MVA   K22PKZOAKZOA                                                                                            017458613
-zzzzSUSAD        MVA   K13S    UY                                             E015507860                                       017468306
-zzzzSUSAD        NUQ   K2111760 TH                     NUQ N37255680W122032320E0170000041  314NASNAVY MOFFETT FIELD            017758806
-zzzzSUSAD        NUQ   K22PKZOAKZOA                                                                                            017778806
-zzzzSUSAD        NUQ   K13S    UY                                             E0159                                            017788806
-zzzzSUSAD        NUW   K1111380 TH                     NUW N48211838W122393600E0200000502  325NASNAVY WHIDBEY ISLAND           017798806
-zzzzSUSAD        NUW   K12PKZSEKZSE                                                                                            017818806
-zzzzSUSAD        NUW   K13S    UY                                             E0205                                            017828806
-zzzzSUSAD        OAK   K2111760VTHA N37433360W122132100    N37433360W122132100E0170000103  477NASOAKLAND                       017838110
-zzzzSUSAD        OAK   K22PKZOAKZOA                                                                                            017858613
-zzzzSUSAD        OAK   K13S    UY                                             E016000010                                       017868110
-zzzzSUSAD        OED   K1111360VTHA N42284710W122544250    N42284710W122544250E0190020802  410NASMEDFORD                       017918411
-zzzzSUSAD        OED   K12PKZSEKZSE                                                                                            017938613
-zzzzSUSAD        OED   K13S    UY                                             E017902080                                       017948411
-zzzzSUSAD        UBG   K1111740VTHA N45211220W122583700    N45211220W122583700E0210014402  493NASNEWBERG                       019078110
-zzzzSUSAD        UBG   K12PKZSEKZSE                                                                                            019098613
-zzzzSUSAD        UBG   K13S    UY                                             E019101440                                       019108110
-zzzzSUSAD        YKM   K1111600VTHA N46341350W120263640    N46341350W120263640E0210009802  525NASYAKIMA                        019158502
-zzzzSUSAD        YKM   K12PKZSEKZSE                                                                                            019178613
-zzzzSUSAD        YKM   K13S    UY                                             E019200980                                       019188502
-zzzzSUSAD KSEAK1 ISZI  K1111170 IT                     ISZIN47260947W122183980     003660  588NASSEATTLE-TACOMA INTL           019588808
-zzzzSUSAD KSEAK1 ISZI  K12PKZSEKZSE                                                                                            019598713
-zzzzSUSAD KSEAK1 ISZI  K13S    UN  L                                          E020000366                                       019608901
+SUSAD        MOD   K22PKZOAKZOA                                                                                            017418613
+SUSAD        MOD   K13S    UY                                             E015800090                                       017428608
+SUSAD        MVA   K2111510VTHA N38335535W118015484    N38335535W118015484E0170078602  476NASMINA                          017438306
+SUSAD        MVA   K22PKZOAKZOA                                                                                            017458613
+SUSAD        MVA   K13S    UY                                             E015507860                                       017468306
+SUSAD        NUQ   K2111760 TH                     NUQ N37255680W122032320E0170000041  314NASNAVY MOFFETT FIELD            017758806
+SUSAD        NUQ   K22PKZOAKZOA                                                                                            017778806
+SUSAD        NUQ   K13S    UY                                             E0159                                            017788806
+SUSAD        NUW   K1111380 TH                     NUW N48211838W122393600E0200000502  325NASNAVY WHIDBEY ISLAND           017798806
+SUSAD        NUW   K12PKZSEKZSE                                                                                            017818806
+SUSAD        NUW   K13S    UY                                             E0205                                            017828806
+SUSAD        OAK   K2111760VTHA N37433360W122132100    N37433360W122132100E0170000103  477NASOAKLAND                       017838110
+SUSAD        OAK   K22PKZOAKZOA                                                                                            017858613
+SUSAD        OAK   K13S    UY                                             E016000010                                       017868110
+SUSAD        OED   K1111360VTHA N42284710W122544250    N42284710W122544250E0190020802  410NASMEDFORD                       017918411
+SUSAD        OED   K12PKZSEKZSE                                                                                            017938613
+SUSAD        OED   K13S    UY                                             E017902080                                       017948411
+SUSAD        UBG   K1111740VTHA N45211220W122583700    N45211220W122583700E0210014402  493NASNEWBERG                       019078110
+SUSAD        UBG   K12PKZSEKZSE                                                                                            019098613
+SUSAD        UBG   K13S    UY                                             E019101440                                       019108110
+SUSAD        YKM   K1111600VTHA N46341350W120263640    N46341350W120263640E0210009802  525NASYAKIMA                        019158502
+SUSAD        YKM   K12PKZSEKZSE                                                                                            019178613
+SUSAD        YKM   K13S    UY                                             E019200980                                       019188502
+SUSAD KSEAK1 ISZI  K1111170 IT                     ISZIN47260947W122183980     003660  588NASSEATTLE-TACOMA INTL           019588808
+SUSAD KSEAK1 ISZI  K12PKZSEKZSE                                                                                            019598713
+SUSAD KSEAK1 ISZI  K13S    UN  L                                          E020000366                                       019608901
