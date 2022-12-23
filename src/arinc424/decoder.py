@@ -54,20 +54,13 @@ def freq(val):
 
 
 def cycle(val):
-    s = ''
-    if int(val[:2]) > 50:
-        s += ("19" + val[:2])
-    else:
-        s += ("20" + val[:2])
-    s += ', ' + (val[2:])
-    return s
+    x = val[:2]
+    return '{}, {}'.format("19" + x if int(x) > 50 else "20" + x,
+                           val[2:])
 
 
 def dme_el(val):
-    if val.strip() == '':
-        return '<Blank>'
-    else:
-        return val.lstrip('0') + " ft"
+    return val.lstrip('0') + " ft" if val.isnumeric() else '<Blank>'
 
 
 def gps(val):
