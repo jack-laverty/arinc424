@@ -136,6 +136,72 @@ def colloc(val):
     return str(collocation[val])
 
 
+def waypoint(val):
+    match val[0]:
+        case 'C':
+            return "Combined Named Intersection\
+ and RNAV"
+        case 'I':
+            return 'Unnamed, Charted Intersection'
+        case 'N':
+            return 'NDB Navaid as Waypoint' + val[1:]
+        case 'R':
+            return 'Named Intersection'
+        case 'U':
+            return 'Uncharted Airway Intersection'
+        case 'V':
+            return 'VFR Waypoint'
+        case 'W':
+            return 'RNAV Waypoint'
+    
+    match val[1]:
+        case 'A':
+            return 'Final Approach Fix'
+        case 'B':
+            return 'Initial and Final Approach Fix'
+        case 'C':
+            return 'Final Approach Course Fix'
+        case 'D':
+            return 'Intermediate Approach Fix'
+        case 'E':
+            return 'Off-Route intersection in the\
+FAA National Reference System'
+        case 'F':
+            return 'Off-Route Intersection'
+        case 'I':
+            return 'Initial Approach Fix'
+        case 'K':
+            return 'Final Approach Course Fix at\
+Initial Approach Fix'
+        case 'L':
+            return 'Final Approach Course Fix at\
+Intermediate Approach Fix'
+        case 'M':
+            return 'Missed Approach Fix'
+        case 'N':
+            return 'Initial Approach Fix and Missed\
+Approach Fix'
+        case 'O':
+            return 'Oceanic Entry/Exit Waypoint'
+        case 'P':
+            return 'Pitch and Catch Point in the FAA\
+High Altitude Redesign'
+        case 'S':
+            return 'AACAA and SUA Waypoints in\
+the FAA High Altitude Redesign'
+        case 'U':
+            return 'FIR/UIR or Controlled Airspace\
+Intersection'
+        case 'V':
+            return 'Latitude/Longitude Intersection,\
+Full Degree of Latitude'
+        case 'W':
+            return 'Latitude/Longitude Intersection,\
+Half Degree of Latitude'
+        case _:
+            return "Unknown Waypoint Type"
+
+
 def section(val):
     return sections[val]
 

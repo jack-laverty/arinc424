@@ -4,5 +4,4 @@
 ENROUTE WAYPOINT (EA)
 (With Flight Planning Continuations)
 
-TOD0: figure out the columns here and add the rest
-SUSAEAENRT   26FLW K21    I D   N36442340W121282270                       E0156    NAS          B   FLW306/D126            017468306
+SUSAEAENRT   26FLW K21    I D   N36442340W121282270                       E0156     NAS          B   FLW306/D126           017468306
