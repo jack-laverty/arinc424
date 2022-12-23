@@ -20,7 +20,7 @@ class Waypoint():
         fields.append(["Waypoint Longitude",     r[41:51],   decode.gps])
         fields.append(["Dynamic Mag. Variation", r[74:79],   decode.text])
         fields.append(["Datum Code",             r[84:87],   decode.text])
-        fields.append(["Name Format Indicator",  r[95:98],   decode.text])
+        fields.append(["Name Format Indicator",  r[95:98],   decode.nfi])
         fields.append(["Waypoint Name / Desc",   r[98:123],  decode.text])
         fields.append(["File Record No",         r[123:128], decode.text])
         fields.append(["Cycle Date",             r[128:132], decode.cycle])

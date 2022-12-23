@@ -12,6 +12,7 @@ class TestWaypoint(unittest.TestCase):
                     self.assertEqual(r.read(line), None)
                 else:
                     self.assertEqual(r.read(line), 0)
+                    print()
                     self.assertEqual(r.decode(), 0)
 
 

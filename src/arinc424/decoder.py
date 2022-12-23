@@ -153,7 +153,7 @@ def waypoint(val):
             return 'VFR Waypoint'
         case 'W':
             return 'RNAV Waypoint'
-    
+
     match val[1]:
         case 'A':
             return 'Final Approach Fix'
@@ -200,6 +200,51 @@ Full Degree of Latitude'
 Half Degree of Latitude'
         case _:
             return "Unknown Waypoint Type"
+
+
+def nfi(val):
+
+    match val[0]:
+        case 'A':
+            return 'Abeam Fix'
+        case 'B':
+            return 'Bearing and Distance Fix '
+        case 'D':
+            return 'Airport Name as Fix'
+        case 'F':
+            return 'FIR Fix'
+        case 'H':
+            return 'Phonetic Letter Name Fix'
+        case 'I':
+            return 'Airport Ident as Fix'
+        case 'L':
+            return 'Latitude/Longitude Fix '
+        case 'M':
+            return 'Multiple Word Name Fix'
+        case 'N':
+            return 'Navaid Ident as Fix'
+        case 'P':
+            return 'Published Five - Letter - Name - Fix'
+        case 'Q':
+            return 'Published Name Fix, less than five\
+letters'
+        case 'R':
+            return 'Published Name Fix, more than five\
+letters'
+        case 'T':
+            return 'Airport/Rwy Related Fix (Note 2)'
+        case 'U':
+            return 'UIR Fix'
+
+    match val[1]:
+        case 'O':
+            return 'Localizer Marker with officially\
+published five - letter identifier'
+        case 'M':
+            return 'Localizer Marker without officially\
+published five - letter identifier'
+        case _:
+            return 'Unknown Name Format Indicator'
 
 
 def section(val):
