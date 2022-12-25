@@ -6,5 +6,7 @@ ENROUTE WAYPOINT (EA)
 
 SUSAEAENRT   26FLW K21    I D   N36442340W121282270                       E0156     NAS        B     FLW306/D126           021528110
 SUSAEAENRT   26FLW K22PKZOAKZOA                                                                                            021538701
-SUSAEAENRT   ALFOR K11    R F L N44183310W123090510                       E0187     NAS        B     ALFOR                 021648207
+SUSAEAENRT   ALFOR K11    R F L N44183310W123090510                       E0187     NAS        P     ALFOR                 021648207
 SUSAEAENRT   ALFOR K12PKZSEKZSE                                                                                            021658613
+SUSAEAENRT   ALTAM K21    R Z L N37484410W121444580                       E0160     NAS        P     ALTAM                 021668613
+SUSAEAENRT   ALTAM K22PKZOAKZOA                                                                                            021678701
