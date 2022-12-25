@@ -176,10 +176,12 @@ class VHFNavaid():
             return self.read_primary(line)
         else:
             match line[22]:
+                case 'A':
+                    return self.read_cont(line)
                 case 'P':
                     return self.read_flight_plan0(line)
                 case 'S':
                     return self.read_sim(line)
                 case _:
-                    # print("ERROR: invalid application type", line[22])
+                    print("ERROR: invalid application type", line[22])
                     return []
