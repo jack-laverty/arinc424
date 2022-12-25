@@ -1,5 +1,6 @@
 from .records import vhf_navaid
 from .records import ndb_navaid
+from .records import enroute
 import json
 
 
@@ -27,6 +28,12 @@ class Record():
                     rec = vhf_navaid.VHFNavaid()
                 elif self.code == 'DB':
                     rec = ndb_navaid.NDBNavaid()
+            case 'E':
+                self.code += line[5]
+                if self.code == 'EA':
+                    rec = enroute.Waypoint()
+                else:
+                    print("dunno section:", self.code)
             case _:
                 print("unsupported section code", self.code[0])
                 return None

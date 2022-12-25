@@ -12,8 +12,6 @@ class TestNDBNavaid(unittest.TestCase):
                     self.assertEqual(r.read(line), None)
                 else:
                     self.assertEqual(r.read(line), 0)
-                    self.assertEqual(r.decode(), 0)
-                    print()
 
     def test_primary(self):
         line = 'SUSADB       ARU   K2102150H MW N41281600W120332500           \
