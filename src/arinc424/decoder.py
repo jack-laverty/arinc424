@@ -301,3 +301,21 @@ Continuation with SBAS use authorization\
 information'
         case _:
             return 'Unknown Application Type: ' + str(val)
+
+def mk_shape(val):
+    match val:
+        case 'E':
+            return 'Elliptical'
+        case 'B':
+            return 'Bone'
+        case _:
+            return val
+
+def mk_power(val):
+    match val:
+        case 'H':
+            return 'High Power (general use)'
+        case 'L':
+            return 'Low Power (low altitude use)'
+        case _:
+            return val

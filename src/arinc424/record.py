@@ -1,6 +1,7 @@
-from .records import vhf_navaid
-from .records import ndb_navaid
-from .records import enroute
+from .records import navaid_vhf
+from .records import navaid_ndb
+from .records import enroute_marker
+from .records import enroute_waypoint
 import json
 
 
@@ -25,13 +26,15 @@ class Record():
             case 'D':
                 self.code += line[5]
                 if self.code == 'D ':
-                    rec = vhf_navaid.VHFNavaid()
+                    rec = navaid_vhf.VHFNavaid()
                 elif self.code == 'DB':
-                    rec = ndb_navaid.NDBNavaid()
+                    rec = navaid_ndb.NDBNavaid()
             case 'E':
                 self.code += line[5]
                 if self.code == 'EA':
-                    rec = enroute.Waypoint()
+                    rec = enroute_waypoint.Waypoint()
+                elif self.code == 'EM':
+                    rec = enroute_marker.Marker()
                 else:
                     print("dunno section:", self.code)
             case _:
