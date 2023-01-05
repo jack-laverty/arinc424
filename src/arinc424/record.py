@@ -2,6 +2,7 @@ from .records import navaid_vhf
 from .records import navaid_ndb
 from .records import enroute_marker
 from .records import enroute_waypoint
+from .records import enroute_holding
 import json
 
 
@@ -35,6 +36,8 @@ class Record():
                     rec = enroute_waypoint.Waypoint()
                 elif self.code == 'EM':
                     rec = enroute_marker.Marker()
+                elif self.code == 'EP':
+                    rec = enroute_holding.Holding()
                 else:
                     print("dunno section:", self.code)
             case _:

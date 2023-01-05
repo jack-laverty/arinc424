@@ -302,6 +302,7 @@ information'
         case _:
             return 'Unknown Application Type: ' + str(val)
 
+
 def mk_shape(val):
     match val:
         case 'E':
@@ -310,6 +311,7 @@ def mk_shape(val):
             return 'Bone'
         case _:
             return val
+
 
 def mk_power(val):
     match val:
