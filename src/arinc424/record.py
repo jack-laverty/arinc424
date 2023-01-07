@@ -3,6 +3,7 @@ from .records import navaid_ndb
 from .records import enroute_marker
 from .records import enroute_waypoint
 from .records import enroute_holding
+from .records import enroute_airway
 import json
 
 
@@ -38,6 +39,8 @@ class Record():
                     rec = enroute_marker.Marker()
                 elif self.code == 'EP':
                     rec = enroute_holding.Holding()
+                elif self.code == 'ER':
+                    rec = enroute_airway.Airway()
                 else:
                     print("dunno section:", self.code)
             case _:

@@ -93,7 +93,6 @@ class Waypoint():
         fields.append(["Cycle Date",             r[128:132], decode.cycle])
         return fields
 
-
     def read(self, line):
         if int(line[21]) < 2:
             # continuation record # 0 = primary record with no continuation
@@ -108,4 +107,4 @@ class Waypoint():
                 case 'S':
                     return self.read_sim(line)
                 case _:
-                    return self.read_flight_plan1(line) # filthy
+                    return self.read_flight_plan1(line)  # filthy
