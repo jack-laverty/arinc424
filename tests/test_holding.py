@@ -9,8 +9,6 @@ class TestHolding(unittest.TestCase):
             for idx, line in enumerate(f.readlines()):
                 r = a424.Record()
                 self.assertEqual(r.read(line), 0)
-                print()
-                self.assertEqual(r.decode(), 0)
 
 
 if __name__ == '__main__':

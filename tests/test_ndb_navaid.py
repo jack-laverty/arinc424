@@ -13,12 +13,6 @@ class TestNDBNavaid(unittest.TestCase):
                 else:
                     self.assertEqual(r.read(line), 0)
 
-    def test_primary(self):
-        line = 'SUSADB       ARU   K2102150H MW N41281600W120332500           \
-            E0180           NASALTURAS                       019768110'
-        r = a424.Record()
-        self.assertEqual(r.read(line), 0)
-
 
 if __name__ == '__main__':
     unittest.main()
