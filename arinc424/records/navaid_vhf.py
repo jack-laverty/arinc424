@@ -183,5 +183,5 @@ class VHFNavaid():
                 case 'S':
                     return self.read_sim(line)
                 case _:
-                    print("ERROR: invalid application type", line[22])
-                    return []
+                    #TODO raise ValueError('Unknown Application Type')
+                    return

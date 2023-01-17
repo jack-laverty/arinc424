@@ -4,6 +4,9 @@ from .records import enroute_marker
 from .records import enroute_waypoint
 from .records import enroute_holding
 from .records import enroute_airway
+from .records import runway
+from .records import heliport
+from .records import heliport_comms
 import json
 
 
@@ -20,7 +23,7 @@ class Record():
 
     def read(self, line):
         if line.startswith('S' or 'T') is False:
-            return None
+            return False
 
         rec = None
         self.code += line[4]
@@ -42,12 +45,32 @@ class Record():
                 elif self.code == 'ER':
                     rec = enroute_airway.Airway()
                 else:
-                    print("dunno section:", self.code)
+                    # print("unsupported section code",
+                    #       "'{}'".format(self.code))
+                    return False
+            case 'P':
+                self.code += line[12]
+                if self.code == 'PG':
+                    rec = runway.Runway()
+                else:
+                    # print("unsupported section code",
+                    #       "'{}'".format(self.code))
+                    return False
+            case 'H':
+                self.code += line[12]
+                if self.code == 'HA':
+                    rec = heliport.Heliport()
+                elif self.code == 'HV':
+                    rec = heliport_comms.HeliportComms()
+                else:
+                    print("unsupported section code", "'{}'".format(self.code))
+                    return False
             case _:
-                print("unsupported section code", self.code[0])
-                return None
+                # print("unsupported section code", "'{}'".format(self.code))
+                return False
+
         self.fields = rec.read(line)
-        return 0
+        return True
 
     def dump(self):
         for i in self.fields:
