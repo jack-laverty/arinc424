@@ -27,19 +27,19 @@ class TestRead(unittest.TestCase):
             for idx, line in enumerate(f.readlines()):
                 r = a424.Record()
                 r.read(line)
-    
+
     def test_navaid_vhf(self):
         with open('./tests/example_data/navaid_vhf.txt') as f:
             for idx, line in enumerate(f.readlines()):
                 r = a424.Record()
                 r.read(line)
-    
+
     def test_runway(self):
         with open('./tests/example_data/runway.txt') as f:
             for idx, line in enumerate(f.readlines()):
                 r = a424.Record()
                 r.read(line)
-    
+
     def test_waypoint(self):
         with open('./tests/example_data/enroute_waypoint.txt') as f:
             for idx, line in enumerate(f.readlines()):
@@ -50,12 +50,16 @@ class TestRead(unittest.TestCase):
         with open('./tests/example_data/heliport.txt') as f:
             for idx, line in enumerate(f.readlines()):
                 r = a424.Record()
-                if r.read(line):
-                    print()
-                    r.decode()
+                r.read(line)
 
     def test_heliport_comms(self):
         with open('./tests/example_data/heliport_communications.txt') as f:
+            for idx, line in enumerate(f.readlines()):
+                r = a424.Record()
+                r.read(line)
+
+    def test_airport(self):
+        with open('./tests/example_data/airport.txt') as f:
             for idx, line in enumerate(f.readlines()):
                 r = a424.Record()
                 if r.read(line):

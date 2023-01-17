@@ -7,6 +7,7 @@ from .records import enroute_airway
 from .records import runway
 from .records import heliport
 from .records import heliport_comms
+from .records import airport
 import json
 
 
@@ -52,6 +53,8 @@ class Record():
                 self.code += line[12]
                 if self.code == 'PG':
                     rec = runway.Runway()
+                elif self.code == 'PA':
+                    rec = airport.Airport()
                 else:
                     # print("unsupported section code",
                     #       "'{}'".format(self.code))

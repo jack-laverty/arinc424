@@ -76,7 +76,7 @@ class Heliport():
         fields.append(["File Record No",          r[123:128], decode.text])
         fields.append(["Cycle Date",              r[128:132], decode.cycle])
         return fields
-    
+
     def read_flight1(self, r):
         fields = []
         fields.append(["Record Type",             r[0],       decode.record])
