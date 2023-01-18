@@ -1,21 +1,34 @@
-from .records import navaid_vhf
-from .records import navaid_ndb
-from .records import enroute_marker
-from .records import enroute_waypoint
-from .records import enroute_holding
-from .records import enroute_airway
-from .records import runway
-from .records import heliport
-from .records import heliport_comms
-from .records import airport
 import json
+from collections import defaultdict
+from .records import VHFNavaid,\
+                     NDBNavaid,\
+                     Waypoint,\
+                     Marker,\
+                     Holding,\
+                     Airway,\
+                     Runway,\
+                     Airport,\
+                     Heliport,\
+                     HeliportComms
 
 
 class Record():
 
-    field_idx = 0
-    value_idx = 1
-    decode_fn_idx = 2
+    def def_val():
+        # print() TODO: Error Handling
+        return None
+
+    code_dict = defaultdict(def_val)
+    code_dict['D '] = VHFNavaid()
+    code_dict['DB'] = NDBNavaid()
+    code_dict['EA'] = Waypoint()
+    code_dict['EM'] = Marker()
+    code_dict['EP'] = Holding()
+    code_dict['ER'] = Airway()
+    code_dict['PG'] = Runway()
+    code_dict['PA'] = Airport()
+    code_dict['HA'] = Heliport()
+    code_dict['HV'] = HeliportComms()
 
     def __init__(self):
         self.code = ''
@@ -25,69 +38,31 @@ class Record():
     def read(self, line):
         if line.startswith('S' or 'T') is False:
             return False
-
-        rec = None
-        self.code += line[4]
-        match self.code[0]:
-            case 'D':
-                self.code += line[5]
-                if self.code == 'D ':
-                    rec = navaid_vhf.VHFNavaid()
-                elif self.code == 'DB':
-                    rec = navaid_ndb.NDBNavaid()
-            case 'E':
-                self.code += line[5]
-                if self.code == 'EA':
-                    rec = enroute_waypoint.Waypoint()
-                elif self.code == 'EM':
-                    rec = enroute_marker.Marker()
-                elif self.code == 'EP':
-                    rec = enroute_holding.Holding()
-                elif self.code == 'ER':
-                    rec = enroute_airway.Airway()
-                else:
-                    # print("unsupported section code",
-                    #       "'{}'".format(self.code))
-                    return False
-            case 'P':
-                self.code += line[12]
-                if self.code == 'PG':
-                    rec = runway.Runway()
-                elif self.code == 'PA':
-                    rec = airport.Airport()
-                else:
-                    # print("unsupported section code",
-                    #       "'{}'".format(self.code))
-                    return False
-            case 'H':
-                self.code += line[12]
-                if self.code == 'HA':
-                    rec = heliport.Heliport()
-                elif self.code == 'HV':
-                    rec = heliport_comms.HeliportComms()
-                else:
-                    print("unsupported section code", "'{}'".format(self.code))
-                    return False
+        self.raw_string = line
+        match line[4]:
+            case 'D' | 'E':
+                self.code = line[4:6]
+            case 'P' | 'H':
+                self.code = line[4] + line[12]
             case _:
-                # print("unsupported section code", "'{}'".format(self.code))
                 return False
-
-        self.fields = rec.read(line)
+        x = self.code_dict[self.code]
+        if x is None:
+            return False
+        self.fields = x.read(line)
         return True
 
     def dump(self):
         for i in self.fields:
-            print("{:<26}: {}".format(i[self.field_idx], i[self.value_idx]))
+            print("{:<26}: {}".format(i[0], i[1]))
 
     def decode(self):
         for i in self.fields:
             try:
-                print("{:<26}: {}".format(i[self.field_idx],
-                                          i[self.decode_fn_idx]
-                                          (i[self.value_idx])))
+                print("{:<26}: {}".format(i[0], i[1](i[2])))
             except IndexError:
-                return 1
-        return 0
+                return False
+        return True
 
     def json(self, single_line=True):
         if single_line:

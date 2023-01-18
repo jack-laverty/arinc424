@@ -62,9 +62,7 @@ class TestRead(unittest.TestCase):
         with open('./tests/example_data/airport.txt') as f:
             for idx, line in enumerate(f.readlines()):
                 r = a424.Record()
-                if r.read(line):
-                    print()
-                    r.decode()
+                r.read(line)
 
 
 if __name__ == '__main__':
