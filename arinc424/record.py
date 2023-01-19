@@ -9,7 +9,8 @@ from .records import VHFNavaid,\
                      Runway,\
                      Airport,\
                      Heliport,\
-                     HeliportComms
+                     HeliportComms,\
+                     CruisingTables
 
 
 class Record():
@@ -29,6 +30,7 @@ class Record():
     code_dict['PA'] = Airport()
     code_dict['HA'] = Heliport()
     code_dict['HV'] = HeliportComms()
+    code_dict['TC'] = CruisingTables()
 
     def __init__(self):
         self.code = ''

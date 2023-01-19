@@ -8,3 +8,4 @@ from .runway import Runway  # noqa: F401
 from .heliport import Heliport  # noqa: F401
 from .heliport_comms import HeliportComms  # noqa: F401
 from .airport import Airport  # noqa: F401
+from .cruising_tables import CruisingTables  # noqa: F401

@@ -64,6 +64,12 @@ class TestRead(unittest.TestCase):
                 r = a424.Record()
                 r.read(line)
 
+    def test_cruising_tables(self):
+        with open('./tests/example_data/cruising_tables.txt') as f:
+            for idx, line in enumerate(f.readlines()):
+                r = a424.Record()
+                r.read(line)
+
 
 if __name__ == '__main__':
     unittest.main()
