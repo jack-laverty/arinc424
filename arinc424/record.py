@@ -6,6 +6,7 @@ from .records import VHFNavaid,\
                      Marker,\
                      Holding,\
                      Airway,\
+                     AirwayRestricted,\
                      Runway,\
                      Airport,\
                      Heliport,\
@@ -26,6 +27,7 @@ class Record():
     code_dict['EM'] = Marker()
     code_dict['EP'] = Holding()
     code_dict['ER'] = Airway()
+    code_dict['EU'] = AirwayRestricted()
     code_dict['PG'] = Runway()
     code_dict['PA'] = Airport()
     code_dict['HA'] = Heliport()

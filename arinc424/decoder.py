@@ -1,50 +1,5 @@
 from collections import defaultdict
 
-sections = defaultdict(None)
-sections['AA'] = 'Grid MORA'
-sections['D '] = 'VHF Navaid'
-sections['DB'] = 'NDB Navaid'
-sections['EA'] = 'Waypoint'
-sections['EM'] = 'Airways Marker'
-sections['EP'] = 'Holding Patterns'
-sections['ER'] = 'Airways and Routes'
-sections['ET'] = 'Preferred Routes'
-sections['EU'] = 'Airway Restrictions'
-sections['EV'] = 'Communications'
-sections['HA'] = 'Heliport Pads'
-sections['HC'] = 'Heliport Terminal Waypoint'
-sections['HD'] = 'Heliport SIDs'
-sections['HE'] = 'Heliport STARs'
-sections['HF'] = 'Heliport Approach Procedure'
-sections['HK'] = 'Heliport TAA'
-sections['HS'] = 'Heliport MSA'
-sections['HV'] = 'Heliport Communication'
-sections['PA'] = 'Airport Reference Point'
-sections['PB'] = 'Airport Gates'
-sections['PC'] = 'Airport Terminal Waypoint'
-sections['PD'] = 'Airport SID'
-sections['PE'] = 'Airport STAR'
-sections['PF'] = 'Airport Approach Procedure'
-sections['PG'] = 'Airport Runway'
-sections['PI'] = 'Airport Localizer/Glideslope'
-sections['PK'] = 'Airport TAA'
-sections['PL'] = 'Airport MLS'
-sections['PM'] = 'Airport Localizer Marker'
-sections['PN'] = 'Airport Terminal'
-sections['PP'] = 'Airport Path'
-sections['PR'] = 'Airport Flt Planning ARR/DEP'
-sections['PS'] = 'Airport MSA'
-sections['PT'] = 'Airport GLS Station'
-sections['PV'] = 'Airport Communication'
-sections['R '] = 'Company Route'
-sections['RA'] = 'Alternate Record'
-sections['TC'] = 'Crusing Table'
-sections['TG'] = 'Geographical Reference'
-sections['TN'] = 'RNAV Name Table'
-sections['UC'] = 'Controller Airspace'
-sections['UF'] = 'Airspace FIR/UIR'
-sections['UR'] = 'Restrictive Airspace'
-
 
 def freq(val):
     if (val.isnumeric()):
@@ -77,10 +32,6 @@ def gps(val):
         )
 
 
-# frequency protection
-# ILS/DME bias
-# station declination
-# continuation
 def text(val):
     return val.strip() if val.strip() != '' else '<Blank>'
 
@@ -241,6 +192,50 @@ published five - letter identifier'
 
 
 def section(val):
+    sections = defaultdict(None)
+    sections['AA'] = 'Grid MORA'
+    sections['D '] = 'VHF Navaid'
+    sections['DB'] = 'NDB Navaid'
+    sections['EA'] = 'Waypoint'
+    sections['EM'] = 'Airways Marker'
+    sections['EP'] = 'Holding Patterns'
+    sections['ER'] = 'Airways and Routes'
+    sections['ET'] = 'Preferred Routes'
+    sections['EU'] = 'Airway Restrictions'
+    sections['EV'] = 'Communications'
+    sections['HA'] = 'Heliport Pads'
+    sections['HC'] = 'Heliport Terminal Waypoint'
+    sections['HD'] = 'Heliport SIDs'
+    sections['HE'] = 'Heliport STARs'
+    sections['HF'] = 'Heliport Approach Procedure'
+    sections['HK'] = 'Heliport TAA'
+    sections['HS'] = 'Heliport MSA'
+    sections['HV'] = 'Heliport Communication'
+    sections['PA'] = 'Airport Reference Point'
+    sections['PB'] = 'Airport Gates'
+    sections['PC'] = 'Airport Terminal Waypoint'
+    sections['PD'] = 'Airport SID'
+    sections['PE'] = 'Airport STAR'
+    sections['PF'] = 'Airport Approach Procedure'
+    sections['PG'] = 'Airport Runway'
+    sections['PI'] = 'Airport Localizer/Glideslope'
+    sections['PK'] = 'Airport TAA'
+    sections['PL'] = 'Airport MLS'
+    sections['PM'] = 'Airport Localizer Marker'
+    sections['PN'] = 'Airport Terminal'
+    sections['PP'] = 'Airport Path'
+    sections['PR'] = 'Airport Flt Planning ARR/DEP'
+    sections['PS'] = 'Airport MSA'
+    sections['PT'] = 'Airport GLS Station'
+    sections['PV'] = 'Airport Communication'
+    sections['R '] = 'Company Route'
+    sections['RA'] = 'Alternate Record'
+    sections['TC'] = 'Crusing Table'
+    sections['TG'] = 'Geographical Reference'
+    sections['TN'] = 'RNAV Name Table'
+    sections['UC'] = 'Controller Airspace'
+    sections['UF'] = 'Airspace FIR/UIR'
+    sections['UR'] = 'Restrictive Airspace'
     return sections[val]
 
 
@@ -321,3 +316,44 @@ def mk_power(val):
             return 'Low Power (low altitude use)'
         case _:
             return val
+
+
+decode_fn = {
+    "Record Type":                      record,
+    "Customer / Area Code":             text,
+    "Section Code":                     section,
+    "Airport ICAO Identifier":          text,
+    "ICAO Code":                        text,
+    "ATA/IATA Designator":              text,
+    "PAD Identifier":                   text,
+    "Continuation Records No":          cont,
+    "Speed Limit Altitude":             text,
+    "Longest Runway":                   text,
+    "IFR Capability":                   text,
+    "Longest Runway Surface Code":      text,
+    "Airport Reference Pt. Latitude":   gps,
+    "Airport Reference Pt. Longitude":  gps,
+    "Magnetic Variation":               text,
+    "Airport Elevation":                text,
+    "Speed Limit":                      text,
+    "Recommended Navaid":               text,
+    "ICAO Code":                        text,
+    "Transition Altitude":              text,
+    "Transition Level":                 text,
+    "Public Military Indicator":        text,
+    "Time Zone":                        text,
+    "Daylight Indicator":               text,
+    "Magnetic/True Indicator":          text,
+    "Datum Code":                       text,
+    "Airport Name":                     text,
+    "File Record No":                   text,
+    "Cycle Date":                       cycle,
+    "Cruising Table Identifier":        text,
+    "Sequence Number":                  text,
+    "Course From":                      text,
+    "Course To":                        text,
+    "Mag/True":                         text,
+    "Cruise Level From":                cont,
+    "Vertical Separation":              cont,
+    "Cruise Level To":                  text,
+}
