@@ -1,4 +1,5 @@
 import json
+from .decoder import decode_fn
 from collections import defaultdict
 from .records import VHFNavaid,\
                      NDBNavaid,\
@@ -62,11 +63,7 @@ class Record():
 
     def decode(self):
         for i in self.fields:
-            try:
-                print("{:<26}: {}".format(i[0], i[1](i[2])))
-            except IndexError:
-                return False
-        return True
+            print("{:<32}: {}".format(i[0], decode_fn[i[0]](i[1])))
 
     def json(self, single_line=True):
         if single_line:

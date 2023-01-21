@@ -1,67 +1,65 @@
-import arinc424.decoder as decode
-
 
 class Runway():
 
     def read_primary(self, r):
         return [
-            ("Record Type",                     r[0],       decode.record),
-            ("Customer / Area Code",            r[1:4],     decode.text),
-            ("Section Code",                    r[4]+r[12], decode.section),
-            ("Airport ICAO Identifier",         r[6:10],    decode.text),
-            ("ICAO Code",                       r[10:12],   decode.text),
-            ("Runway Identifier",               r[13:18],   decode.text),
-            ("Continuation Records No",         r[21],      decode.cont),
-            ("Runway Length",                   r[22:27],   decode.text),
-            ("Runway Magnetic Bearing",         r[27:31],   decode.text),
-            ("Runway Latitude",                 r[32:41],   decode.gps),
-            ("Runway Longitude",                r[41:51],   decode.gps),
-            ("Runway Gradient",                 r[51:56],   decode.text),
-            ("Landing Threshold Elevation",     r[66:71],   decode.text),
-            ("Displaced Threshold Dist",        r[71:75],   decode.text),
-            ("Threshold Crossing Height",       r[75:77],   decode.text),
-            ("Runway Width",                    r[77:80],   decode.text),
-            ("TCH Value Indicator",             r[80],      decode.text),
-            ("Localizer/MLS/GLS Ref Path Ident", r[81:85],  decode.text),
-            ("Localizer/MLS/GLS Category/Class", r[85],     decode.text),
-            ("Stopway",                         r[86:90],   decode.text),
-            ("Localizer/MLS/GLS Ref Path Ident (2)", r[90:94], decode.text),
-            ("Localizer/MLS/GLS Category/Class (2)", r[94], decode.text),
-            ("Runway Description",              r[101:123], decode.text),
-            ("File Record No",                  r[123:128], decode.text),
-            ("Cycle Date",                      r[128:132], decode.cycle)
+            ("Record Type",                         r[0]),
+            ("Customer / Area Code",                r[1:4]),
+            ("Section Code",                        r[4]+r[12]),
+            ("Airport ICAO Identifier",             r[6:10]),
+            ("ICAO Code",                           r[10:12]),
+            ("Runway Identifier",                   r[13:18]),
+            ("Continuation Record No",              r[21]),
+            ("Runway Length",                       r[22:27]),
+            ("Runway Magnetic Bearing",             r[27:31]),
+            ("Runway Latitude",                     r[32:41]),
+            ("Runway Longitude",                    r[41:51]),
+            ("Runway Gradient",                     r[51:56]),
+            ("Landing Threshold Elevation",         r[66:71]),
+            ("Displaced Threshold Dist",            r[71:75]),
+            ("Threshold Crossing Height",           r[75:77]),
+            ("Runway Width",                        r[77:80]),
+            ("TCH Value Indicator",                 r[80]),
+            ("Localizer/MLS/GLS Ref Path Ident",    r[81:85]),
+            ("Localizer/MLS/GLS Category/Class",    r[85]),
+            ("Stopway",                             r[86:90]),
+            ("Localizer/MLS/GLS Ref Path Ident (2)", r[90:94]),
+            ("Localizer/MLS/GLS Category/Class (2)", r[94]),
+            ("Runway Description",                  r[101:123]),
+            ("File Record No",                      r[123:128]),
+            ("Cycle Date",                          r[128:132])
         ]
 
     def read_cont(self, r):
         return [
-            ("Record Type",                     r[0],       decode.record),
-            ("Customer / Area Code",            r[1:4],     decode.text),
-            ("Section Code",                    r[4]+r[12], decode.section),
-            ("Airport ICAO Identifier",         r[6:10],    decode.text),
-            ("ICAO Code",                       r[10:12],   decode.text),
-            ("Runway Identifier",               r[13:18],   decode.text),
-            ("Continuation Records No",         r[21],      decode.cont),
-            ("Notes",                           r[23:92],   decode.text),
-            ("File Record No",                  r[123:128], decode.text),
-            ("Cycle Date",                      r[128:132], decode.cycle)
+            ("Record Type",                         r[0]),
+            ("Customer / Area Code",                r[1:4]),
+            ("Section Code",                        r[4]+r[12]),
+            ("Airport ICAO Identifier",             r[6:10]),
+            ("ICAO Code",                           r[10:12]),
+            ("Runway Identifier",                   r[13:18]),
+            ("Continuation Record No",              r[21]),
+            ("Notes",                               r[23:92]),
+            ("File Record No",                      r[123:128]),
+            ("Cycle Date",                          r[128:132])
         ]
 
     def read_sim(self, r):
         return [
-            ("Record Type",                     r[0],       decode.record),
-            ("Customer / Area Code",            r[1:4],     decode.text),
-            ("Section Code",                    r[4]+r[12], decode.section),
-            ("Airport ICAO Identifier",         r[6:10],    decode.text),
-            ("ICAO Code",                       r[10:12],   decode.text),
-            ("Runway Identifier",               r[13:18],   decode.text),
-            ("Continuation Records No",         r[21],      decode.cont),
-            ("Application Type",                r[22],      decode.app),
-            ("Runway True Bearing",             r[51:56],   decode.text),
-            ("True Bearing Source",             r[56],      decode.text),
-            ("TDZE Location",                   r[65],      decode.text),
-            ("Touchdown Zone Elevation",        r[66:71],   decode.text),
-            ("File Record No",                  r[123:128], decode.text),
-            ("Cycle Date",                      r[128:132], decode.cycle),
+            ("Record Type",                         r[0]),
+            ("Customer / Area Code",                r[1:4]),
+            ("Section Code",                        r[4]+r[12]),
+            ("Airport ICAO Identifier",             r[6:10]),
+            ("ICAO Code",                           r[10:12]),
+            ("Runway Identifier",                   r[13:18]),
+            ("Continuation Record No",              r[21]),
+            ("Application Type",                    r[22]),
+            ("Runway True Bearing",                 r[51:56]),
+            ("True Bearing Source",                 r[56]),
+            ("TDZE Location",                       r[65]),
+            ("Touchdown Zone Elevation",            r[66:71]),
+            ("File Record No",                      r[123:128]),
+            ("Cycle Date",                          r[128:132]),
         ]
 
     def read(self, line):

@@ -318,42 +318,195 @@ def mk_power(val):
             return val
 
 
-decode_fn = {
-    "Record Type":                      record,
-    "Customer / Area Code":             text,
-    "Section Code":                     section,
-    "Airport ICAO Identifier":          text,
-    "ICAO Code":                        text,
-    "ATA/IATA Designator":              text,
-    "PAD Identifier":                   text,
-    "Continuation Records No":          cont,
-    "Speed Limit Altitude":             text,
-    "Longest Runway":                   text,
-    "IFR Capability":                   text,
-    "Longest Runway Surface Code":      text,
-    "Airport Reference Pt. Latitude":   gps,
-    "Airport Reference Pt. Longitude":  gps,
-    "Magnetic Variation":               text,
-    "Airport Elevation":                text,
-    "Speed Limit":                      text,
-    "Recommended Navaid":               text,
-    "ICAO Code":                        text,
-    "Transition Altitude":              text,
-    "Transition Level":                 text,
-    "Public Military Indicator":        text,
-    "Time Zone":                        text,
-    "Daylight Indicator":               text,
-    "Magnetic/True Indicator":          text,
-    "Datum Code":                       text,
-    "Airport Name":                     text,
-    "File Record No":                   text,
-    "Cycle Date":                       cycle,
-    "Cruising Table Identifier":        text,
-    "Sequence Number":                  text,
-    "Course From":                      text,
-    "Course To":                        text,
-    "Mag/True":                         text,
-    "Cruise Level From":                cont,
-    "Vertical Separation":              cont,
-    "Cruise Level To":                  text,
-}
+decode_fn = defaultdict(def_val)
+decode_fn["Airport Elevation"] = text
+decode_fn["Airport ICAO Identifier"] = text
+decode_fn["Airport Name"] = text
+decode_fn["Airport Reference Pt. Latitude"] = gps
+decode_fn["Airport Reference Pt. Longitude"] = gps
+decode_fn["Altitude Description"] = text
+decode_fn["Altitude Limiation"] = text
+decode_fn["Application Type"] = app
+decode_fn["Arc Radius"] = text
+decode_fn["ATA/IATA Designator"] = text
+decode_fn["Blank (Spacing)"] = text
+decode_fn["Boundary Code"] = text
+decode_fn["Call Sign"] = text
+decode_fn["Class Collocation"] = colloc
+decode_fn["Class Facility"] = facility
+decode_fn["Class Info"] = info
+decode_fn["Class Power"] = power
+decode_fn["Class"] = text
+decode_fn["Communication Altitude"] = text
+decode_fn["Communications Distance"] = text
+decode_fn["Communications Freq"] = text
+decode_fn["Communications Type"] = text
+decode_fn["Component Affected Indicator"] = text
+decode_fn["Continuation Record No"] = cont
+decode_fn["Controlled A/S Airport ICAO"] = text
+decode_fn["Controlled A/S Airport Indent"] = text
+decode_fn["Controlled A/S Airport Indentifier"] = text
+decode_fn["Controlled A/S Indicator"] = text
+decode_fn["Course From"] = text
+decode_fn["Course To"] = text
+decode_fn["Cruise Level From"] = cont
+decode_fn["Cruise Level To"] = text
+decode_fn["Cruise Table Indicator"] = text
+decode_fn["Cruising Table Identifier"] = text
+decode_fn["Customer / Area Code"] = text
+decode_fn["Cycle Date"] = cycle
+decode_fn["Datum Code"] = text
+decode_fn["Daylight Indicator"] = text
+decode_fn["Direction Restriction"] = text
+decode_fn["Displaced Threshold Dist"] = text
+decode_fn["Distance Description"] = text
+decode_fn["Distance Limiation"] = text
+decode_fn["DME Elevation"] = dme_el
+decode_fn["DME Ident"] = text
+decode_fn["DME Latitude"] = gps
+decode_fn["DME Longitude"] = gps
+decode_fn["Duplicate Identifier"] = text
+decode_fn["Dynamic Mag. Variation"] = text
+decode_fn["EU Indicator"] = text
+decode_fn["Facility Characteristics"] = text
+decode_fn["Facility Elevation"] = text
+decode_fn["Figure of Merit"] = text
+decode_fn["File Record No"] = text
+decode_fn["FIR Identifier"] = text
+decode_fn["Fix Identifier"] = text
+decode_fn["Fix Radius Transition Indicator"] = text
+decode_fn["Frequency Protection"] = freq
+decode_fn["Frequency Units"] = text
+decode_fn["Frequency"] = freq
+decode_fn["Guard/Transmit"] = text
+decode_fn["H24 Indicator"] = text
+decode_fn["Heliport Elevation"] = text
+decode_fn["Heliport Identifier"] = text
+decode_fn["Heliport Name"] = text
+decode_fn["Holding Speed"] = text
+decode_fn["ICAO Code (2)"] = text
+decode_fn["ICAO Code"] = nfi
+decode_fn["IFR Capability"] = text
+decode_fn["IFR Indicator"] = text
+decode_fn["ILS/DME Bias"] = text
+decode_fn["Inbound Holding Course"] = text
+decode_fn["Inbound Magnetic Course"] = text
+decode_fn["Landing Threshold Elevation"] = text
+decode_fn["Latitude"] = gps
+decode_fn["Leg Length"] = text
+decode_fn["Leg Time"] = text
+decode_fn["Level"] = text
+decode_fn["Localizer/MLS/GLS Category/Class (2)"] = text
+decode_fn["Localizer/MLS/GLS Category/Class"] = text
+decode_fn["Localizer/MLS/GLS Ref Path Ident (2)"] = text
+decode_fn["Localizer/MLS/GLS Ref Path Ident"] = text
+decode_fn["Longest Runway Surface Code"] = text
+decode_fn["Longest Runway"] = text
+decode_fn["Longitude"] = gps
+decode_fn["Mag/True"] = text
+decode_fn["Magnetic Variation"] = text
+decode_fn["Magnetic/True Indicator"] = text
+decode_fn["Marker Code"] = text
+decode_fn["Marker Identifier"] = text
+decode_fn["Marker Latitude"] = gps
+decode_fn["Marker Longitude"] = gps
+decode_fn["Marker Name"] = text
+decode_fn["Marker Power"] = mk_power
+decode_fn["Marker Shape"] = mk_shape
+decode_fn["Maximum Altitude"] = text
+decode_fn["Minimum Altitude"] = text
+decode_fn["Minor Axis"] = text
+decode_fn["Modulation"] = text
+decode_fn["Name Format Indicator"] = nfi
+decode_fn["Name"] = text
+decode_fn["Narrative"] = text
+decode_fn["Navaid Limitation Code"] = text
+decode_fn["NDB Class Collocation"] = colloc
+decode_fn["NDB Class Facility"] = facility
+decode_fn["NDB Class Info"] = info
+decode_fn["NDB Class Power"] = power
+decode_fn["NDB Frequency"] = freq
+decode_fn["NDB Identifier"] = text
+decode_fn["NDB Latitude"] = gps
+decode_fn["NDB Longitude"] = gps
+decode_fn["NDB Name"] = text
+decode_fn["NOTAM"] = text
+decode_fn["Notes"] = text
+decode_fn["Outbound Magnetic Course"] = text
+decode_fn["Pad Dimensions"] = text
+decode_fn["PAD Identifier"] = text
+decode_fn["Public Military Indicator"] = text
+decode_fn["Radar Service"] = text
+decode_fn["Recommended NAVAID"] = text
+decode_fn["Recommended VHF Navaid"] = text
+decode_fn["Record Type"] = record
+decode_fn["Region Code"] = text
+decode_fn["Remote Facility"] = text
+decode_fn["Reserved (Expansion)"] = text
+decode_fn["Reserved (Spacing)"] = text
+decode_fn["Restr. Air Designation"] = text
+decode_fn["Restr. Air ICAO Code"] = text
+decode_fn["Restr. Air Link Continuation"] = app
+decode_fn["Restr. Air Multiple Code"] = text
+decode_fn["Restr. Air Type"] = text
+decode_fn["Restriction Identifier"] = text
+decode_fn["Restriction Type"] = text
+decode_fn["Rho"] = text
+decode_fn["RNP"] = text
+decode_fn["Route Distance From"] = text
+decode_fn["Route Identifier"] = text
+decode_fn["Route Type"] = waypoint
+decode_fn["Runway Description"] = text
+decode_fn["Runway Gradient"] = text
+decode_fn["Runway Identifier"] = text
+decode_fn["Runway Latitude"] = gps
+decode_fn["Runway Length"] = text
+decode_fn["Runway Longitude"] = gps
+decode_fn["Runway Magnetic Bearing"] = text
+decode_fn["Runway True Bearing"] = text
+decode_fn["Runway Width"] = text
+decode_fn["Section Code"] = section
+decode_fn["Sector Facility"] = text
+decode_fn["Sector From/Sector To"] = text
+decode_fn["Sectorization"] = text
+decode_fn["Sequence End Indicator"] = text
+decode_fn["Sequence Number"] = text
+decode_fn["Service Indicator"] = text
+decode_fn["Signal Emission"] = text
+decode_fn["Speed Limit Altitude"] = text
+decode_fn["Speed Limit"] = text
+decode_fn["Start Fix ICAO Code"] = text
+decode_fn["Start Fix Identifier"] = text
+decode_fn["Start Fix Section Code"] = text
+decode_fn["Start/End Date"] = text
+decode_fn["Start/End Date/Time"] = text
+decode_fn["Start/End Indicator"] = text
+decode_fn["Station Declination"] = text
+decode_fn["Stopway"] = text
+decode_fn["Subsection Code"] = text
+decode_fn["TCH Value Indicator"] = text
+decode_fn["TDZE Location"] = text
+decode_fn["Theta"] = text
+decode_fn["Threshold Crossing Height"] = text
+decode_fn["Time Code"] = text
+decode_fn["Time Indicator"] = text
+decode_fn["Time of Operation"] = text
+decode_fn["Time Zone"] = text
+decode_fn["Touchdown Zone Elevation"] = text
+decode_fn["Transition Altitude"] = text
+decode_fn["Transition Level"] = text
+decode_fn["True Bearing Source"] = text
+decode_fn["Turn Direction"] = text
+decode_fn["UIR Identifier"] = text
+decode_fn["Vertical Separation"] = cont
+decode_fn["VOR Identifier"] = text
+decode_fn["VOR Latitude"] = gps
+decode_fn["VOR Longitude"] = gps
+decode_fn["VOR Name"] = text
+decode_fn["Waypoint Desc Code"] = text
+decode_fn["Waypoint Identifier"] = text
+decode_fn["Waypoint Latitude"] = gps
+decode_fn["Waypoint Longitude"] = gps
+decode_fn["Waypoint Name / Desc"] = text
+decode_fn["Waypoint Type"] = waypoint
+decode_fn["Waypoint Usage"] = text
