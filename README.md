@@ -10,7 +10,7 @@ An open-source tool for parsing and decoding ARINC-424, the international standa
 
 * Python 3.10 or greater
 * Clone the repository
-* Install the package [from local source](https://packaging.python.org/en/latest/tutorials/installing-packages/#installing-from-a-local-src-tree)
+* Install the package [from local source](https://packaging.python.org/en/latest/tutorials/installing-packages/#installing-from-a-local-src-tree) (no official package released until the work is finished to some degree)
 
 ## Getting Started
 
@@ -35,15 +35,33 @@ record.dump()
 ```
 
 ```console
-foo@bar:~$ python3 test.py
+foo@bar:~$ python3 dump.py
 
 Record Type               : S
-Customer / Area Code      : FOO
-Airport ICAO Identifier   : BAR
+Customer / Area Code      : USA
+Section Code              : ER
 .
 .
 .
-and so on
+Cycle Date                : 8704
+```
+
+### Decoding a record
+Similar to **dump()**, but each value in the key-value pair is decoded to be human readable without referencing the ARINC-424 spec.
+```Python
+record.decode()
+```
+
+```console
+foo@bar:~$ python3 decode.py
+
+Record Type               : Standard Record
+Customer / Area Code      : United States of America
+Section Code              : Airways and Routes
+.
+.
+.
+Cycle Date                : 1987, April
 ```
 
 ### Writing a record to a file
@@ -56,12 +74,6 @@ f.write(record.dump())
 
 # writes the record in single-line JSON format
 f.write(record.json())
-```
-
-### Decoding a record
-Similar to **dump()**, but each value in the key-value pair is decoded to be human readable without referencing the ARINC-424 spec.
-```Python
-record.decode()
 ```
 
 ## Details
