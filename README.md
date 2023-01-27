@@ -4,7 +4,7 @@
 ![alt text](https://img.shields.io/badge/status-work%20in%20progress-orange)
 
 
-An open-source tool for parsing and decoding ARINC-424, the international standard file format for aircraft navigation data.
+A python library for parsing and decoding ARINC-424, the international standard file format for aircraft navigation data.
 
 ## Installation
 
