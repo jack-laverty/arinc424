@@ -5,7 +5,7 @@ class CruisingTables():
         return [
             ("Record Type",                             r[0]),
             ("Customer / Area Code",                    r[1:4]),
-            ("Section Code",                            r[4]+r[12]),
+            ("Section Code",                            r[4:6]),
             ("Cruising Table Identifier",               r[6:8]),
             ("Sequence Number",                         r[8]),
             ("Course From",                             r[28:32]),

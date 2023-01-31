@@ -47,7 +47,7 @@ class Record():
             return False
         self.raw_string = line
         match line[4]:
-            case 'D' | 'E' | 'A':
+            case 'D' | 'E' | 'A' | 'T':
                 self.code = line[4:6]
             case 'P' | 'H':
                 self.code = line[4] + line[12]
@@ -61,7 +61,7 @@ class Record():
 
     def dump(self):
         for i in self.fields:
-            print("{:<26}: {}".format(i[0], i[1]))
+            print("{:<32}: {}".format(i[0], i[1]))
 
     def decode(self):
         for i in self.fields:

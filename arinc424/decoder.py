@@ -14,8 +14,12 @@ def cycle(val):
                            val[2:])
 
 
-def dme_el(val):
+def altitude(val):
     return val.lstrip('0') + " ft" if val.isnumeric() else '<Blank>'
+
+
+def dme_el(val):
+    return altitude(val)
 
 
 def gps(val):
@@ -230,7 +234,7 @@ def section(val):
     sections['PV'] = 'Airport Communication'
     sections['R '] = 'Company Route'
     sections['RA'] = 'Alternate Record'
-    sections['TC'] = 'Crusing Table'
+    sections['TC'] = 'Cruising Table'
     sections['TG'] = 'Geographical Reference'
     sections['TN'] = 'RNAV Name Table'
     sections['UC'] = 'Controller Airspace'
@@ -349,8 +353,8 @@ decode_fn["Controlled A/S Airport Indentifier"] = text
 decode_fn["Controlled A/S Indicator"] = text
 decode_fn["Course From"] = text
 decode_fn["Course To"] = text
-decode_fn["Cruise Level From"] = cont
-decode_fn["Cruise Level To"] = text
+decode_fn["Cruise Level From"] = altitude
+decode_fn["Cruise Level To"] = altitude
 decode_fn["Cruise Table Indicator"] = text
 decode_fn["Cruising Table Identifier"] = text
 decode_fn["Customer / Area Code"] = text
@@ -501,7 +505,7 @@ decode_fn["Transition Level"] = text
 decode_fn["True Bearing Source"] = text
 decode_fn["Turn Direction"] = text
 decode_fn["UIR Identifier"] = text
-decode_fn["Vertical Separation"] = cont
+decode_fn["Vertical Separation"] = altitude
 decode_fn["VOR Identifier"] = text
 decode_fn["VOR Latitude"] = gps
 decode_fn["VOR Longitude"] = gps

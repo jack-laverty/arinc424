@@ -68,15 +68,15 @@ class TestRead(unittest.TestCase):
         with open('./tests/example_data/cruising_tables.txt') as f:
             for idx, line in enumerate(f.readlines()):
                 r = a424.Record()
-                r.read(line)
+                if r.read(line):
+                    r.dump()
+                    r.decode()
 
     def test_mora(self):
         with open('./tests/example_data/mora.txt') as f:
             for idx, line in enumerate(f.readlines()):
                 r = a424.Record()
-                if r.read(line):
-                    print(r.dump())
-                    print(r.decode())
+                r.read(line)
 
 
 if __name__ == '__main__':
