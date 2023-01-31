@@ -1,7 +1,7 @@
 from .navaid_vhf import VHFNavaid  # noqa: F401
 from .navaid_ndb import NDBNavaid  # noqa: F401
 from .enroute_marker import Marker  # noqa: F401
-from .enroute_waypoint import Waypoint  # noqa: F401
+from .waypoint import Waypoint  # noqa: F401
 from .enroute_holding import Holding  # noqa: F401
 from .enroute_airway import Airway  # noqa: F401
 from .runway import Runway  # noqa: F401
@@ -11,3 +11,4 @@ from .airport import Airport  # noqa: F401
 from .cruising_tables import CruisingTables  # noqa: F401
 from .enroute_airway_restricted import AirwayRestricted  # noqa: F401
 from .mora import Mora  # noqa: F401
+from .sids import Sid  # noqa: F401

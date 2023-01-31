@@ -13,6 +13,7 @@ from .records import VHFNavaid,\
                      Heliport,\
                      HeliportComms,\
                      Mora,\
+                     Sid,\
                      CruisingTables
 
 
@@ -25,13 +26,15 @@ class Record():
     code_dict = defaultdict(def_val)
     code_dict['D '] = VHFNavaid()
     code_dict['DB'] = NDBNavaid()
-    code_dict['EA'] = Waypoint()
+    code_dict['EA'] = Waypoint(True)
     code_dict['EM'] = Marker()
     code_dict['EP'] = Holding()
     code_dict['ER'] = Airway()
     code_dict['EU'] = AirwayRestricted()
     code_dict['PG'] = Runway()
     code_dict['PA'] = Airport()
+    code_dict['PC'] = Waypoint(False)
+    code_dict['PD'] = Sid()
     code_dict['HA'] = Heliport()
     code_dict['HV'] = HeliportComms()
     code_dict['TC'] = CruisingTables()
