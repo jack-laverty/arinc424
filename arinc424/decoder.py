@@ -193,7 +193,7 @@ published five - letter identifier'
 
 def section(val):
     sections = defaultdict(None)
-    sections['AA'] = 'Grid MORA'
+    sections['AS'] = 'Grid MORA'
     sections['D '] = 'VHF Navaid'
     sections['DB'] = 'NDB Navaid'
     sections['EA'] = 'Waypoint'
@@ -417,6 +417,7 @@ decode_fn["Maximum Altitude"] = text
 decode_fn["Minimum Altitude"] = text
 decode_fn["Minor Axis"] = text
 decode_fn["Modulation"] = text
+decode_fn["MORA"] = text
 decode_fn["Name Format Indicator"] = nfi
 decode_fn["Name"] = text
 decode_fn["Narrative"] = text
@@ -478,6 +479,8 @@ decode_fn["Speed Limit"] = text
 decode_fn["Start Fix ICAO Code"] = text
 decode_fn["Start Fix Identifier"] = text
 decode_fn["Start Fix Section Code"] = text
+decode_fn["Starting Latitude"] = text
+decode_fn["Starting Longitude"] = text
 decode_fn["Start/End Date"] = text
 decode_fn["Start/End Date/Time"] = text
 decode_fn["Start/End Indicator"] = text

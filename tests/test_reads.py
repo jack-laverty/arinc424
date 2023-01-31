@@ -8,7 +8,7 @@ class TestRead(unittest.TestCase):
         with open('./tests/example_data/enroute_airway.txt') as f:
             for idx, line in enumerate(f.readlines()):
                 r = a424.Record()
-                r.decode()
+                r.read(line)
 
     def test_holding(self):
         with open('./tests/example_data/enroute_holding.txt') as f:
@@ -69,6 +69,14 @@ class TestRead(unittest.TestCase):
             for idx, line in enumerate(f.readlines()):
                 r = a424.Record()
                 r.read(line)
+
+    def test_mora(self):
+        with open('./tests/example_data/mora.txt') as f:
+            for idx, line in enumerate(f.readlines()):
+                r = a424.Record()
+                if r.read(line):
+                    print(r.dump())
+                    print(r.decode())
 
 
 if __name__ == '__main__':

@@ -12,6 +12,7 @@ from .records import VHFNavaid,\
                      Airport,\
                      Heliport,\
                      HeliportComms,\
+                     Mora,\
                      CruisingTables
 
 
@@ -34,6 +35,7 @@ class Record():
     code_dict['HA'] = Heliport()
     code_dict['HV'] = HeliportComms()
     code_dict['TC'] = CruisingTables()
+    code_dict['AS'] = Mora()
 
     def __init__(self):
         self.code = ''
@@ -45,7 +47,7 @@ class Record():
             return False
         self.raw_string = line
         match line[4]:
-            case 'D' | 'E':
+            case 'D' | 'E' | 'A':
                 self.code = line[4:6]
             case 'P' | 'H':
                 self.code = line[4] + line[12]
