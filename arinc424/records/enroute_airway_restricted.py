@@ -61,6 +61,7 @@ class AirwayRestricted():
             ("Fix Identifier",                          r[29:34]),
             ("ICAO Code",                               r[34:36]),
             ("Section Code",                            r[36:38]),
+            ("Continuation Record No",                  r[38]),
             ("Application Type",                        r[39]),
             ("Start/End Indicator",                     r[40]),
             ("Start/End Date",                          r[41:52]),
@@ -120,10 +121,11 @@ class AirwayRestricted():
         ]
 
     def read(self, line):
+        return
         if int(line[38]) < 2:
             # continuation record # 0 = primary record with no continuation
             # continuation record # 1 = primary record with continuation
-            return self.read_primary(line)
+            return self.read_primary_alt_exclude(line)
         else:
             match line[39]:
                 case 'A':

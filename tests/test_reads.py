@@ -1,88 +1,17 @@
 import arinc424.record as a424
 import unittest
+import os
 
 
 class TestRead(unittest.TestCase):
 
-    def test_airway(self):
-        with open('./tests/example_data/enroute_airway.txt') as f:
-            for idx, line in enumerate(f.readlines()):
-                r = a424.Record()
-                r.read(line)
-
-    def test_holding(self):
-        with open('./tests/example_data/enroute_holding.txt') as f:
-            for idx, line in enumerate(f.readlines()):
-                r = a424.Record()
-                r.read(line)
-
-    def test_marker(self):
-        with open('./tests/example_data/enroute_marker.txt') as f:
-            for idx, line in enumerate(f.readlines()):
-                r = a424.Record()
-                r.read(line)
-
-    def test_navaid_ndb(self):
-        with open('./tests/example_data/navaid_ndb.txt') as f:
-            for idx, line in enumerate(f.readlines()):
-                r = a424.Record()
-                r.read(line)
-
-    def test_navaid_vhf(self):
-        with open('./tests/example_data/navaid_vhf.txt') as f:
-            for idx, line in enumerate(f.readlines()):
-                r = a424.Record()
-                r.read(line)
-
-    def test_runway(self):
-        with open('./tests/example_data/runway.txt') as f:
-            for idx, line in enumerate(f.readlines()):
-                r = a424.Record()
-                r.read(line)
-
-    def test_waypoint(self):
-        with open('./tests/example_data/enroute_waypoint.txt') as f:
-            for idx, line in enumerate(f.readlines()):
-                r = a424.Record()
-                r.read(line)
-
-    def test_heliport(self):
-        with open('./tests/example_data/heliport.txt') as f:
-            for idx, line in enumerate(f.readlines()):
-                r = a424.Record()
-                r.read(line)
-
-    def test_heliport_comms(self):
-        with open('./tests/example_data/heliport_communications.txt') as f:
-            for idx, line in enumerate(f.readlines()):
-                r = a424.Record()
-                r.read(line)
-
-    def test_airport(self):
-        with open('./tests/example_data/airport.txt') as f:
-            for idx, line in enumerate(f.readlines()):
-                r = a424.Record()
-                r.read(line)
-
-    def test_cruising_tables(self):
-        with open('./tests/example_data/cruising_tables.txt') as f:
-            for idx, line in enumerate(f.readlines()):
-                r = a424.Record()
-                r.read(line)
-
-    def test_mora(self):
-        with open('./tests/example_data/mora.txt') as f:
-            for idx, line in enumerate(f.readlines()):
-                r = a424.Record()
-                r.read(line)
-
-    def test_terminal_waypoint(self):
-        with open('./tests/example_data/terminal_waypoint.txt') as f:
-            for idx, line in enumerate(f.readlines()):
-                r = a424.Record()
-                if r.read(line):
-                    r.dump()
-                    r.decode()
+    def test_read(self):
+        for file in os.scandir('./tests/example_data/'):
+            with open(file) as f:
+                print(file.name)
+                for idx, line in enumerate(f.readlines()):
+                    r = a424.Record()
+                    r.read(line)
 
 
 if __name__ == '__main__':

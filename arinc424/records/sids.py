@@ -47,33 +47,4 @@ class Sid():
         ]
 
     def read(self, line):
-        if int(line[21]) < 2:
-            # continuation record # 0 = primary record with no continuation
-            # continuation record # 1 = primary record with continuation
-            return self.read_primary(line)
-        else:
-            match line[22]:
-                case 'A':
-                    return
-                case 'C':
-                    return
-                case 'E':
-                    return
-                case 'L':
-                    return
-                case 'N':
-                    return
-                case 'T':
-                    return
-                case 'U':
-                    return
-                case 'V':
-                    return
-                case 'P':
-                    return
-                case 'Q':
-                    return
-                case 'S':
-                    return
-                case _:
-                    raise ValueError('Unknown Application Type')
+        return self.read_primary(line)
