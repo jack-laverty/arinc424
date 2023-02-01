@@ -4,7 +4,7 @@ class Waypoint():
     def __init__(self, enrt) -> None:
         self.enrt = enrt
 
-    def read_primary(self, r):
+    def read_primary(self, r) -> list:
         return [
             ("Record Type",                         r[0]),
             ("Customer / Area Code",                r[1:4]),
@@ -27,7 +27,7 @@ class Waypoint():
             ("Cycle Date",                          r[128:132])
         ]
 
-    def read_cont(self, r):
+    def read_cont(self, r) -> list:
         return [
             ("Record Type",                         r[0]),
             ("Customer / Area Code",                r[1:4]),
@@ -44,7 +44,7 @@ class Waypoint():
             ("Cycle Date",                          r[128:132])
         ]
 
-    def read_flight_plan0(self, r):
+    def read_flight_plan0(self, r) -> list:
         return [
             ("Record Type",                         r[0]),
             ("Customer / Area Code",                r[1:4]),
@@ -64,7 +64,7 @@ class Waypoint():
             ("Cycle Date",                          r[128:132])
         ]
 
-    def read_flight_plan1(self, r):
+    def read_flight_plan1(self, r) -> list:
         return [
             ("Record Type",                         r[0]),
             ("Customer / Area Code",                r[1:4]),
@@ -87,7 +87,7 @@ class Waypoint():
             ("Cycle Date",                          r[128:132])
         ]
 
-    def read(self, line):
+    def read(self, line) -> list:
         if int(line[21]) < 2:
             # continuation record # 0 = primary record with no continuation
             # continuation record # 1 = primary record with continuation
@@ -97,24 +97,24 @@ class Waypoint():
                 case 'A':
                     return self.read_cont(line)
                 case 'C':
-                    return
+                    return []
                 case 'E':
-                    return
+                    return []
                 case 'L':
-                    return
+                    return []
                 case 'N':
-                    return
+                    return []
                 case 'T':
-                    return
+                    return []
                 case 'U':
-                    return
+                    return []
                 case 'V':
-                    return
+                    return []
                 case 'P':
                     return self.read_flight_plan0(line)
                 case 'Q':
                     return self.read_flight_plan1(line)
                 case 'S':
-                    return
+                    return []
                 case _:
                     raise ValueError('Unknown Application Type')
