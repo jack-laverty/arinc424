@@ -8,10 +8,14 @@ class TestRead(unittest.TestCase):
     def test_read(self):
         for file in os.scandir('./tests/example_data/'):
             with open(file) as f:
-                print(file.name)
                 for idx, line in enumerate(f.readlines()):
                     r = a424.Record()
-                    r.read(line)
+                    if r.read(line):
+                        print()
+                        print("------------------------------------")
+                        print("Record Type:", r.parse_code())
+                        print("------------------------------------")
+                        r.dump()
 
 
 if __name__ == '__main__':

@@ -1,5 +1,6 @@
 import json
 from .decoder import decode_fn
+from .decoder import section
 from collections import defaultdict
 from .records import VHFNavaid,\
                      NDBNavaid,\
@@ -13,7 +14,8 @@ from .records import VHFNavaid,\
                      Heliport,\
                      HeliportComms,\
                      Mora,\
-                     Sid,\
+                     FlightPlanning,\
+                     SIDSTARApp,\
                      CruisingTables
 
 
@@ -34,7 +36,8 @@ class Record():
     code_dict['PG'] = Runway()
     code_dict['PA'] = Airport()
     code_dict['PC'] = Waypoint(False)
-    code_dict['PD'] = Sid()
+    code_dict['PD'] = SIDSTARApp()
+    code_dict['PR'] = FlightPlanning()
     code_dict['HA'] = Heliport()
     code_dict['HV'] = HeliportComms()
     code_dict['TC'] = CruisingTables()
@@ -61,6 +64,9 @@ class Record():
             return False
         self.fields = x.read(line)
         return True
+
+    def parse_code(self):
+        return section(self.code)
 
     def dump(self):
         for i in self.fields:

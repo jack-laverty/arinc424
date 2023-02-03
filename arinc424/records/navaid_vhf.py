@@ -44,7 +44,6 @@ class VHFNavaid():
             ("Continuation Record No",      r[21]),
             ("Application Type",            r[22]),
             ("Notes",                       r[23:92]),
-            ("Reserved (Expansion)",        r[92:123]),
             ("File Record No",              r[123:128]),
             ("Cycle Date",                  r[128:132]),
         ]
@@ -61,7 +60,6 @@ class VHFNavaid():
             ("Continuation Record No",      r[21]),
             ("Application Type",            r[22]),
             ("Facility Characteristics",    r[27:32]),
-            ("Reserved (Spacing)",          r[32:74]),
             ("File Record No",              r[123:128]),
             ("Cycle Date",                  r[128:132])
         ]
@@ -81,7 +79,6 @@ class VHFNavaid():
             ("UIR Identifier",              r[28:31]),
             ("Start/End Indicator",         r[32]),
             ("Start/End Date",              r[32:43]),
-            ("Reserved (Expansion)",        r[43:123]),
             ("File Record No",              r[123:128]),
             ("Cycle Date",                  r[128:132])
         ]
@@ -155,7 +152,6 @@ class VHFNavaid():
             ("Altitude Description",        r[101]),
             ("Altitude Limiation",          r[101:107]),
             ("Sequence End Indicator",      r[107]),
-            ("Blank (Spacing)",             r[108:123]),
             ("File Record No",              r[123:128]),
             ("Cycle Date",                  r[128:132])
         ]
@@ -186,9 +182,8 @@ class VHFNavaid():
                 case 'P':
                     return self.read_flight_plan0(line)
                 case 'Q':
-                    return self.read_flight_plan1(line)
+                    return
                 case 'S':
                     return self.read_sim(line)
                 case _:
-                    # raise ValueError('Unknown Application Type')
-                    return
+                    return self.read_flight_plan1(line)

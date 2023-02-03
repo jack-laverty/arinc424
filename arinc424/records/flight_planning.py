@@ -1,5 +1,5 @@
 
-class Sid():
+class FlightPlanning():
 
     def read_primary(self, r):
         return [
