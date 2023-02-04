@@ -18,6 +18,7 @@ from .records import VHFNavaid,\
                      SIDSTARApp,\
                      LocalizerGlideslope,\
                      Mls,\
+                     AirportCommunication,\
                      CruisingTables
 
 
@@ -42,6 +43,7 @@ class Record():
     code_dict['PI'] = LocalizerGlideslope()
     code_dict['PL'] = Mls()
     code_dict['PR'] = FlightPlanning()
+    code_dict['PV'] = AirportCommunication()
     code_dict['HA'] = Heliport()
     code_dict['HV'] = HeliportComms()
     code_dict['TC'] = CruisingTables()
@@ -63,10 +65,15 @@ class Record():
                 self.code = line[4] + line[12]
             case _:
                 return False
+
         x = self.code_dict[self.code]
         if x is None:
             return False
+
         self.fields = x.read(line)
+        if self.fields is None:
+            return False
+
         return True
 
     def parse_code(self):

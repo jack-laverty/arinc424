@@ -15,3 +15,5 @@ from .flight_planning import FlightPlanning  # noqa: F401
 from .sid_star_app import SIDSTARApp  # noqa: F401
 from .localizer_glideslope import LocalizerGlideslope  # noqa: F401
 from .mls import Mls  # noqa: F401
+from .localizer_marker import LocalizerMarker  # noqa: F401
+from .airport_communication import AirportCommunication  # noqa: F401
