@@ -1,7 +1,8 @@
 
 class FlightPlanning():
 
-    def read_primary(self, r):
+    def read(self, r):
+        # primary record
         return [
             ("Record Type",                         r[0]),
             ("Customer / Area Code",                r[1:4]),
@@ -45,6 +46,3 @@ class FlightPlanning():
             ("File Record No",                      r[123:128]),
             ("Cycle Date",                          r[128:132])
         ]
-
-    def read(self, line):
-        return self.read_primary(line)

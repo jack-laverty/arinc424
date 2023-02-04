@@ -16,6 +16,8 @@ from .records import VHFNavaid,\
                      Mora,\
                      FlightPlanning,\
                      SIDSTARApp,\
+                     LocalizerGlideslope,\
+                     Mls,\
                      CruisingTables
 
 
@@ -37,6 +39,8 @@ class Record():
     code_dict['PA'] = Airport()
     code_dict['PC'] = Waypoint(False)
     code_dict['PD' or 'PE' or 'PF'] = SIDSTARApp()
+    code_dict['PI'] = LocalizerGlideslope()
+    code_dict['PL'] = Mls()
     code_dict['PR'] = FlightPlanning()
     code_dict['HA'] = Heliport()
     code_dict['HV'] = HeliportComms()

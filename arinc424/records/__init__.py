@@ -13,3 +13,5 @@ from .enroute_airway_restricted import AirwayRestricted  # noqa: F401
 from .mora import Mora  # noqa: F401
 from .flight_planning import FlightPlanning  # noqa: F401
 from .sid_star_app import SIDSTARApp  # noqa: F401
+from .localizer_glideslope import LocalizerGlideslope  # noqa: F401
+from .mls import Mls  # noqa: F401
