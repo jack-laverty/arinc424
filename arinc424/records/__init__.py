@@ -10,7 +10,7 @@ from .heliport_comms import HeliportComms  # noqa: F401
 from .airport import Airport  # noqa: F401
 from .cruising_tables import CruisingTables  # noqa: F401
 from .enroute_airway_restricted import AirwayRestricted  # noqa: F401
-from .mora import Mora  # noqa: F401
+from .mora import MORA  # noqa: F401
 from .flight_planning import FlightPlanning  # noqa: F401
 from .sid_star_app import SIDSTARApp  # noqa: F401
 from .localizer_glideslope import LocalizerGlideslope  # noqa: F401
