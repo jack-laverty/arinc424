@@ -17,3 +17,5 @@ from .localizer_glideslope import LocalizerGlideslope  # noqa: F401
 from .mls import Mls  # noqa: F401
 from .localizer_marker import LocalizerMarker  # noqa: F401
 from .airport_communication import AirportCommunication  # noqa: F401
+from .msa import Msa  # noqa: F401
+from .fir_uir import FirUir  # noqa: F401

@@ -18,6 +18,8 @@ from .records import VHFNavaid,\
                      SIDSTARApp,\
                      LocalizerGlideslope,\
                      Mls,\
+                     Msa,\
+                     FirUir,\
                      AirportCommunication,\
                      CruisingTables
 
@@ -43,23 +45,37 @@ class Record():
     code_dict['PI'] = LocalizerGlideslope()
     code_dict['PL'] = Mls()
     code_dict['PR'] = FlightPlanning()
+    code_dict['PS'] = Msa()
     code_dict['PV'] = AirportCommunication()
     code_dict['HA'] = Heliport()
     code_dict['HV'] = HeliportComms()
     code_dict['TC'] = CruisingTables()
     code_dict['AS'] = Mora()
+    code_dict['UF'] = FirUir()
 
     def __init__(self):
         self.code = ''
         self.raw_string = ''
         self.fields = []
 
-    def read(self, line):
+    # to quickly discard lines that are not records
+    def validate(self, line):
+        line = line.strip()
         if line.startswith('S' or 'T') is False:
+            print("Not S or T")
             return False
+        if len(line) != 132:
+            print("Not 132")
+            return False
+        if line[-9:].isnumeric() is False:
+            print("Not last 9 chars numeric")
+            return False
+        return True
+
+    def read(self, line):
         self.raw_string = line
         match line[4]:
-            case 'D' | 'E' | 'A' | 'T':
+            case 'D' | 'E' | 'A' | 'T' | 'U':
                 self.code = line[4:6]
             case 'P' | 'H':
                 self.code = line[4] + line[12]
