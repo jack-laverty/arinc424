@@ -1,5 +1,5 @@
 
-class Mora():
+class MORA():
 
     def read_primary(self, r):
         return [

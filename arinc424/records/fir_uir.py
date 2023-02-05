@@ -1,5 +1,5 @@
 
-class FirUir():
+class FIR_UIR():
 
     def read(self, r):
         if int(r[19]) < 2:

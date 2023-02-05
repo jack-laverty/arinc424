@@ -1,5 +1,5 @@
 
-class Msa():
+class MSA():
 
     def read(self, r):
         if int(r[38]) < 2:

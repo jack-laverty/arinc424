@@ -2,26 +2,26 @@ import json
 from .decoder import decode_fn
 from .decoder import section
 from collections import defaultdict
-from .records import VHFNavaid,\
-                     NDBNavaid,\
-                     Waypoint,\
-                     Marker,\
-                     Holding,\
+from .records import Airport,\
                      Airway,\
+                     AirportCommunication,\
                      AirwayRestricted,\
-                     Runway,\
-                     Airport,\
+                     CruisingTables,\
+                     FIR_UIR,\
+                     FlightPlanning,\
                      Heliport,\
                      HeliportComms,\
-                     Mora,\
-                     FlightPlanning,\
-                     SIDSTARApp,\
+                     Holding,\
                      LocalizerGlideslope,\
-                     Mls,\
-                     Msa,\
-                     FirUir,\
-                     AirportCommunication,\
-                     CruisingTables
+                     Marker,\
+                     MLS,\
+                     MSA,\
+                     MORA,\
+                     NDBNavaid,\
+                     Runway,\
+                     SIDSTARApp,\
+                     Waypoint,\
+                     VHFNavaid
 
 
 class Record():
@@ -43,15 +43,15 @@ class Record():
     code_dict['PC'] = Waypoint(False)
     code_dict['PD' or 'PE' or 'PF'] = SIDSTARApp()
     code_dict['PI'] = LocalizerGlideslope()
-    code_dict['PL'] = Mls()
+    code_dict['PL'] = MLS()
     code_dict['PR'] = FlightPlanning()
-    code_dict['PS'] = Msa()
+    code_dict['PS'] = MSA()
     code_dict['PV'] = AirportCommunication()
     code_dict['HA'] = Heliport()
     code_dict['HV'] = HeliportComms()
     code_dict['TC'] = CruisingTables()
-    code_dict['AS'] = Mora()
-    code_dict['UF'] = FirUir()
+    code_dict['AS'] = MORA()
+    code_dict['UF'] = FIR_UIR()
 
     def __init__(self):
         self.code = ''

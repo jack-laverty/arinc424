@@ -1,5 +1,5 @@
 
-class Mls():
+class MLS():
 
     def read(self, r):
         if int(r[21]) < 2:

@@ -14,8 +14,8 @@ from .mora import Mora  # noqa: F401
 from .flight_planning import FlightPlanning  # noqa: F401
 from .sid_star_app import SIDSTARApp  # noqa: F401
 from .localizer_glideslope import LocalizerGlideslope  # noqa: F401
-from .mls import Mls  # noqa: F401
+from .mls import MLS  # noqa: F401
 from .localizer_marker import LocalizerMarker  # noqa: F401
 from .airport_communication import AirportCommunication  # noqa: F401
-from .msa import Msa  # noqa: F401
-from .fir_uir import FirUir  # noqa: F401
+from .msa import MSA  # noqa: F401
+from .fir_uir import FIR_UIR  # noqa: F401
