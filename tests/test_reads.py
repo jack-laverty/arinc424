@@ -13,16 +13,19 @@ class TestRead(unittest.TestCase):
                     r = a424.Record()
                     if r.validate(line):
                         if r.read(line):
-                            print()
-                            print("------------------------------------")
-                            print("Record Type:", r.parse_code())
-                            print("------------------------------------")
-                            r.dump()
+                            # print()
+                            # print("------------------------------------")
+                            # print("Record Type:", r.parse_code())
+                            # print("------------------------------------")
+                            # r.dump()
                             k += 1
                         else:
                             u += 1
+                            print("UNKNOWN RECORD:", r.parse_code())
+                            print(line)
                     else:
-                        print(line)
+                        # print(line)
+                        pass
         print('\n{:9}{}\n{:9}{}'.format('Parsed:', k,
                                         'Unknown:', u))
 

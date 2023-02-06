@@ -7,12 +7,14 @@ from .records import Airport,\
                      AirportCommunication,\
                      AirwayRestricted,\
                      CruisingTables,\
+                     EnrouteComms,\
                      FIR_UIR,\
                      FlightPlanning,\
                      Heliport,\
                      HeliportComms,\
                      Holding,\
                      LocalizerGlideslope,\
+                     LocalizerMarker,\
                      Marker,\
                      MLS,\
                      MSA,\
@@ -38,12 +40,16 @@ class Record():
     code_dict['EP'] = Holding()
     code_dict['ER'] = Airway()
     code_dict['EU'] = AirwayRestricted()
+    code_dict['EV'] = EnrouteComms()
     code_dict['PG'] = Runway()
     code_dict['PA'] = Airport()
     code_dict['PC'] = Waypoint(False)
-    code_dict['PD' or 'PE' or 'PF'] = SIDSTARApp()
+    code_dict['PD'] = SIDSTARApp()
+    code_dict['PE'] = SIDSTARApp()
+    code_dict['PF'] = SIDSTARApp()
     code_dict['PI'] = LocalizerGlideslope()
     code_dict['PL'] = MLS()
+    code_dict['PM'] = LocalizerMarker()
     code_dict['PR'] = FlightPlanning()
     code_dict['PS'] = MSA()
     code_dict['PV'] = AirportCommunication()
@@ -62,13 +68,13 @@ class Record():
     def validate(self, line):
         line = line.strip()
         if line.startswith('S' or 'T') is False:
-            print("Not S or T")
+            # print("Not S or T")
             return False
         if len(line) != 132:
-            print("Not 132")
+            # print("Not 132")
             return False
         if line[-9:].isnumeric() is False:
-            print("Not last 9 chars numeric")
+            # print("Not last 9 chars numeric")
             return False
         return True
 
