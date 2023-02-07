@@ -10,6 +10,7 @@ from .records import Airport,\
                      EnrouteComms,\
                      FIR_UIR,\
                      FlightPlanning,\
+                     Gate,\
                      Heliport,\
                      HeliportComms,\
                      Holding,\
@@ -43,6 +44,7 @@ class Record():
     code_dict['EV'] = EnrouteComms()
     code_dict['PG'] = Runway()
     code_dict['PA'] = Airport()
+    code_dict['PB'] = Gate()
     code_dict['PC'] = Waypoint(False)
     code_dict['PD'] = SIDSTARApp()
     code_dict['PE'] = SIDSTARApp()
