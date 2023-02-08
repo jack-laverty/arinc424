@@ -21,6 +21,7 @@ from .records import Airport,\
                      MSA,\
                      MORA,\
                      NDBNavaid,\
+                     RestrictiveAirspace,\
                      Runway,\
                      SIDSTARApp,\
                      Waypoint,\
@@ -60,6 +61,7 @@ class Record():
     code_dict['TC'] = CruisingTables()
     code_dict['AS'] = MORA()
     code_dict['UF'] = FIR_UIR()
+    code_dict['UR'] = RestrictiveAirspace()
 
     def __init__(self):
         self.code = ''
