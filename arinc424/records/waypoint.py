@@ -117,4 +117,4 @@ class Waypoint():
                 case 'S':
                     return []
                 case _:
-                    raise ValueError('Unknown Application Type')
+                    return []

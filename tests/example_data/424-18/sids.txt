@@ -1,0 +1,28 @@
+
+**Examples from ARINC-424 18 Spec.**
+
+STANDARD INSTRUMENT DEPARTURES (SIDs) (PD)
+(With Flight Planning Continuations)
+
+SUSAP KSEAK1DMOUNT12ALL   010ELN  K1D 1VE     IF                                         18000                             045968507
+SUSAP KSEAK1DMOUNT12ALL   010ELN  K1D 2P                               0000                                                045978801
+SUSAP KSEAK1DMOUNT13GEG   010ELN  K1D 1VE     IF                                         18000                             045988507
+SUSAP KSEAK1DMOUNT13GEG   010ELN  K1D 2P                               0000                                                045998801
+SUSAP KSEAK1DMOUNT13GEG   020HAMURK1EA1E      TF                                                                           046008413
+SUSAP KSEAK1DMOUNT13GEG   020HAMURK1EA2P                               0630                                                046018613
+SUSAP KSEAK1DMOUNT13GEG   030GEG  K1D 1VE     TF                                                                           046028413
+SUSAP KSEAK1DMOUNT13GEG   030GEG  K1D 2P                               0630                                                046038613
+SUSAP KSEAK1DMOUNT13MLP   010ELN  K1D 1VE     IF                                         18000                             046048507
+SUSAP KSEAK1DMOUNT13MLP   010ELN  K1D 2P                               0000                                                046058801
+SUSAP KSEAK1DMOUNT13MLP   020HAMURK1EA1E      TF                                                                           046068413
+SUSAP KSEAK1DMOUNT13MLP   020HAMURK1EA2P                               0630                                                046078613
+SUSAP KSEAK1DMOUNT13MLP   030ODESSK1EA1E      TF                                                                           046088413
+SUSAP KSEAK1DMOUNT13MLP   030ODESSK1EA2P                               0400                                                046098613
+SUSAP KSEAK1DMOUNT13MLP   040MLP  K1D 1VE     TF                                                                           046108413
+SUSAP KSEAK1DMOUNT13MLP   040MLP  K1D 2P                               0970                                                045118613
+SUSAP KSEAK1DMOUNT13ODESS 010ELN  K1D 1VE     IF                                         18000                             045128507
+SUSAP KSEAK1DMOUNT13ODESS 010ELN  K1D 2P                               0000                                                045138801
+SUSAP KSEAK1DMOUNT13ODESS 020HAMURK1EA1E      TF                                                                           045148413
+SUSAP KSEAK1DMOUNT13ODESS 020HAMURK1EA2P                               0630                                                045158613
+SUSAP KSEAK1DMOUNT13ODESS 030ODESSK1EA1EE     TF                                                                           045168413
+SUSAP KSEAK1DMOUNT13ODESS 030ODESSK1EA2P                               0400                                                045178613

@@ -1,0 +1,15 @@
+SUSAEPENRT                 10AVE  K2D 01300R   1518000FL450                                       AVENAL                   030038904
+SUSAEPENRT                 10ODESSK1EA02530R   10     17999                                       ODESS                    030048904
+SUSAEPENRT                 20ALTAMK2EA01770L   100500017999160                                    ALTAM                    030058904
+SUSAEPENRT                 20BTG  K1D          10     17999                                       BATTLE GROUND            030068904
+SUSAEPENRT                 20OED  K1D          10     17999                                       MEDFORD                  030078904
+SUSAEPENRT                 20UBG  K1D          10     17999                                       NEWBERG                  030088904
+SUSAEPENRT                 21BRINYK2EA00570R   10     17999                                       BRINY                    030098904
+SUSAEPENRT                 22BRINYK2EA02370R   10     17999                                       BRINY                    030108904
+SUSAEPENRT                 30EPH  K1D          10     17999                                       EPHRATA                  030118904
+SUSAEPENRT                 40EPH  K1D          10     17999                                       EPHRATA                  030128904
+SUSAEPENRT                 40UBG  K1D          10     17999                                       NEWBERG                  030148904
+SUSAEPENRT                 50MOD  K2D          10     17999                                       MODESTO                  030158904
+SUSAEPENRT                 50ELW  K1D          10     17999                                       ELLENBERG                030168904
+SUSAEPKSEAK1               40FINNYK1PC00230R  0500150009000150                                    FINNY                    030178904
+SUSAEPKSEAK1               50FINNYK1PC00230R  0500150009000150                                    FINNY                    030188904

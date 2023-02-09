@@ -1,0 +1,20 @@
+
+**Examples from ARINC-424 18 Spec.**
+
+NDB NAVAID (DB)
+(With Simulation and Flight Planning Continuations)
+SUSADB       ARU   K2102150H MW N41281600W120332500                       E0180           NASALTURAS                       019768110
+SUSADB       ARU   K22S     U21                                                                                            019788110
+SUSADB       ARU   K23PKZSEKZSE                                                                                            019798110
+SUSADB       CAN   K1102740H MW N47243880W122501510                       E0200           NASCARNEY (BREMERTON)            019848308
+SUSADB       CAN   K12S     U21                                                                                            019868308
+SUSADB       CAN   K13PKZSEKZSE                                                                                            019878308
+SUSADB       CC    K2103350HOMW N38024740W122015640                       E0170           NASKANAN                         019888807
+SUSADB       CC    K22S     U21                                                                                            019908807
+SUSADB       CC    K23PKZOAKZOA                                                                                            019918807
+SUSADB       F     K2103140H  W N37415400W123001200                       E0170           NASFARALLON ISLAND               020088110
+SUSADB       F     K22S     U21                                                                                            020108110
+SUSADB       F     K23PKZOAKZOA                                                                                            020118110
+SUSADB       MOG   K2103820H  A N41433840W122285050                       E0200           NASMONTAGUE                      020768110
+SUSADB       MOG   K22S     U21                                                                                            020788110
+SUSADB       MOG   K23PKZSEKZSE                                                                                            020798110

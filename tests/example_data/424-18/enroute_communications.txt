@@ -1,0 +1,30 @@
+
+**Examples from ARINC-424 18 Spec.**
+
+ENROUTE COMMUNICATIONS (EV)
+
+SUSAEVALW    MOSES LAKE                    FSS0012240 V1  R A N47123960W119185640E0193     Y                               039188810
+SUSAEVALW    MOSES LAKE                    FSS0012240 V2                                    WALLA WALLA                    039198810
+SUSAEVALW    MOSES LAKE                    TWE0011500 V1  R A N47123960W119185640E021001177Y          MWH K1D              039208810
+SUSAEVALW    MOSES LAKE                    TWE0011500 V2                                                                   039218810
+SUSAEVKZSEZRFTHE DALLES                    ACC0011965 V1 DGRA N45425000W121055900E0190     Y                               041568810
+SUSAEVKZSEZRFTHE DALLES                    ACC0011965 V2                                     SEATTLE                       041578810
+SUSAEVKZSEZRFYAKIMA                        ACC0012030 V1  GRA N46314000W120304600E0192     Y                               041628810
+SUSAEVKZSEZRFYAKIMA                        ACC0012030 V2                                     SEATTLE                       041638810
+SUSAEVKZSEZRFYAKIMA                        ACC0013260 V1 DGRA N46314000W120304600E0192     Y                               041648810
+SUSAEVKZSEZRFYAKIMA                        ACC0013260 V2                                     SEATTLE                       041658810
+SUSAEVKZSEZRFYAKIMA                        ACC0012030 V1  GRA N46314000W120304600E0192     Y                               041948810
+SUSAEVKZSEZRFYAKIMA                        ACC0012030 V2                                     SEATTLE                       041958810
+SUSAEVKZSEZRFYAKIMA                        ACC0013475 V1  GRA N46314000W120304600E0192     Y                               041968810
+SUSAEVKZSEZRFYAKIMA                        ACC0013475 V2                                     SEATTLE                       041978810
+SUSAEVSEA    THE DALLES                    FSS0012200 V1E R A N45425000W121055900E021003220N           DLS K1D             045168810
+SUSAEVSEA    THE DALLES                    FSS0012200 V2 H  1507002300                       SEATTLE                       045178810
+SUSAEVSEA    THE DALLES                    FSS0012265 V1  R A N45425000W121055900E021003220Y           DLS K1D             045188810
+SUSAEVSEA    THE DALLES                    FSS0012265 V2    1507002300                       SEATTLE                       045198810
+SUSAEVSEA    THE DALLES                    TWE0012265 V1    A N45425000W121055900E021003220N           DLS K1D             045208810
+SUSAEVSEA    THE DALLES                    TWE0012265 V2 N  1507002300                       SEATTLE                       045218810
+SUSAEVSEA    YAKIMA                        TWE0012265 V3    SPRING AND FALL PERIOD ONLY                                    045228810
+SUSAEVSEA    YAKIMA                        FSS0012250 V1  R A N46313300W120315200E0192     Y                               045288810
+SUSAEVSEA    YAKIMA                        FSS0012250 V2                                     SEATTLE                       045298810
+SUSAEVSEA    YAKIMA                        TWE0011600 V1    A N46341350W120263640E021000980N                 YKM K1D       045308810
+SUSAEVSEA    YAKIMA                        TWE0011600 V2                                                                   045318810

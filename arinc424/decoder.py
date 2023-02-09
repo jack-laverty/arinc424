@@ -41,7 +41,7 @@ def text(val):
 
 
 def def_val():
-    return "<Unsupported>"
+    return "<Unsupported Decoding>"
 
 
 def facility(val):
@@ -196,7 +196,7 @@ published five - letter identifier'
 
 
 def section(val):
-    sections = defaultdict(None)
+    sections = defaultdict(def_val)
     sections['AS'] = 'Grid MORA'
     sections['D '] = 'VHF Navaid'
     sections['DB'] = 'NDB Navaid'

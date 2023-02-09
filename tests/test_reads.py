@@ -1,33 +1,14 @@
-import arinc424.record as a424
 import unittest
-import os
+import arinc424.utils as a424
 
 
 class TestRead(unittest.TestCase):
 
-    def test_read(self):
-        k, u = 0, 0
-        for file in os.scandir('./tests/example_data/'):
-            with open(file) as f:
-                for idx, line in enumerate(f.readlines()):
-                    r = a424.Record()
-                    if r.validate(line):
-                        if r.read(line):
-                            # print()
-                            # print("------------------------------------")
-                            # print("Record Type:", r.parse_code())
-                            # print("------------------------------------")
-                            # r.dump()
-                            k += 1
-                        else:
-                            u += 1
-                            print("UNKNOWN RECORD:", r.parse_code())
-                            print(line)
-                    else:
-                        # print(line)
-                        pass
-        print('\n{:9}{}\n{:9}{}'.format('Parsed:', k,
-                                        'Unknown:', u))
+    def test_a424(self):
+        a424.scan_folder('./tests/example_data/424-18')
+
+    def test_cifp(self):
+        a424.scan_folder('./tests/example_data/CIFP')
 
 
 if __name__ == '__main__':

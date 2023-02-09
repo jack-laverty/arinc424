@@ -1,0 +1,40 @@
+
+**Examples from ARINC-424 18 Spec.**
+
+STANDARD INSTRUMENT ARRIVALS (STARs) (PE)
+(With Flight Planning Continuations)
+
+
+SUSAP KSEAK1EELN2  1GEG   010GEG  K1D 1V       IF                                         18000                            046328508
+SUSAP KSEAK1EELN2  1GEG   010GEG  K1D 2P                                0000                                               046338804
+SUSAP KSEAK1EELN2  1GEG   020HAMURK1EA1E       TF                                                                          046348508
+SUSAP KSEAK1EELN2  1GEG   020HAMURK1EA2P                                0630                                               046358613
+SUSAP KSEAK1EELN2  1GEG   030ELN  K1D 1VE H    TF                                                                          046368508
+SUSAP KSEAK1EELN2  1GEG   030ELN  K1D 2P                                0630                                               046378613
+SUSAP KSEAK1EELN2  1HAMUR 010HAMURK1EA1E       IF                                         18000                            046388508
+SUSAP KSEAK1EELN2  1HAMUR 010HAMURK1EA2P                                0000                                               046398804
+SUSAP KSEAK1EELN2  1HAMUR 020ELN  K1D 1VE H    TF                                                                          046408508
+SUSAP KSEAK1EELN2  1HAMUR 020ELN  K1D 2P                                0630                                               046418613
+SUSAP KSEAK1EELN2  1MLP   010MLP  K1D 1V       IF                                         18000                            046428508
+SUSAP KSEAK1EELN2  1MLP   010MLP  K1D 2P                                0000                                               046438804
+SUSAP KSEAK1EELN2  1MLP   020ODESSK1EA1E  H    TF                                                                          046448508
+SUSAP KSEAK1EELN2  1MLP   020ODESSK1EA2P                                0970                                               046458613
+SUSAP KSEAK1EELN2  1MLP   030HAMURK1EA1E       TF                                                                          046468508
+SUSAP KSEAK1EELN2  1MLP   030HAMURK1EA2P                                0400                                               046478613
+SUSAP KSEAK1EELN2  1MLP   040ELN  K1D 1VE H    TF                                                                          046488508
+SUSAP KSEAK1EELN2  1MLP   040ELN  K1D 2P                                0630                                               046498613
+SUSAP KSEAK1EELN2  1ODESS 010ODESSK1EA1E  H    IF                                                                          046508613
+SUSAP KSEAK1EELN2  1ODESS 010ODESSK1EA2P                                0000                                               046518804
+SUSAP KSEAK1EELN2  1ODESS 020HAMURK1EA1E       TF                                                                          046528508
+SUSAP KSEAK1EELN2  1ODESS 020HAMURK1EA2P                                0400                                               046538613
+SUSAP KSEAK1EELN2  1ODESS 030ELN  K1D 1V  H    TF                                                                          046548508
+SUSAP KSEAK1EELN2  1ODESS 030ELN  K1D 2P                                0630                                               046558613
+SUSAP KSEAK1EELN2  2RW34B 010ELN  K1D 1V  H    IF                                                                          046568508
+SUSAP KSEAK1EELN2  2RW34B 010ELN  K1D 2P                                0000                                               046578804
+SUSAP KSEAK1EELN2  2RW34B 020BISSLK1PC1E       TF                                                                          046588508
+SUSAP KSEAK1EELN2  2RW34B 020BISSLK1PC2P                                0450                   250                         046598613
+SUSAP KSEAK1EELN2  2RW34B 030         1        VD SEA K1            26000300                                               046608508
+SUSAP KSEAK1EELN2  2RW34B 030         2P                                0060                                               046618613
+SUSAP KSEAK1EELN2  2RW34B 040         1        VD SEA K1            26000250                                               046628508
+SUSAP KSEAK1EELN2  2RW34B 040         2P                                0050                                               046638613
+SUSAP KSEAK1EELN2  2RW34B 050KSEA K1PA1AE      VM                   2600                                                   046648508

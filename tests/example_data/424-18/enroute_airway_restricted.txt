@@ -1,0 +1,8 @@
+
+**Examples from ARINC-424 18 Spec.**
+
+ENROUTE AIRWAYS RESTRICTED (EU)
+
+SUSAEUJ20   001TC0YKM  K1D SEA  K1D 31JAN9031MAR90CS1707001700                              A0                             031918913
+SUSAEUJ3    001NR1RBL  K2D IMB  K1D 01JAN9031DEC90AVBL ONE WAY RBL TO IMB DURING LAKEVIEW AFB                              031928913
+SUSAEUJ3    001NR2                                MORNING AND EVENING SCRAMBLE ACTIVITY                                    031938913
