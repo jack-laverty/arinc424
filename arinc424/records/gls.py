@@ -2,7 +2,7 @@
 class GLS():
 
     def read(self, r):
-        if int(r[38]) < 2:
+        if int(r[21]) < 2:
             # primary record
             return [
                 ("Record Type",                         r[0]),
@@ -32,7 +32,7 @@ class GLS():
             ]
         else:
             # continuation record
-            match r[39]:
+            match r[22]:
                 case 'A':
                     # standard ARINC continuation containing notes or other
                     # formatted data

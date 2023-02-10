@@ -2,7 +2,7 @@
 class PathPoint():
 
     def read(self, r):
-        if int(r[21]) < 2:
+        if int(r[26]) < 2:
             # primary record
             return [
                 ("Record Type",                             r[0]),
@@ -37,29 +37,29 @@ class PathPoint():
             ]
         else:
             # continuation record
-            match r[22]:
+            match r[27]:
                 case 'A':
                     # standard ARINC continuation containing notes or other
                     # formatted data
                     return [
-                        ("Record Type",                             r[0]),
-                        ("Customer / Area Code",                    r[1:4]),
-                        ("Section Code",                            r[4]+r[12]),
-                        ("Airport Identifier",                      r[6:10]),
-                        ("ICAO Code",                               r[10:12]),
-                        ("Approach Procedure Ident",                r[13:19]),
-                        ("Runway or Helipad Ident",                 r[19:24]),
-                        ("Operation Type",                          r[24:26]),
-                        ("Continuation Record No",                  r[26]),
-                        ("Application Type",                        r[27]),
-                        ("(FPAP) Ellipsoid Height",                 r[28:34]),
-                        ("(FPAP) Orthometric Height",               r[34:40]),
-                        ("(LTP) Orthometric Height",                r[40:46]),
-                        ("Approach Type Identifier",                r[46:56]),
-                        ("GNSS Channel Number",                     r[56:61]),
-                        ("Helicopter Procedure Course",             r[71:123]),
-                        ("File Record No",                          r[123:128]),
-                        ("Cycle Date",                              r[128:132]),
+                        ("Record Type",                      r[0]),
+                        ("Customer / Area Code",             r[1:4]),
+                        ("Section Code",                     r[4]+r[12]),
+                        ("Airport Identifier",               r[6:10]),
+                        ("ICAO Code",                        r[10:12]),
+                        ("Approach Procedure Ident",         r[13:19]),
+                        ("Runway or Helipad Ident",          r[19:24]),
+                        ("Operation Type",                   r[24:26]),
+                        ("Continuation Record No",           r[26]),
+                        ("Application Type",                 r[27]),
+                        ("(FPAP) Ellipsoid Height",          r[28:34]),
+                        ("(FPAP) Orthometric Height",        r[34:40]),
+                        ("(LTP) Orthometric Height",         r[40:46]),
+                        ("Approach Type Identifier",         r[46:56]),
+                        ("GNSS Channel Number",              r[56:61]),
+                        ("Helicopter Procedure Course",      r[71:123]),
+                        ("File Record No",                   r[123:128]),
+                        ("Cycle Date",                       r[128:132]),
                     ]
                 case 'B':
                     # combined controlling agency/call sign and formatted
