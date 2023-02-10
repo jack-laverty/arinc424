@@ -1,0 +1,8 @@
+
+**Examples from ARINC-424 18 Spec.**
+
+HELIPORT (HA)
+(With Flight Planning Continuations)
+
+SUSAH KKENK1AKAHHELO1110000NASY N47440610W122153300E019300996250SEA K1180018000CU00Y050100  KENMORE AIR TERMINAL           045328807
+SUSAH KKENK1AKAH     2PKZSEKZSE                                                                                            045338807

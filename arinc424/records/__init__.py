@@ -22,3 +22,5 @@ from .fir_uir import FIR_UIR  # noqa: F401
 from .enroute_comms import EnrouteComms  # noqa: F401
 from .gate import Gate  # noqa: F401
 from .restrictive_airspace import RestrictiveAirspace  # noqa: F401
+from .path_point import PathPoint  # noqa: F401
+from .gls import GLS  # noqa: F401

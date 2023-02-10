@@ -11,6 +11,7 @@ from .records import Airport,\
                      FIR_UIR,\
                      FlightPlanning,\
                      Gate,\
+                     GLS,\
                      Heliport,\
                      HeliportComms,\
                      Holding,\
@@ -21,6 +22,7 @@ from .records import Airport,\
                      MSA,\
                      MORA,\
                      NDBNavaid,\
+                     PathPoint,\
                      RestrictiveAirspace,\
                      Runway,\
                      SIDSTARApp,\
@@ -53,8 +55,10 @@ class Record():
     code_dict['PI'] = LocalizerGlideslope()
     code_dict['PL'] = MLS()
     code_dict['PM'] = LocalizerMarker()
+    code_dict['PP'] = PathPoint()
     code_dict['PR'] = FlightPlanning()
     code_dict['PS'] = MSA()
+    code_dict['PT'] = GLS()
     code_dict['PV'] = AirportCommunication()
     code_dict['HA'] = Heliport()
     code_dict['HV'] = HeliportComms()

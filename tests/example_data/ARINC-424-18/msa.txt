@@ -1,0 +1,8 @@
+
+**Examples from ARINC-424 18 Spec.**
+
+MINIMUM SECTOR ALTITUDE (MSA) (PS)
+
+SUSAP KSEAK1SDONDOK1PC            0 25180062270071360034                                                                   048118612
+SUSAP KSEAK1SPARKKK1PC            0 25180062360045                                                                         048128704
+SUSAP KSEAKISSEA KID              0 25180062360034                                                                         048138612

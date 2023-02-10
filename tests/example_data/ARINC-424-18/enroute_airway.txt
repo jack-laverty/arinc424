@@ -1,0 +1,53 @@
+SUSAER       C1415       0010F0T  K2D 0V    CB AA                   252012400000 UNKNN     FL450                           030308803
+SUSAER       C1415       0020REDOOK2EA0EEC  CB                      000000002510                                           030318702
+SUSAER       C1416       0010F0T  K2D 0V    CB AA                   305013300000 UNKNN     FL450                           030328704
+SUSAER       C1416       0020DAASHK2EA0EEC  CB                      000000003050                                           030338902
+SUSAER       C1418       0010H0M  K1D 0V    CB AA                   210013800000 UNKNN     FL450                           030348704
+SUSAER       C1418       0020SEDARK1EA0EEC  CB                      000000002100                                           030358110
+SUSAER       C1419       0010F0T  K2D 0V    CB AA                   216013700000 UNKNN     FL450                           030369704
+SUSAER       C1419       0020HEMLOK1EA0EEC  CB                      000000002160                                           030378110
+SUSAER       C1486       0010F0T  K2D 0V    CB AA                   285019600000 UNKNN     FL450                           030388803
+SUSAER       C1486       0020REDOOK2EA0EEC  CB                      000000002850                                           030398803
+SUSAER       J1          0570OAK  K2D 0V C  OH AA                   343014203010 1800022000FL450                           030400000
+SUSAER       J1          0580RBL  K2D 0V    OH AA                   330014603420 1800022000FL450                           030400000
+SUSAER       J1          0590OED  K2D 0V    OH AA                   345019703290 1800022000FL450                           030400000
+SUSAER       J1          0600BTG  K2D 0V    OH AA                   345006503430 1800022000FL450                           030400000
+SUSAER       J1          0610ALDERK1EA0T  H OH AA                   345003703450 1800022000FL450                           030400000
+SUSAER       J1          0620SEA  K1D 0VEC  OH                      000000003450                                           030458207
+SUSAER       J110        0010OAK  K2D 0V C  OH AA                   138007000000 18000     FL450                           030468704
+SUSAER       J110        0030SNS  K2D 0V    OH AA                   064008801380 18000     FL450                           030478704
+SUSAER       J110        0040CZQ  K2D 0V C  OH AA                   086002600670 24000     FL450                           030488704
+SUSAER       J110        0050PINIKK2EA0R    OH AA                   086003400960 24000     FL450                           030498704
+SUSAER       J110        0055MITELK2EA0R    OH AA                   086011700860 24000     FL450                           030508704
+SUSAER       J20         0210PDT  K1D 0V C  OH AA                   290008202750 18000     FL450                           030828704
+SUSAER       J20         0220YKM  K1D 0V    OH AAY                  284005402880 18000     FL450                           030838704
+SUSAER       J20         0225RADDYK1EA0R    OH AAY                  281003902840 18000     FL450                           030848704
+SUSAER       J20         0230SEA  K1D 0VEC  OH                      000000002810                                           030858110
+SUSAER       J3          0010OAK  K2D 0V C  OH AA                   343014200000 18000     FL450                           030868704
+SUSAER       J3          0020RBL  K2D 0V C  OH AAY                  010016303420 18000     FL450                           030878704
+SUSAER       J3          0030LKV  K1D 0V C  OH AAY                  356013400100 18000     FL450                           030888704
+SUSAER       J3          0040IMB  K1D 0V C  OH AA                   006019503550 18000     FL450                           030898704
+SUSAER       V105        0220YERINK2EA0E    OL AA                   299003102990 10000     17999                           031678704
+SUSAER       V105        0230CHIMEK2EA0E    OL AA                   299001502990 10000     17999                           031688704
+SUSAER       V105        0240FMG  K2D 0VEC  OL                      000000002990                                           031698603
+SUSAER       V107        0120CITIEK2EA0R    OL AA                   313002003130 07000     17999                           031708704
+SUSAER       V107        0130PXN  K2D 0V C  OL AA                   296003403130 07000     17999                           031718704
+SUSAER       V107        0140CATHEK2EA0E    OL AA                   296002602960 07000     17999                           031728704
+SUSAER       V107        0150VINCOK2EA0R    OL AA                   294002502960 06000     17999                           031738704
+SUSAER       V107        0160MABRYK2EA0R    OL AA                   294002602960 05500     17999                           031748704
+SUSAER       V107        0170MISONK2EA0T    OL AA                   294002502960 04500     17999                           031758704
+SUSAER       V107        0180IMPLYK2EA0T    OL AA                   294002502960 04500     17999                           031768704
+SUSAER       V107        0190DECOTK2EA0T    OL AA                   294000502940 04500     17999                           031778704
+SUSAER       V107        0200OAK  K2D 0V C  OL AA                   288001602940 05000     17999                           031788704
+SUSAER       V107        0210COMMOK2D 0E    OL AA                   288000802880 05000     17999                           031798704
+SUSAER       V107        0220OMIRAK2D 0T    OL AA                   288001302880 05000     17999                           031808704
+SUSAER       V107        0230PYE  K2D 0V C  OL AA                   289001502880 05000     17999                           031818704
+SUSAER       V107        0240BOARSK2EA0EE   OL                      000000002890                                           031828206
+SUSAER       V108        0050STS  K2D 0V    OL AA                   118002900000 04500     17999                           031838704
+SUSAER       V108        0060SGD  K2D 0V    OL AA                   294002502960 03000     17999                           031848704
+SUSAER       V108        0070CROITK2EA0E    OL AA                   294000502940 03000     17999                           031858704
+SUSAER       V108        0080CCR  K2D 0V    OL AA                   288000802880 03000     17999                           031868704
+SUSAER       V108        0090PITTSK2EA0E    OL AA                   288001302880 03500     17999                           031878902
+SUSAER       V108        0100OAKESK2EA0E    OL AA                   289001502880 02000     17999                           031888902
+SUSAER       V108        0110LODDIK2EA0E    OL AA                   289001502880 02000     17999                           031898704
+SUSAER       V108        0120LIN  K2D 0VEC  OL                      000000002890                                           031908110

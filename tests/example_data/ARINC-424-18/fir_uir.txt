@@ -1,0 +1,24 @@
+
+**Examples from ARINC-424 18 Spec.**
+
+UIR/FIR (UF)
+
+SUSAUFKZSEZQZXF00100CZVR    13N G N48200000W128000000                           17999          AA SEATTLE                  059648809
+SUSAUFKZSEZQZXF00200CZVR        H N48300000W125000000                                                                      059658804
+SUSAUFKZSEZQZXF00300CZVR        G N48300000W124450000                                                                      059668809
+SUSAUFKZSEZQZXF00400CZVR        G N48132015W123314105                                                                      059678809
+SUSAUFKZSEZQZXF00S00CZVR        G W48163607W123150796                                                                      059688809
+SUSAUFKZSEZQZXF00600CZVR        G N48251928W123065473                                                                      059698809
+SUSAUFKZSEZQZXF00700CZVR        G N48412300W123151982                                                                      059708809
+SUSAUFKZSEZQZXF00800CZVR        G N48455181W122595674                                                                      059718809
+SUSAUFKZSEZQZXF00900CZVR        G N48491916W122595780                                                                      059728809
+SUSAUFKZSEZQZXF01000CZVR        H N49000000W123182562                                                                      059738804
+SUSAUFKZSEZQZXF01050CZVR        H N49000000W121300000                                                                      059748804
+SUSAUFKZSEZQZXF01100C2VR        H N49000000W121000000                                                                      059758804
+SUSAUFKZSEZQZXF01200CZVR        H N49000000W120300000                                                                      059768804
+SUSAUFKZSEZQZXF01300CZVR        H N49000000W120000000                                                                      059778804
+SUSAUFKZSEZQZXF01400CZVR        H N49000000W119300000                                                                      059788804
+SUSAUFKZSEZQZXF01500CZVR        H N49000000W119000000                                                                      059798804
+SUSAUFKZSEZQZXF01600CZVR        H N49000000W118300000                                                                      059808804
+SUSAUFKZSEZQZXF01700C2VR        H N49000000W118000000                                                                      059818804
+SUSAUFKZSEZQZXF01800CZVR        H N49000000W117300000                                                                      059828804
