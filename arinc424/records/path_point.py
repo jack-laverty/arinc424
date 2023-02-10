@@ -41,6 +41,16 @@ class PathPoint():
                 case 'A':
                     # standard ARINC continuation containing notes or other
                     # formatted data
+                    return
+                case 'B':
+                    # combined controlling agency/call sign and formatted
+                    # time of operation
+                    return
+                case 'C':
+                    # call sign/controlling agency continuation
+                    return
+                case 'E':
+                    # primary record extension
                     return [
                         ("Record Type",                      r[0]),
                         ("Customer / Area Code",             r[1:4]),
@@ -61,16 +71,6 @@ class PathPoint():
                         ("File Record No",                   r[123:128]),
                         ("Cycle Date",                       r[128:132]),
                     ]
-                case 'B':
-                    # combined controlling agency/call sign and formatted
-                    # time of operation
-                    return
-                case 'C':
-                    # call sign/controlling agency continuation
-                    return
-                case 'E':
-                    # primary record extension
-                    return
                 case 'L':
                     # VHF Navaid Limitation Continuation
                     return
