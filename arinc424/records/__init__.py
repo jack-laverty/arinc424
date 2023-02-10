@@ -24,3 +24,5 @@ from .gate import Gate  # noqa: F401
 from .restrictive_airspace import RestrictiveAirspace  # noqa: F401
 from .path_point import PathPoint  # noqa: F401
 from .gls import GLS  # noqa: F401
+from .controlled_airspace import ControlledAirspace  # noqa: F401
+from .heliport_terminal_waypoint import HeliportTerminalWaypoint  # noqa: F401

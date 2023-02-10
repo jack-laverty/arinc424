@@ -1,8 +1,11 @@
 
 class RestrictiveAirspace():
 
+    cont_idx = 24
+    app_idx = 25
+
     def read(self, r):
-        if int(r[21]) < 2:
+        if int(r[self.cont_idx]) < 2:
             # primary record
             return [
                 ("Record Type",                         r[0]),
@@ -33,7 +36,7 @@ class RestrictiveAirspace():
             ]
         else:
             # continuation record
-            match r[22]:
+            match r[self.app_idx]:
                 case 'A':
                     # standard ARINC continuation containing notes or other
                     # formatted data
@@ -62,12 +65,38 @@ class RestrictiveAirspace():
                         ("File Record No",                      r[123:128]),
                         ("Cycle Date",                          r[128:132])
                     ]
+                    return
                 case 'B':
                     # combined controlling agency/call sign and formatted
                     # time of operation
                     return
                 case 'C':
                     # call sign/controlling agency continuation
+                    return [
+                        ("Record Type",                         r[0]),
+                        ("Customer / Area Code",                r[1:4]),
+                        ("Section Code",                        r[4:6]),
+                        ("ICAO Code",                           r[6:8]),
+                        ("Restrictive Type",                    r[8]),
+                        ("Restrictive Airspace Designation",    r[9:19]),
+                        ("Multiple Code",                       r[19]),
+                        ("Sequence Number",                     r[20:24]),
+                        ("Continuation Record No",              r[24]),
+                        ("Application Type",                    r[25]),
+                        ("Time Code",                           r[26]),
+                        ("NOTAM",                               r[27]),
+                        ("Time Indicator",                      r[27]),
+                        ("Time of Operations",                  r[29:39]),
+                        ("Time of Operations",                  r[39:49]),
+                        ("Time of Operations",                  r[49:59]),
+                        ("Time of Operations",                  r[59:69]),
+                        ("Time of Operations",                  r[69:79]),
+                        ("Time of Operations",                  r[79:89]),
+                        ("Time of Operations",                  r[89:99]),
+                        ("Controlling Agency",                  r[99:123]),
+                        ("File Record No",                      r[123:128]),
+                        ("Cycle Date",                          r[128:132])
+                    ]
                     return
                 case 'E':
                     # primary record extension
@@ -126,22 +155,7 @@ class RestrictiveAirspace():
                     return
                 case 'S':
                     # simulation application continuation
-                    return [
-                        ("Record Type",                         r[0]),
-                        ("Customer / Area Code",                r[1:4]),
-                        ("Section Code",                        r[4]+r[12]),
-                        ("Airport ICAO Identifier",             r[6:10]),
-                        ("ICAO Code",                           r[10:12]),
-                        ("Runway Identifier",                   r[13:18]),
-                        ("Continuation Record No",              r[21]),
-                        ("Application Type",                    r[22]),
-                        ("Runway True Bearing",                 r[51:56]),
-                        ("True Bearing Source",                 r[56]),
-                        ("TDZE Location",                       r[65]),
-                        ("Touchdown Zone Elevation",            r[66:71]),
-                        ("File Record No",                      r[123:128]),
-                        ("Cycle Date",                          r[128:132]),
-                    ]
+                    return
                 case 'W':
                     # an airport or heliport procedure data continuation
                     # with SBAS use authorization information

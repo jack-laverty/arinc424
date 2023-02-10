@@ -1,0 +1,26 @@
+
+**Examples from ARINC-424 18 Spec.**
+
+ENROUTE WAYPOINT (EA)
+(With Flight Planning Continuations)
+
+SUSAEAENRT   26FLW K21    I D   N36442340W121282270                       E0156     NAS        B     FLW306/D126           021528110
+SUSAEAENRT   26FLW K22PKZOAKZOA                                                                                            021538701
+SUSAEAENRT   ALFOR K11    R F L N44183310W123090510                       E0187     NAS        P     ALFOR                 021648207
+SUSAEAENRT   ALFOR K12PKZSEKZSE                                                                                            021658613
+SUSAEAENRT   ALTAM K21    R Z L N37484410W121444580                       E0160     NAS        P     ALTAM                 021668613
+SUSAEAENRT   ALTAM K22PKZOAKZOA                                                                                            021678701
+SUSAEAENRT   BRINY K21    RF  L N37181740W122393800                       E0159     NAS        P     BRINY                 021668613
+SUSAEAENRT   BRINY K22PKZOAKZOA                                                                                            021678701
+SUSAEAENRT   BTG32 K11    I   L N45345140W121524960                       E0190     NAS        B     BTG089/DLS234         021668613
+SUSAEAENRT   BTG32 K12PKZSEKZSE                                                                                            021678701
+SUSAEAENRT   BTG51 K11    I   L N44522830W122361410                       E0189     NAS        B     BTG160/EUG010         021668613
+SUSAEAENRT   BTG51 K12PKZSEKZSE                                                                                            021678701
+SUSAEAENRT   LOFAL K11    R Z L N47503790W122401980                       E0203     NAS        P     LOFAL                 021668613
+SUSAEAENRT   LOFAL K22PKZOAKZOA                                                                                            021678701
+SUSAEAENRT   MOGNB K21    N   B N41433840W122285050                       E0175     NAS        Q     MONTAGUE              021668613
+SUSAEAENRT   MOGNB K22PKZOAKZOA                                                                                            021678701
+SUSAEAENRT   ODESS K11    R Z H N47081310W117582330                       E0188     NAS        P     ODESS                 021668613
+SUSAEAENRT   ODESS K12PKZSEKZSE                                                                                            021678701
+SUSAEAENRT   SHOEY K21    R Z L N36444462W122075863                       E0157     NAS        P     SHOEY                 021668613
+SUSAEAENRT   SHOEY K22PKZOAKZOA                                                                                            021678701

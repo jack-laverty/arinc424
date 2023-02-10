@@ -6,6 +6,7 @@ from .records import Airport,\
                      Airway,\
                      AirportCommunication,\
                      AirwayRestricted,\
+                     ControlledAirspace,\
                      CruisingTables,\
                      EnrouteComms,\
                      FIR_UIR,\
@@ -14,6 +15,7 @@ from .records import Airport,\
                      GLS,\
                      Heliport,\
                      HeliportComms,\
+                     HeliportTerminalWaypoint,\
                      Holding,\
                      LocalizerGlideslope,\
                      LocalizerMarker,\
@@ -55,15 +57,18 @@ class Record():
     code_dict['PI'] = LocalizerGlideslope()
     code_dict['PL'] = MLS()
     code_dict['PM'] = LocalizerMarker()
+    code_dict['PN'] = NDBNavaid()  # terminal
     code_dict['PP'] = PathPoint()
     code_dict['PR'] = FlightPlanning()
     code_dict['PS'] = MSA()
     code_dict['PT'] = GLS()
     code_dict['PV'] = AirportCommunication()
     code_dict['HA'] = Heliport()
+    code_dict['HC'] = HeliportTerminalWaypoint()
     code_dict['HV'] = HeliportComms()
     code_dict['TC'] = CruisingTables()
     code_dict['AS'] = MORA()
+    code_dict['UC'] = ControlledAirspace()
     code_dict['UF'] = FIR_UIR()
     code_dict['UR'] = RestrictiveAirspace()
 

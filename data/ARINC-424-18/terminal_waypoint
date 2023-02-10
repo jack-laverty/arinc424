@@ -1,0 +1,30 @@
+
+**Examples from ARINC-424 18 Spec.**
+
+ENROUTE WAYPOINT (PC)
+(With Flight Planning Continuations)
+
+SUSAP KSEAK1CANVIL K11    RCF   N47370820W122183010                       E0201                P   ANVIL                   045728804
+SUSAP KSEAK1CANVIL K12PKZSEKZSE                                                                                            045738613
+SUSAP KSEAK1CBEAVR K11    R D   N44371085W122183020                       E0201                P   BEAVR                   045748804
+SUSAP KSEAK1CBEAVR K12PKZSEKZSE                                                                                            045758613
+SUSAP KSEAK1CBISSL K11    R E   N47103130W121315750                       E0197                P   BISSL                   045768304
+SUSAP KSEAK1CBISSL K12PKZSEKZSE                                                                                            045778613
+SUSAP KSEAK1CDONDO K11    O F   N47215090W122182790                       E0200                 O  OM RW34R DONDO          045788110
+SUSAP KSEAK1CDONDO K12PKZSEKZSE                                                                                            045798613
+SUSAP KSEAK1CFACTS K11    R Z   N47090850W122182790                       E0199                P   FACTS                   045808304
+SUSAP KSEAK1CFACTS K12PKZSEKZSE                                                                                            045818613
+SUSAP KSEAK1CFF16L K11    IAF   N47315580W122183020                       E0201                T   SEA338/D5.8             045828804
+SUSAP KSEAK1CFF16L K12PKZSEKZSE                                                                                            045838613
+SUSAP KSEAK1CFF34L K11    IAF   N47215010W122183020                       E0200                T   SEA158/D4.3             045848804
+SUSAP KSEAK1CFF34L K12PKZSEKZSE                                                                                            045858613
+SUSAP KSEAK1CFINNY K11    R E   N46374050W122183020                       E0196                P   FINNY                   045868304
+SUSAP KSEAK1CFINNY K12PKZSEKZSE                                                                                            045878613
+SUSAP KSEAK1CGRAME K11    R E   N46560520W122183020                       E0198                P   GRAME                   045888804
+SUSAP KSEAK1CGRAME K12PKZSEKZSE                                                                                            045898613
+SUSAP KSEAK1CMILLT K11    RCF   N47150990W122183020                       E0199                P   MILLT                   045908804
+SUSAP KSEAK1CMILLT K12PKZSEKZSE                                                                                            045918613
+SUSAP KSEAK1CPARKK K11    RAF   N47315720W122182060                       E0201                P   PARKK                   045928804
+SUSAP KSEAK1CPARKK K12PKZSEKZSE                                                                                            045938613
+SUSAP KSEAK1CTHUNN K11    R E   N47060860W122183020                       E0198                P   THUNN                   045948811
+SUSAP KSEAK1CTHUNN K12PKZSEKZSE                                                                                            045958613
