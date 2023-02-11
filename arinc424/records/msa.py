@@ -1,14 +1,22 @@
 
 class MSA():
 
+    cont_idx = 38
+    app_idx = 39
+
+    def __init__(self, heliport) -> None:
+        self.heliport = heliport
+
     def read(self, r):
-        if int(r[38]) < 2:
+        if int(r[self.cont_idx]) < 2:
             # primary record
             return [
                 ("Record Type",                         r[0]),
                 ("Customer / Area Code",                r[1:4]),
                 ("Section Code",                        r[4]+r[12]),
-                ("Airport Identifier",                  r[6:10]),
+                ("Airport Identifier" if self.heliport is False
+                 else "Heliport Identifier",
+                 r[6:10]),
                 ("ICAO Code",                           r[10:12]),
                 ("MSA Center",                          r[13:17]),
                 ("ICAO Code",                           r[18:20]),
@@ -42,7 +50,7 @@ class MSA():
             ]
         else:
             # continuation record
-            match r[39]:
+            match r[self.app_idx]:
                 case 'A':
                     # standard ARINC continuation containing notes or other
                     # formatted data
@@ -50,7 +58,9 @@ class MSA():
                         ("Record Type",                         r[0]),
                         ("Customer / Area Code",                r[1:4]),
                         ("Section Code",                        r[4]+r[12]),
-                        ("Airport Identifier",                  r[6:10]),
+                        ("Airport Identifier" if self.heliport is False
+                         else "Heliport Identifier",
+                         r[6:10]),
                         ("ICAO Code",                           r[10:12]),
                         ("MSA Center",                          r[13:17]),
                         ("ICAO Code",                           r[18:20]),

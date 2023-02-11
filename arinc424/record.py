@@ -38,43 +38,47 @@ class Record():
         # print() TODO: Error Handling
         return None
 
-    code_dict = defaultdict(def_val)
-    code_dict['D '] = VHFNavaid()
-    code_dict['DB'] = NDBNavaid()
-    code_dict['EA'] = Waypoint(True)
-    code_dict['EM'] = Marker()
-    code_dict['EP'] = Holding()
-    code_dict['ER'] = Airway()
-    code_dict['EU'] = AirwayRestricted()
-    code_dict['EV'] = EnrouteComms()
-    code_dict['PG'] = Runway()
-    code_dict['PA'] = Airport()
-    code_dict['PB'] = Gate()
-    code_dict['PC'] = Waypoint(False)
-    code_dict['PD'] = SIDSTARApp()
-    code_dict['PE'] = SIDSTARApp()
-    code_dict['PF'] = SIDSTARApp()
-    code_dict['PI'] = LocalizerGlideslope()
-    code_dict['PL'] = MLS()
-    code_dict['PM'] = LocalizerMarker()
-    code_dict['PN'] = NDBNavaid()  # terminal
-    code_dict['PP'] = PathPoint()
-    code_dict['PR'] = FlightPlanning()
-    code_dict['PS'] = MSA()
-    code_dict['PT'] = GLS()
-    code_dict['PV'] = AirportCommunication()
-    code_dict['HA'] = Heliport()
-    code_dict['HC'] = HeliportTerminalWaypoint()
-    code_dict['HV'] = HeliportComms()
-    code_dict['TC'] = CruisingTables()
-    code_dict['AS'] = MORA()
-    code_dict['UC'] = ControlledAirspace()
-    code_dict['UF'] = FIR_UIR()
-    code_dict['UR'] = RestrictiveAirspace()
+    records = defaultdict(def_val)
+    records['D '] = VHFNavaid()
+    records['DB'] = NDBNavaid()
+    records['EA'] = Waypoint(True)
+    records['EM'] = Marker()
+    records['EP'] = Holding()
+    records['ER'] = Airway()
+    records['EU'] = AirwayRestricted()
+    records['EV'] = EnrouteComms()
+    records['PG'] = Runway()
+    records['PA'] = Airport()
+    records['PB'] = Gate()
+    records['PC'] = Waypoint(False)
+    records['PD'] = SIDSTARApp()
+    records['PE'] = SIDSTARApp()
+    records['PF'] = SIDSTARApp()
+    records['HD'] = SIDSTARApp()
+    records['HE'] = SIDSTARApp()
+    records['HF'] = SIDSTARApp()
+    records['PI'] = LocalizerGlideslope()
+    records['PL'] = MLS()
+    records['PM'] = LocalizerMarker()
+    records['PN'] = NDBNavaid()  # terminal
+    records['PP'] = PathPoint()
+    records['PR'] = FlightPlanning()
+    records['PS'] = MSA(False)
+    records['PT'] = GLS()
+    records['PV'] = AirportCommunication()
+    records['HA'] = Heliport()
+    records['HC'] = HeliportTerminalWaypoint()
+    records['HS'] = MSA(True)
+    records['HV'] = HeliportComms()
+    records['TC'] = CruisingTables()
+    records['AS'] = MORA()
+    records['UC'] = ControlledAirspace()
+    records['UF'] = FIR_UIR()
+    records['UR'] = RestrictiveAirspace()
 
     def __init__(self):
         self.code = ''
-        self.raw_string = ''
+        self.raw = ''
         self.fields = []
 
     # to quickly discard lines that are not records
@@ -92,23 +96,16 @@ class Record():
         return True
 
     def read(self, line):
-        self.raw_string = line
-        match line[4]:
-            case 'D' | 'E' | 'A' | 'T' | 'U':
-                self.code = line[4:6]
-            case 'P' | 'H':
-                self.code = line[4] + line[12]
-            case _:
-                return False
-
-        x = self.code_dict[self.code]
-        if x is None:
+        self.raw = line
+        if line[4:6] in self.records.keys():
+            self.code = line[4:6]
+        elif (line[4] + line[12]) in self.records.keys():
+            self.code = line[4] + line[12]
+        else:
             return False
-
-        self.fields = x.read(line)
+        self.fields = self.records[self.code].read(line)
         if self.fields is None:
             return False
-
         return True
 
     def parse_code(self):

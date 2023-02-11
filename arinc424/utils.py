@@ -9,7 +9,7 @@ def scan_folder(path):
 
 def scan_file(file):
     k, t = 0, 0
-    f2 = open("./debug/unknown_records", "a")
+    f2 = open("./unknown_records", "a")
     with open(file) as f:
         for line in f.readlines():
             r = a424.Record()
