@@ -135,7 +135,7 @@ class Runway():
                         ("Fix Identifier",                      r[29:34]),
                         ("ICAO Code",                           r[34:36]),
                         ("Section Code",                        r[36:38]),
-                        ("Continuation Record Number",          r[38]),
+                        ("Continuation Record No",              r[38]),
                         ("Application Type",                    r[39]),
                         ("Start/End Indicator",                 r[40]),
                         ("Start/End Date",                      r[41:45]),

@@ -72,7 +72,7 @@ class MLS():
                         ("Back Azimuth Bearing Source",         r[100]),
                         ("Azimuth True Bearing",                r[101:106]),
                         ("Azimuth Bearing Source",              r[106]),
-                        ("Glide Path Heigh at Landing Threshold",
+                        ("Glide Path Height at Landing Threshold",
                          r[107:109]),
                         ("File Record No",                      r[123:128]),
                         ("Cycle Date",                          r[128:132])

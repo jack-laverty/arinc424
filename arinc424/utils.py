@@ -23,3 +23,7 @@ def scan_file(file):
     print('\n{}\n{:9}{}\n{:9}{}'.format(file.name,
                                         'Parsed:', k,
                                         'Unknown:', t-k))
+
+
+def filter(line, sub) -> bool:
+    return sub in line
