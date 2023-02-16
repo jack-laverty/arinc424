@@ -81,26 +81,23 @@ class Record():
         self.raw = ''
         self.fields = []
 
-    # to quickly discard lines that are not records
     def validate(self, line):
         line = line.strip()
         if line.startswith('S' or 'T') is False:
-            # print("Not S or T")
             return False
         if len(line) != 132:
-            # print("Not 132")
             return False
         if line[-9:].isnumeric() is False:
-            # print("Not last 9 chars numeric")
             return False
         return True
 
     def read(self, line):
         self.raw = line
-        if line[4:6] in self.records.keys():
-            self.code = line[4:6]
-        elif (line[4] + line[12]) in self.records.keys():
-            self.code = line[4] + line[12]
+        x1, x2 = line[4:6], line[4] + line[12]
+        if x1 in self.records.keys():
+            self.code = x1
+        elif x2 in self.records.keys():
+            self.code = x2
         else:
             return False
         self.fields = self.records[self.code].read(line)
