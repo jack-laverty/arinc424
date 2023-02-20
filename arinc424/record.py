@@ -35,7 +35,6 @@ from .records import Airport,\
 class Record():
 
     def def_val():
-        # print() TODO: Error Handling
         return None
 
     records = defaultdict(def_val)

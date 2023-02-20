@@ -9,6 +9,7 @@ def scan_folder(path):
 
 def scan_file(file):
     k, t = 0, 0
+    print("reading: {}".format(file.name))
     f2 = open("./unknown_records", "a")
     with open(file) as f:
         for line in f.readlines():
@@ -20,9 +21,18 @@ def scan_file(file):
                 else:
                     f2.write('{}\n{}'.format(r.parse_code(), line))
     f2.close()
-    print('\n{}\n{:9}{}\n{:9}{}'.format(file.name,
-                                        'Parsed:', k,
-                                        'Unknown:', t-k))
+
+
+def scan_file_and_dec(file):
+    k, t = 0, 0
+    with open(file) as f:
+        for line in f.readlines():
+            r = a424.Record()
+            if r.validate(line):
+                t = t+1
+                if r.read(line):
+                    k = k+1
+                    print("\n{}".format(r.decode()))
 
 
 def filter(line, sub) -> bool:
