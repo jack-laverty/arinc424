@@ -19,10 +19,6 @@ def altitude(val):
     return val.lstrip('0') + " ft" if val.isnumeric() else '<Blank>'
 
 
-def dme_el(val):
-    return altitude(val)
-
-
 def gps(val):
     x = len(val)
     if val.strip() == '':
@@ -42,7 +38,8 @@ def text(val):
 
 
 def def_val():
-    raise ValueError('Unsupported Value') 
+    return "bad value"
+    raise ValueError('Unsupported Value')
 
 
 def def_fn():
@@ -156,7 +153,6 @@ Half Degree of Latitude'
 
 
 def nfi(val):
-
     match val[0]:
         case 'A':
             return 'Abeam Fix'
@@ -383,9 +379,8 @@ def daylight(val):
             raise ValueError('Invalid Daylight')
 
 
-# TODO: less sketchy
 def time(val):
-    if val[0].isalpha():
+    if val[0].isalpha() and val[1:].isnumeric():
         x = string.ascii_uppercase.index(val[0]) - 12
         y = 'GMT +' + str(x) if x >= 0 else 'GMT -' + str(x)
         return y + ':' + str(val[1:])
@@ -403,6 +398,76 @@ def area(val):
             raise ValueError('Invalid Area')
 
 
+def commtype(key):
+    ct = defaultdict(def_val)
+    ct['ACC'] = 'Area Control Center'
+    ct['ACP'] = 'Airlift Command Post'
+    ct['AIR'] = 'Air to Air'
+    ct['APP'] = 'Approach Control'
+    ct['ARR'] = 'Arrival Control'
+    ct['ASO'] = 'Automatic Surface Observing System (ASOS)'
+    ct['ATI'] = 'Automatic Terminal Info Service (ATIS)'
+    ct['AWI'] = 'Airport Weather Information Broadcast (AWIB)'
+    ct['AWO'] = 'Automatic Weather Observing Service (AWOS)'
+    ct['AWS'] = 'Aerodrome Weather Information Services (AWIS)'
+    ct['CLD'] = 'Clearance Delivery'
+    ct['CPT'] = 'Clearance, Pre-Taxi'
+    ct['CTA'] = 'Control Area (Terminal)'
+    ct['CTL'] = 'Control'
+    ct['DEP'] = 'Departure Control'
+    ct['DIR'] = 'Director (Approach Control Radar)'
+    ct['EFS'] = 'Enroute Flight Advisory Service (EFAS)'
+    ct['EMR'] = 'Emeergency'
+    ct['FSS'] = 'Flight Service Station'
+    ct['GCO'] = 'Ground Comm Outlet'
+    ct['GND'] = 'Ground Control'
+    ct['GTE'] = 'Gate Control'
+    ct['HEL'] = 'Helicopter Frequency'
+    ct['INF'] = 'Information'
+    ct['MIL'] = 'Military Frequency'
+    ct['MUL'] = 'Multicom'
+    ct['OPS'] = 'Operations'
+    ct['PAL'] = 'Pilot Activated Lighting (Note 1)'
+    ct['RDO'] = 'Radio'
+    ct['RDR'] = 'Radar'
+    ct['RFS'] = 'Remote Flight Service Station (RFSS)'
+    ct['RMP'] = 'Ramp/Taxi Control'
+    ct['RSA'] = 'Airport Radar Service Area (ARSA)'
+    ct['TCA'] = 'Terminal Control Area'
+    ct['TMA'] = 'Terminal Control Area'
+    ct['TML'] = 'Terminal'
+    ct['TRS'] = 'Terminal Radar Service Area (TRSA)'
+    ct['TWE'] = 'Transcribe Weather Broadcast (TWEB)'
+    ct['TWR'] = 'Tower, Air Traffic Control'
+    ct['UAC'] = 'Upper Area Control'
+    ct['UNI'] = 'Unicom'
+    ct['VOL'] = 'Volmet'
+    return ct[key] if ct[key] != "bad value" else key + " - BAD VALUE"
+
+
+def frequnit(key):
+    d = defaultdict(def_val)
+    d['H'] = 'High Frequency (3000 kHz - 30,000 kHz)'
+    d['V'] = 'Very High Frequency (30,000 kHz - 200 MHz)'
+    d['U'] = 'Ultra High Frequency (200 MHz - 3000 MHz)'
+    d['C'] = 'Communication Channel for 8.33 kHz spacing'
+    return d[key] if d[key] != "bad value" else key + " - BAD VALUE"
+
+
+def mod(key):
+    d = defaultdict(def_val)
+    d['A'] = 'Amplitude Modulated'
+    d['F'] = 'Frequency Modulated'
+    return d[key] if d[key] != "bad value" else key + " - BAD VALUE"
+
+
+def h24(key):
+    d = defaultdict(def_val)
+    d['Y'] = '24-Hour Availability'
+    d['N'] = 'Part-time Availability'
+    return d[key] if d[key] != "bad value" else key + " - BAD VALUE"
+
+
 decode_fn = defaultdict(def_fn)
 decode_fn["Airport Elevation"] = altitude
 decode_fn["Airport Reference Pt. Latitude"] = gps
@@ -412,16 +477,22 @@ decode_fn["Class Collocation"] = colloc
 decode_fn["Class Facility"] = facility
 decode_fn["Class Info"] = info
 decode_fn["Class Power"] = power
+decode_fn["Communications Freq"] = freq
+decode_fn["Communications Type"] = commtype
+decode_fn["Continuation Record No"] = cont
 decode_fn["Cruise Level From"] = altitude
 decode_fn["Cruise Level To"] = altitude
 decode_fn["Customer / Area Code"] = area
 decode_fn["Cycle Date"] = cycle
 decode_fn["Daylight Indicator"] = daylight
-decode_fn["DME Elevation"] = dme_el
+decode_fn["DME Elevation"] = altitude
 decode_fn["DME Latitude"] = gps
 decode_fn["DME Longitude"] = gps
-decode_fn["Frequency Protection"] = freq
+decode_fn["Facility Elevation"] = altitude
 decode_fn["Frequency"] = freq
+decode_fn["Frequency Protection"] = freq
+decode_fn["Frequency Units"] = frequnit
+decode_fn["H24 Indicator"] = h24
 decode_fn["IFR Capability"] = ifr
 decode_fn["Latitude"] = gps
 decode_fn["Longest Runway"] = rwy
@@ -431,6 +502,7 @@ decode_fn["Marker Latitude"] = gps
 decode_fn["Marker Longitude"] = gps
 decode_fn["Marker Power"] = mk_power
 decode_fn["Marker Shape"] = mk_shape
+decode_fn["Modulation"] = mod
 decode_fn["Name Format Indicator"] = nfi
 decode_fn["NDB Class Collocation"] = colloc
 decode_fn["NDB Class Facility"] = facility
