@@ -90,8 +90,6 @@ class Airport():
 
     def read(self, line):
         if int(line[21]) < 2:
-            # continuation record # 0 = primary record with no continuation
-            # continuation record # 1 = primary record with continuation
             return self.read_primary(line)
         else:
             match line[22]:
