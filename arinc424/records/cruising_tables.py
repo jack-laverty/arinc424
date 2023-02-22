@@ -1,6 +1,9 @@
 
 class CruisingTables():
 
+    def read(self, line):
+        return self.read_primary(line)
+
     def read_primary(self, r):
         return [
             ("Record Type",                             r[0]),
@@ -26,6 +29,3 @@ class CruisingTables():
             ("File Record No",                          r[123:128]),
             ("Cycle Date",                              r[128:132]),
         ]
-
-    def read(self, line):
-        return self.read_primary(line)
