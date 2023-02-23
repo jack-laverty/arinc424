@@ -1,6 +1,20 @@
 
 class Marker():
 
+    cont_idx = 21
+    app_idx = 22
+
+    def read(self, line):
+        if int(line[self.cont_idx]) < 2:
+            return self.read_primary(line)
+        else:
+            match line[self.app_idx]:
+                case 'A':
+                    return self.read_cont(line)
+                case _:
+                    print("Unsupported Application Type")
+                    return []
+
     def read_primary(self, r):
         return [
             ("Record Type",                         r[0]),
@@ -36,16 +50,3 @@ class Marker():
             ("File Record No",                      r[123:128]),
             ("Cycle Date",                          r[128:132])
         ]
-
-    def read(self, line):
-        if int(line[21]) < 2:
-            # continuation record # 0 = primary record with no continuation
-            # continuation record # 1 = primary record with continuation
-            return self.read_primary(line)
-        else:
-            match line[22]:
-                case 'A':
-                    return self.read_cont(line)
-                case _:
-                    print("Unsupported Application Type")
-                    return []

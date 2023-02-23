@@ -388,14 +388,15 @@ def time(val):
         raise ValueError('Invalid Time Zone')
 
 
-def area(val):
-    match val:
+def area(key):
+    match key:
         case 'USA':
             return 'USA - United States of America'
         case 'AFR':
             return 'AFR -  Africa'
         case _:
-            raise ValueError('Invalid Area')
+            print("bad value", key)
+            # raise ValueError('Invalid Area')
 
 
 def commtype(key):

@@ -2,7 +2,6 @@
 class FlightPlanning():
 
     def read(self, r):
-        # primary record
         return [
             ("Record Type",                         r[0]),
             ("Customer / Area Code",                r[1:4]),
