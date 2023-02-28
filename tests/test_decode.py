@@ -13,6 +13,9 @@ class TestDecode(unittest.TestCase):
     def test_2(self):
         a424.scan_file_and_dec('./data/ARINC-424-18/cruising_tables')
 
+    # def test_3(self):
+    #     a424.scan_file_and_dec('./data/ARINC-424-18/enroute_airway')
+
 
 if __name__ == '__main__':
     unittest.main()

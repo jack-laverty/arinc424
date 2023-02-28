@@ -1,6 +1,23 @@
 
 class HeliportComms():
 
+    cont_idx = 25
+    app_idx = 26
+
+    def read(self, line):
+        if int(line[self.cont_idx]) < 2:
+            # continuation record # 0 = primary record with no continuation
+            # continuation record # 1 = primary record with continuation
+            return self.read_primary(line)
+        else:
+            match line[self.app_idx]:
+                case 'A':
+                    return self.read_cont(line)
+                # case '?':
+                #     return self.read_cont1(line)
+                case _:
+                    raise ValueError('Unknown Application Type')
+
     def read_primary(self, r):
         return [
             ("Record Type",                         r[0]),
@@ -83,35 +100,3 @@ class HeliportComms():
             ("File Record No",                      r[123:128]),
             ("Cycle Date",                          r[128:132])
         ]
-
-    def read(self, line):
-        if int(line[25]) < 2:
-            # continuation record # 0 = primary record with no continuation
-            # continuation record # 1 = primary record with continuation
-            return self.read_primary(line)
-        else:
-            match line[26]:
-                case 'A':
-                    return self.read_cont(line)
-                case 'C':
-                    return
-                case 'E':
-                    return
-                case 'L':
-                    return
-                case 'N':
-                    return
-                case 'T':
-                    return
-                case 'U':
-                    return
-                case 'V':
-                    return
-                case 'P':
-                    return
-                case 'Q':
-                    return
-                case 'S':
-                    return
-                case _:
-                    raise ValueError('Unknown Application Type')

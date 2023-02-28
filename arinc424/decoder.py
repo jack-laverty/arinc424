@@ -469,6 +469,20 @@ def h24(key):
     return d[key] if d[key] != "bad value" else key + " - BAD VALUE"
 
 
+def cruise_ident(key):
+    if key == 'AA':
+        return 'ICAO Standard Cruise Table'
+    elif key == 'AO':
+        return 'Exception to ICAO Cruise Table'
+    elif key.isalpha() and key[1] == key[0]:
+        return 'Modified Cruise Table'
+    elif key.isalpha() and key[1] == 'O':
+        return 'Exception to Modified Cruise Table'
+    else:
+        print(key)
+        raise ValueError("Invalid Cruise Table Ident")
+
+
 decode_fn = defaultdict(def_fn)
 decode_fn["Airport Elevation"] = altitude
 decode_fn["Airport Reference Pt. Latitude"] = gps
@@ -481,6 +495,7 @@ decode_fn["Class Power"] = power
 decode_fn["Communications Freq"] = freq
 decode_fn["Communications Type"] = commtype
 decode_fn["Continuation Record No"] = cont
+# decode_fn["Cruise Table Identifier"] = cruise_ident
 decode_fn["Cruise Level From"] = altitude
 decode_fn["Cruise Level To"] = altitude
 decode_fn["Customer / Area Code"] = area
