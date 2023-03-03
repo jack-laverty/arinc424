@@ -483,11 +483,39 @@ def cruise_ident(key):
         raise ValueError("Invalid Cruise Table Ident")
 
 
+def magtrue(key):
+    if key == 'M':
+        return 'Magnetic'
+    elif key == 'T':
+        return 'True'
+    else:
+        raise ValueError("Invalid Mag/True Indicator")
+
+
+def course(val):
+    return float(val)/10
+
+
+def turn(key):
+    if key == 'R':
+        return 'Right'
+    elif key == 'L':
+        return 'Left'
+    else:
+        raise ValueError("Invalid Turn Direction")
+
+
+def legtime(val):
+    return '{}m {}s'.format(int(val[0]), int(val[1])*6)
+
+
 decode_fn = defaultdict(def_fn)
 decode_fn["Airport Elevation"] = altitude
 decode_fn["Airport Reference Pt. Latitude"] = gps
 decode_fn["Airport Reference Pt. Longitude"] = gps
 decode_fn["Application Type"] = app
+decode_fn["Course To"] = course
+decode_fn["Course From"] = course
 decode_fn["Class Collocation"] = colloc
 decode_fn["Class Facility"] = facility
 decode_fn["Class Info"] = info
@@ -510,10 +538,13 @@ decode_fn["Frequency Protection"] = freq
 decode_fn["Frequency Units"] = frequnit
 decode_fn["H24 Indicator"] = h24
 decode_fn["IFR Capability"] = ifr
+decode_fn["Inbound Holding Course"] = course
 decode_fn["Latitude"] = gps
+decode_fn["Leg Time"] = legtime
 decode_fn["Longest Runway"] = rwy
 decode_fn["Longitude"] = gps
 decode_fn["Magnetic Variation"] = mag
+decode_fn["Mag/True"] = magtrue
 decode_fn["Marker Latitude"] = gps
 decode_fn["Marker Longitude"] = gps
 decode_fn["Marker Power"] = mk_power
@@ -538,6 +569,7 @@ decode_fn["Speed Limit Altitude"] = altitude
 decode_fn["Time Zone"] = time
 decode_fn["Transition Altitude"] = altitude
 decode_fn["Transition Level"] = altitude
+decode_fn["Turn Direction"] = turn
 decode_fn["Vertical Separation"] = altitude
 decode_fn["VOR Latitude"] = text
 decode_fn["VOR Longitude"] = text
