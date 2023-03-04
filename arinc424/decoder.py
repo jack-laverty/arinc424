@@ -509,11 +509,55 @@ def legtime(val):
     return '{}m {}s'.format(int(val[0]), int(val[1])*6)
 
 
+def wpusage(key):
+    if key == ' B':
+        return 'HI and LO Altitude'
+    elif key == ' H':
+        return 'HI Altitude'
+    elif key == ' L':
+        return 'LO Altitude'
+    elif key == '  ':
+        return 'Terminal Use Only'
+    elif key == 'R ':
+        return 'RNAV'
+    else:
+        raise ValueError("Invalid Waypoint Usage")
+
+
+def boundary(key):
+    if key == 'C ':
+        return 'Circle'
+    elif key == 'G ':
+        return 'Great Circle'
+    elif key == 'H ':
+        return 'Rhumb Line'
+    elif key == 'L ':
+        return 'Counter Clockwise ARC'
+    elif key == 'R ':
+        return 'Clockwise ARC'
+    elif key == ' E':
+        return 'End of description, return to origin point'
+    else:
+        raise ValueError("Invalid Boundary Via")
+
+
+def firuir(key):
+    if key == 'F':
+        return 'FIR'
+    elif key == 'U ':
+        return 'UIR'
+    elif key == 'B':
+        return 'Combined FIR/UIR'
+    else:
+        raise ValueError("Invalid FIR/UIR Indicator")
+
+
 decode_fn = defaultdict(def_fn)
 decode_fn["Airport Elevation"] = altitude
 decode_fn["Airport Reference Pt. Latitude"] = gps
 decode_fn["Airport Reference Pt. Longitude"] = gps
 decode_fn["Application Type"] = app
+decode_fn["Boundary Via"] = boundary
 decode_fn["Course To"] = course
 decode_fn["Course From"] = course
 decode_fn["Class Collocation"] = colloc
@@ -533,6 +577,9 @@ decode_fn["DME Elevation"] = altitude
 decode_fn["DME Latitude"] = gps
 decode_fn["DME Longitude"] = gps
 decode_fn["Facility Elevation"] = altitude
+decode_fn["FIR/UIR Indicator"] = firuir
+decode_fn["FIR/UIR Latitude"] = gps
+decode_fn["FIR/UIR Longitude"] = gps
 decode_fn["Frequency"] = freq
 decode_fn["Frequency Protection"] = freq
 decode_fn["Frequency Units"] = frequnit
@@ -576,3 +623,4 @@ decode_fn["VOR Longitude"] = text
 decode_fn["Waypoint Latitude"] = gps
 decode_fn["Waypoint Longitude"] = gps
 decode_fn["Waypoint Type"] = waypoint
+decode_fn["Waypoint Usage"] = wpusage
