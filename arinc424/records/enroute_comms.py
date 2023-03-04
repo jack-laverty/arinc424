@@ -9,12 +9,12 @@ class EnrouteComms():
             return self.read_primary(r)
         else:
             match r[self.app_idx]:
-                case 'A':
+                case ' ':
                     return self.read_cont(r)
                 case 'T':
                     return self.read_timeop(r)
                 case _:
-                    raise ValueError('{}\n{}\n{}'.format("Unknown Value",
+                    raise ValueError('{}\n{}\n{}'.format("Unknown Application",
                                                          r[self.app_idx], r))
 
     def read_primary(self, r):

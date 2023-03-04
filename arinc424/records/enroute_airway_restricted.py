@@ -14,7 +14,7 @@ class AirwayRestricted():
                 case 'NR':
                     return self.primary_note_restriction(line)
                 case _:
-                    raise ValueError("Unknown Value")
+                    raise ValueError("Unknown Restricted Airway Type")
         else:
             match line[15:17]:
                 case 'AE':
@@ -24,7 +24,7 @@ class AirwayRestricted():
                 case 'NR':
                     return self.cont_note_restriction(line)
                 case _:
-                    raise ValueError("Unknown Value")
+                    raise ValueError("Unknown Restricted Airway Type")
 
     def primary_altitude_exclude(self, r):
         return [
