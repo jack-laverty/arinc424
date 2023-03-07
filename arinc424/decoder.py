@@ -38,8 +38,7 @@ def text(val):
 
 
 def def_val():
-    return "bad value"
-    raise ValueError('Unsupported Value')
+    return "ERROR: bad value"
 
 
 def def_fn():
@@ -393,10 +392,12 @@ def area(key):
         case 'USA':
             return 'USA - United States of America'
         case 'AFR':
-            return 'AFR -  Africa'
+            return 'AFR - Africa'
+        case 'XYZ':
+            # TODO: wat
+            return 'XYZ - No Idea'
         case _:
-            print("bad value", key)
-            # raise ValueError('Invalid Area')
+            raise ValueError('Invalid Area')
 
 
 def commtype(key):

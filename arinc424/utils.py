@@ -24,14 +24,11 @@ def scan_file(file):
 
 
 def scan_file_and_dec(file):
-    k, t = 0, 0
     with open(file) as f:
         for line in f.readlines():
             r = a424.Record()
             if r.validate(line):
-                t = t+1
                 if r.read(line):
-                    k = k+1
                     print("\n{}".format(r.decode()))
 
 

@@ -82,14 +82,11 @@ class Record():
 
     def validate(self, line):
         line = line.strip()
-        if line.startswith('S' or 'T') is False:
-            print(1)
+        if line.startswith(('S', 'T')) is False:
             return False
         if len(line) != 132:
-            print(2)
             return False
         if line[-9:].isnumeric() is False:
-            print(3)
             return False
         return True
 
