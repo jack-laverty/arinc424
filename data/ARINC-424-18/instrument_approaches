@@ -4,37 +4,37 @@
 INSTRUMENT APPROACH PROCEDURES (PF)
 (With Flight Planning Continuations)
 
-SUSAP KSEAK1FI16R  APAE   010PAE  K1D 1V      FC PAE K1      0000000016100131    + 02000     18000                         047128504
-SUSAP KSEAK1FI16R  APAE   010PAE  K1D 2P                                 0131                                              047138613
-SUSAP KSEAK1FI16R  APAE   020ANVILK1PC1EE     CF ISZIK1      3383011016100040    + 02000                                   047148401
-SUSAP KSEAK1FI16R  APAE   020ANVILK1PC2P                                 0040                                              047158613
-SUSAP KSEAK1FI16R  I      010ANVILK1PC1E  I   IF ISZIK1      33830110            I 0200000190018000                        047168504
-SUSAP KSEAK1FI16R  I      010ANVILK1PC2P                                 0000                                              047178804
-SUSAP KSEAK1FI16R  I      020PARKKK1PC1E  F   CF ISZIK1      3397005815800052    G 0190001803          000PARKK K1PC       047188904
-SUSAP KSEAK1FI16R  I      020PARKKK1PC2P                                 0052                                              047198613
-SUSAP KSEAK1FI16R  I      030RW16RK1PG1G      CF ISZIK1      3383001715800041      01809                                   047208506
-SUSAP KSEAK1FI16R  I      030RW16RK1PG2P                                 0041                                              047218613
-SUSAP KSEAK1FI16R  I      040DONDOK1PC1E M    CF SEA K1      1577004315720060      01800                                   047228506
-SUSAP KSEAK1FI16R  I      040DONDOK1PC2P                                 0060                                              047238613
-SUSAP KSEAK1FI16R  I      050DONDOK1PC1EE HR  HM                     3380T010      01800                                   047248506
-SUSAP KSEAK1FI16R  I      050DONDOK1PC2P                                 0000                                              047258506
-SUSAP KSEAK1FI16L  APAE   010PAE  K1D 1V      FC PAE K1      0000000016200123    + 02100     18000                         047448709
-SUSAP KSEAK1FI16L  APAE   010PAE  K1D 2P                                 0131                                              047458613
-SUSAP KSEAK1FI16L  APAE   020FF16LK1PC1EE     CF PAE K1      1603022315800100    + 02100                                   047468709
-SUSAP KSEAK1FI16L  APAE   020FF16LK1PC2P                                 0100                                              047478613
-SUSAP KSEAK1FI16L  ASEA   010SEA  K1D 1V      IF                                             18000                         047488602
-SUSAP KSEAK1FI16L  ASEA   010SEA  K1D 2P                                 0000                                              047498804
-SUSAP KSEAK1FI16L  ASEA   020FF16LK1PC1E      IF SEA K1      3380005833900058    + 02100                                   045508709
-SUSAP KSEAK1FI16L  ASEA   020FF16LK1PC2P                                 0058                                              045518613
-SUSAP KSEAK1FI16L  ASEA   030FF1GLK1PC1E      CF SEA K1      3380005829300100    + 02100                                   047528709
-SUSAP KSEAK1FI16L  ASEA   030FF16LK1PC2P                                 0100                                              047538613
-SUSAP KSEAK1FI16L  ASEA   040FF16LKIPC1EE M   CF SEA K1      3380005815800100    + 01800                                   047548304
-SUSAP KSEAK1FI16L  ASEA   040FF16LK1PC2P                                 0100                                              047558613
-SUSAP KSEAK1FI16L  V      020FF16LK1PC1EE HR  HM             33800058              01800     18000      SEA   K1D          047568904
-SUSAP KSEAK1FI16L  V      020FF16LK1PC2P                                 0000                                              047578804
-SUSAP KSEAK1FI16L  V      030RW16LK1PG1G                     3407001615800041      00478            -310                   047588507
-SUSAP KSEAK1FI16L  V      030RW16LK1PG2P                                 0041                                              047598613
-SUSAP KSEAK1FI16L  V      040DONDOK1PC1E                     1577004315850059    + 01800                                   047608711
-SUSAP KSEAK1FI16L  V      040DONDOK1PC2P                                 0059                                              047618613
-SUSAP KSEAK1FI16L  V      050DONDOK1PC1EE HR  HM             3380T010                                                      047628507
-SUSAP KSEAK1FI16L  V      050DONDOK1PC2P                         0000                                                      047638804
+SUSAP KSEAK1FI16R  APAE   010PAE  K1D 1V       FC PAE K1      0000000016100131    + 02000     18000                        047128504
+SUSAP KSEAK1FI16R  APAE   010PAE  K1D 2P                                  0131                                             047138613
+SUSAP KSEAK1FI16R  APAE   020ANVILK1PC1EE      CF ISZIK1      3383011016100040    + 02000                                  047148401
+SUSAP KSEAK1FI16R  APAE   020ANVILK1PC2P                                  0040                                             047158613
+SUSAP KSEAK1FI16R  I      010ANVILK1PC1E  I    IF ISZIK1      33830110            I 020000190018000                        047168504
+SUSAP KSEAK1FI16R  I      010ANVILK1PC2P                                  0000                                             047178804
+SUSAP KSEAK1FI16R  I      020PARKKK1PC1E  F    CF ISZIK1      3397005815800052    G 0190001803          000PARKK K1PC      047188904
+SUSAP KSEAK1FI16R  I      020PARKKK1PC2P                                  0052                                             047198613
+SUSAP KSEAK1FI16R  I      030RW16RK1PG1G       CF ISZIK1      3383001715800041      01809                                  047208506
+SUSAP KSEAK1FI16R  I      030RW16RK1PG2P                                  0041                                             047218613
+SUSAP KSEAK1FI16R  I      040DONDOK1PC1E M     CF SEA K1      1577004315720060      01800                                  047228506
+SUSAP KSEAK1FI16R  I      040DONDOK1PC2P                                  0060                                             047238613
+SUSAP KSEAK1FI16R  I      050DONDOK1PC1EE HR   HM                     3380T010      01800                                  047248506
+SUSAP KSEAK1FI16R  I      050DONDOK1PC2P                                  0000                                             047258506
+SUSAP KSEAK1FI16L  APAE   010PAE  K1D 1V       FC PAE K1      0000000016200123    + 02100     18000                        047448709
+SUSAP KSEAK1FI16L  APAE   010PAE  K1D 2P                                  0131                                             047458613
+SUSAP KSEAK1FI16L  APAE   020FF16LK1PC1EE      CF PAE K1      1603022315800100    + 02100                                  047468709
+SUSAP KSEAK1FI16L  APAE   020FF16LK1PC2P                                  0100                                             047478613
+SUSAP KSEAK1FI16L  ASEA   010SEA  K1D 1V       IF                                             18000                        047488602
+SUSAP KSEAK1FI16L  ASEA   010SEA  K1D 2P                                  0000                                             047498804
+SUSAP KSEAK1FI16L  ASEA   020FF16LK1PC1E       IF SEA K1      3380005833900058    + 02100                                  045508709
+SUSAP KSEAK1FI16L  ASEA   020FF16LK1PC2P                                  0058                                             045518613
+SUSAP KSEAK1FI16L  ASEA   030FF1GLK1PC1E   R   PI SEA K1      3380005829300100    + 02100                                  047528709
+SUSAP KSEAK1FI16L  ASEA   030FF16LK1PC2P                                  0100                                             047538613
+SUSAP KSEAK1FI16L  ASEA   040FF16LKIPC1E       CF SEA K1      3380005815800100    + 01800                                  047548304
+SUSAP KSEAK1FI16L  ASEA   040FF16LK1PC2P                                  0100                                             047558613
+SUSAP KSEAK1FI16L  V      020FF16LK1PC1E  F    IF SEA K1      33800058              01800     18000        SEA   K1D       047568904
+SUSAP KSEAK1FI16L  V      020FF16LK1PC2P                                  0000                                             047578804
+SUSAP KSEAK1FI16L  V      030RW16LK1PG1G       CF SEA K1      3407001615800041      00478              -310                047588507
+SUSAP KSEAK1FI16L  V      030RW16LK1PG2P                                  0041                                             047598613
+SUSAP KSEAK1FI16L  V      040DONDOK1PC1E M     CF SEA K1      1577004315850059    + 01800                                  047608711
+SUSAP KSEAK1FI16L  V      040DONDOK1PC2P                                  0059                                             047618613
+SUSAP KSEAK1FI16L  V      050DONDOK1PC1EE HR   HM                     3380T010                                             047628507
+SUSAP KSEAK1FI16L  V      050DONDOK1PC2P                                  0000                                             047638804

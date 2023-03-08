@@ -40,6 +40,9 @@ class TestDecode(unittest.TestCase):
     def test_11(self):
         a424.scan_file_and_dec('./data/ARINC-424-18/heliport_communications')
 
+    def test_12(self):
+        a424.scan_file_and_dec('./data/ARINC-424-18/instrument_approaches')
+
 
 if __name__ == '__main__':
     unittest.main()

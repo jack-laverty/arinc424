@@ -352,8 +352,10 @@ def mag(val):
 def speed(val):
     if val.isnumeric():
         return val + " knots (IAS)"
+    elif val.strip() == '':
+        return '<Blank>'
     else:
-        raise ValueError('Invalid speed')
+        raise ValueError('Invalid speed' + val)
 
 
 def mil(val):
@@ -502,8 +504,11 @@ def turn(key):
         return 'Right'
     elif key == 'L':
         return 'Left'
+    # TODO check this
+    elif key == 'E' or key == ' ':
+        return 'Either'
     else:
-        raise ValueError("Invalid Turn Direction")
+        raise ValueError("Invalid Turn Direction" + key)
 
 
 def legtime(val):
