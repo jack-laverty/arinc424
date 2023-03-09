@@ -91,6 +91,8 @@ class Record():
         return True
 
     def read(self, line):
+        if self.validate(line) is False:
+            return False
         self.raw = line
         x1, x2 = line[4:6], line[4] + line[12]
         if x1 in self.records.keys():
