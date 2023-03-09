@@ -3,13 +3,14 @@ import arinc424.record as a424
 
 
 def scan_folder(path):
+    os.remove("./unknown_records")
     for file in os.scandir(path):
-        scan_file(file)
+        scan_file(path + '/' + file.name)
 
 
 def scan_file(file):
     k, t = 0, 0
-    print("reading: {}".format(file.name))
+    print("reading: {}".format(file))
     f2 = open("./unknown_records", "a")
     with open(file) as f:
         for line in f.readlines():

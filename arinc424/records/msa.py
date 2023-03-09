@@ -10,67 +10,67 @@ class MSA():
     def read(self, r):
         if int(r[self.cont_idx]) < 2:
             # primary record
-            return [
-                ("Record Type",                         r[0]),
-                ("Customer / Area Code",                r[1:4]),
-                ("Section Code",                        r[4]+r[12]),
-                ("Airport Identifier" if self.heliport is False
-                 else "Heliport Identifier",
-                 r[6:10]),
-                ("ICAO Code",                           r[10:12]),
-                ("MSA Center",                          r[13:17]),
-                ("ICAO Code",                           r[18:20]),
-                ("Section Code",                        r[20:22]),
-                ("Multiple Code",                       r[22]),
-                ("Continuation Record No",              r[39]),
-                ("Sector Bearing",                      r[42:48]),
-                ("Sector Altitude",                     r[48:51]),
-                ("Sector Radius",                       r[51:53]),
-                ("Sector Bearing",                      r[53:59]),
-                ("Sector Altitude",                     r[59:62]),
-                ("Sector Radius",                       r[62:64]),
-                ("Sector Bearing",                      r[64:70]),
-                ("Sector Altitude",                     r[70:73]),
-                ("Sector Radius",                       r[73:75]),
-                ("Sector Bearing",                      r[75:81]),
-                ("Sector Altitude",                     r[81:84]),
-                ("Sector Radius",                       r[84:86]),
-                ("Sector Bearing",                      r[86:92]),
-                ("Sector Altitude",                     r[92:95]),
-                ("Sector Radius",                       r[95:97]),
-                ("Sector Bearing",                      r[97:103]),
-                ("Sector Altitude",                     r[103:106]),
-                ("Sector Radius",                       r[106:108]),
-                ("Sector Bearing",                      r[108:114]),
-                ("Sector Altitude",                     r[114:117]),
-                ("Sector Radius",                       r[117:119]),
-                ("Magnetic/True Bearing",               r[119]),
-                ("File Record No",                      r[123:128]),
-                ("Cycle Date",                          r[128:132])
-            ]
+            return {
+                "Record Type":                         r[0],
+                "Customer / Area Code":                r[1:4],
+                "Section Code":                        r[4]+r[12],
+                "Airport Identifier" if self.heliport is False
+                else "Heliport Identifier":
+                r[6:10],
+                "ICAO Code":                           r[10:12],
+                "MSA Center":                          r[13:17],
+                "ICAO Code (2)":                       r[18:20],
+                "Section Code (2)":                    r[20:22],
+                "Multiple Code":                       r[22],
+                "Continuation Record No":              r[39],
+                "Sector Bearing":                      r[42:48],
+                "Sector Altitude":                     r[48:51],
+                "Sector Radius":                       r[51:53],
+                "Sector Bearing (2)":                  r[53:59],
+                "Sector Altitude (2)":                 r[59:62],
+                "Sector Radius (2)":                   r[62:64],
+                "Sector Bearing (3)":                  r[64:70],
+                "Sector Altitude (3)":                 r[70:73],
+                "Sector Radius (3)":                   r[73:75],
+                "Sector Bearing (4)":                  r[75:81],
+                "Sector Altitude (4)":                 r[81:84],
+                "Sector Radius (4)":                   r[84:86],
+                "Sector Bearing (5)":                  r[86:92],
+                "Sector Altitude (5)":                 r[92:95],
+                "Sector Radius (5)":                   r[95:97],
+                "Sector Bearing (6)":                  r[97:103],
+                "Sector Altitude (6)":                 r[103:106],
+                "Sector Radius (6)":                   r[106:108],
+                "Sector Bearing (7)":                  r[108:114],
+                "Sector Altitude (7)":                 r[114:117],
+                "Sector Radius (7)":                   r[117:119],
+                "Magnetic/True Bearing":               r[119],
+                "File Record No":                      r[123:128],
+                "Cycle Date":                          r[128:132]
+            }
         else:
             # continuation record
             match r[self.app_idx]:
                 case 'A':
                     # standard ARINC continuation containing notes or other
                     # formatted data
-                    return [
-                        ("Record Type",                         r[0]),
-                        ("Customer / Area Code",                r[1:4]),
-                        ("Section Code",                        r[4]+r[12]),
-                        ("Airport Identifier" if self.heliport is False
-                         else "Heliport Identifier",
-                         r[6:10]),
-                        ("ICAO Code",                           r[10:12]),
-                        ("MSA Center",                          r[13:17]),
-                        ("ICAO Code",                           r[18:20]),
-                        ("Section Code",                        r[20:22]),
-                        ("Multiple Code",                       r[22]),
-                        ("Continuation Record No",              r[39]),
-                        ("Notes",                               r[40:109]),
-                        ("File Record No",                      r[123:128]),
-                        ("Cycle Date",                          r[128:132])
-                    ]
+                    return {
+                        "Record Type":                         r[0],
+                        "Customer / Area Code":                r[1:4],
+                        "Section Code":                        r[4]+r[12],
+                        "Airport Identifier" if self.heliport is False
+                        else "Heliport Identifier":
+                        r[6:10],
+                        "ICAO Code (2)":                       r[10:12],
+                        "MSA Center":                          r[13:17],
+                        "ICAO Code (3)":                       r[18:20],
+                        "Section Code (2)":                    r[20:22],
+                        "Multiple Code":                       r[22],
+                        "Continuation Record No":              r[39],
+                        "Notes":                               r[40:109],
+                        "File Record No":                      r[123:128],
+                        "Cycle Date":                          r[128:132]
+                    }
                 case 'B':
                     # combined controlling agency/call sign and formatted
                     # time of operation

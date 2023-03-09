@@ -7,64 +7,64 @@ class RestrictiveAirspace():
     def read(self, r):
         if int(r[self.cont_idx]) < 2:
             # primary record
-            return [
-                ("Record Type",                         r[0]),
-                ("Customer / Area Code",                r[1:4]),
-                ("Section Code",                        r[4:6]),
-                ("ICAO Code",                           r[6:8]),
-                ("Restrictive Type",                    r[8]),
-                ("Restrictive Airspace Designation",    r[9:19]),
-                ("Multiple Code",                       r[19]),
-                ("Sequence Number",                     r[20:24]),
-                ("Continuation Record No",              r[24]),
-                ("Level",                               r[25]),
-                ("Time Code",                           r[26]),
-                ("NOTAM",                               r[27]),
-                ("Boundary Via",                        r[30:32]),
-                ("Latitude",                            r[32:41]),
-                ("Arc Origin Latitude",                 r[51:60]),
-                ("Arc Origin Longitude",                r[60:70]),
-                ("Arc Distance",                        r[70:74]),
-                ("Arc Bearing",                         r[74:78]),
-                ("Lower Limit",                         r[82:86]),
-                ("Unit Indicator",                      r[86]),
-                ("Upper Limit",                         r[87:92]),
-                ("Unit Indicator",                      r[92]),
-                ("Restrictive Airspace Name",           r[93:123]),
-                ("File Record No",                      r[123:128]),
-                ("Cycle Date",                          r[128:132])
-            ]
+            return {
+                "Record Type":                         r[0],
+                "Customer / Area Code":                r[1:4],
+                "Section Code":                        r[4:6],
+                "ICAO Code":                           r[6:8],
+                "Restrictive Type":                    r[8],
+                "Restrictive Airspace Designation":    r[9:19],
+                "Multiple Code":                       r[19],
+                "Sequence Number":                     r[20:24],
+                "Continuation Record No":              r[24],
+                "Level":                               r[25],
+                "Time Code":                           r[26],
+                "NOTAM":                               r[27],
+                "Boundary Via":                        r[30:32],
+                "Latitude":                            r[32:41],
+                "Arc Origin Latitude":                 r[51:60],
+                "Arc Origin Longitude":                r[60:70],
+                "Arc Distance":                        r[70:74],
+                "Arc Bearing":                         r[74:78],
+                "Lower Limit":                         r[82:86],
+                "Unit Indicator":                      r[86],
+                "Upper Limit":                         r[87:92],
+                "Unit Indicator (2)":                  r[92],
+                "Restrictive Airspace Name":           r[93:123],
+                "File Record No":                      r[123:128],
+                "Cycle Date":                          r[128:132]
+            }
         else:
             # continuation record
             match r[self.app_idx]:
                 case 'A':
                     # standard ARINC continuation containing notes or other
                     # formatted data
-                    return [
-                        ("Record Type",                         r[0]),
-                        ("Customer / Area Code",                r[1:4]),
-                        ("Section Code",                        r[4:6]),
-                        ("ICAO Code",                           r[6:8]),
-                        ("Restrictive Type",                    r[8]),
-                        ("Restrictive Airspace Designation",    r[9:19]),
-                        ("Multiple Code",                       r[19]),
-                        ("Sequence Number",                     r[20:24]),
-                        ("Continuation Record No",              r[24]),
-                        ("Application Type",                    r[25]),
-                        ("Time Code",                           r[26]),
-                        ("NOTAM",                               r[27]),
-                        ("Time Indicator",                      r[27]),
-                        ("Time of Operations",                  r[29:39]),
-                        ("Time of Operations",                  r[39:49]),
-                        ("Time of Operations",                  r[49:59]),
-                        ("Time of Operations",                  r[59:69]),
-                        ("Time of Operations",                  r[69:79]),
-                        ("Time of Operations",                  r[79:89]),
-                        ("Time of Operations",                  r[89:99]),
-                        ("Controlling Agency",                  r[99:123]),
-                        ("File Record No",                      r[123:128]),
-                        ("Cycle Date",                          r[128:132])
-                    ]
+                    return {
+                        "Record Type":                         r[0],
+                        "Customer / Area Code":                r[1:4],
+                        "Section Code":                        r[4:6],
+                        "ICAO Code":                           r[6:8],
+                        "Restrictive Type":                    r[8],
+                        "Restrictive Airspace Designation":    r[9:19],
+                        "Multiple Code":                       r[19],
+                        "Sequence Number":                     r[20:24],
+                        "Continuation Record No":              r[24],
+                        "Application Type":                    r[25],
+                        "Time Code":                           r[26],
+                        "NOTAM":                               r[27],
+                        "Time Indicator":                      r[27],
+                        "Time of Operations":                  r[29:39],
+                        "Time of Operations (2)":              r[39:49],
+                        "Time of Operations (3)":              r[49:59],
+                        "Time of Operations (4)":              r[59:69],
+                        "Time of Operations (5)":              r[69:79],
+                        "Time of Operations (6)":              r[79:89],
+                        "Time of Operations (7)":              r[89:99],
+                        "Controlling Agency":                  r[99:123],
+                        "File Record No":                      r[123:128],
+                        "Cycle Date":                          r[128:132]
+                    }
                     return
                 case 'B':
                     # combined controlling agency/call sign and formatted
@@ -72,31 +72,31 @@ class RestrictiveAirspace():
                     return
                 case 'C':
                     # call sign/controlling agency continuation
-                    return [
-                        ("Record Type",                         r[0]),
-                        ("Customer / Area Code",                r[1:4]),
-                        ("Section Code",                        r[4:6]),
-                        ("ICAO Code",                           r[6:8]),
-                        ("Restrictive Type",                    r[8]),
-                        ("Restrictive Airspace Designation",    r[9:19]),
-                        ("Multiple Code",                       r[19]),
-                        ("Sequence Number",                     r[20:24]),
-                        ("Continuation Record No",              r[24]),
-                        ("Application Type",                    r[25]),
-                        ("Time Code",                           r[26]),
-                        ("NOTAM",                               r[27]),
-                        ("Time Indicator",                      r[27]),
-                        ("Time of Operations",                  r[29:39]),
-                        ("Time of Operations",                  r[39:49]),
-                        ("Time of Operations",                  r[49:59]),
-                        ("Time of Operations",                  r[59:69]),
-                        ("Time of Operations",                  r[69:79]),
-                        ("Time of Operations",                  r[79:89]),
-                        ("Time of Operations",                  r[89:99]),
-                        ("Controlling Agency",                  r[99:123]),
-                        ("File Record No",                      r[123:128]),
-                        ("Cycle Date",                          r[128:132])
-                    ]
+                    return {
+                        "Record Type":                         r[0],
+                        "Customer / Area Code":                r[1:4],
+                        "Section Code":                        r[4:6],
+                        "ICAO Code":                           r[6:8],
+                        "Restrictive Type":                    r[8],
+                        "Restrictive Airspace Designation":    r[9:19],
+                        "Multiple Code":                       r[19],
+                        "Sequence Number":                     r[20:24],
+                        "Continuation Record No":              r[24],
+                        "Application Type":                    r[25],
+                        "Time Code":                           r[26],
+                        "NOTAM":                               r[27],
+                        "Time Indicator":                      r[27],
+                        "Time of Operations":                  r[29:39],
+                        "Time of Operations (2)":              r[39:49],
+                        "Time of Operations (3)":              r[49:59],
+                        "Time of Operations (4)":              r[59:69],
+                        "Time of Operations (5)":              r[69:79],
+                        "Time of Operations (6)":              r[79:89],
+                        "Time of Operations (7)":              r[89:99],
+                        "Controlling Agency":                  r[99:123],
+                        "File Record No":                      r[123:128],
+                        "Cycle Date":                          r[128:132]
+                    }
                     return
                 case 'E':
                     # primary record extension
@@ -121,22 +121,22 @@ class RestrictiveAirspace():
                     return
                 case 'P':
                     # a flight planning application continuation
-                    return [
-                        ("Record Type",                         r[0]),
-                        ("Customer / Area Code",                r[1:4]),
-                        ("Section Code",                        r[4:6]),
-                        ("ICAO Code",                           r[6:8]),
-                        ("Restrictive Type",                    r[8]),
-                        ("Restrictive Airspace Designation",    r[9:19]),
-                        ("Multiple Code",                       r[19]),
-                        ("Sequence Number",                     r[20:24]),
-                        ("Continuation Record No",              r[24]),
-                        ("Application Type",                    r[25]),
-                        ("Start/End Indicator",                 r[29]),
-                        ("Start/End Date",                      r[30:41]),
-                        ("File Record No",                      r[123:128]),
-                        ("Cycle Date",                          r[128:132])
-                    ]
+                    return {
+                        "Record Type":                         r[0],
+                        "Customer / Area Code":                r[1:4],
+                        "Section Code":                        r[4:6],
+                        "ICAO Code":                           r[6:8],
+                        "Restrictive Type":                    r[8],
+                        "Restrictive Airspace Designation":    r[9:19],
+                        "Multiple Code":                       r[19],
+                        "Sequence Number":                     r[20:24],
+                        "Continuation Record No":              r[24],
+                        "Application Type":                    r[25],
+                        "Start/End Indicator":                 r[29],
+                        "Start/End Date":                      r[30:41],
+                        "File Record No":                      r[123:128],
+                        "Cycle Date":                          r[128:132]
+                    }
                 case 'Q':
                     # NOTE: ARINC spec appears to give conflicting info here:
 

@@ -7,46 +7,46 @@ class HeliportTerminalWaypoint():
     def read(self, r):
         if int(r[self.cont_idx]) < 2:
             # primary record
-            return [
-                ("Record Type",                         r[0]),
-                ("Customer / Area Code",                r[1:4]),
-                ("Section Code",                        r[4]+r[12]),
-                ("Heliport Identifier",                 r[6:10]),
-                ("ICAO Code",                           r[10:12]),
-                ("Waypoint Identifier",                 r[13:18]),
-                ("ICAO Code",                           r[19:21]),
-                ("Continuation Record No",              r[21]),
-                ("Waypoint Type",                       r[26:29]),
-                ("Waypoint Usage",                      r[29:31]),
-                ("Waypoint Latitude",                   r[32:41]),
-                ("Waypoint Longitude",                  r[41:51]),
-                ("Dynamic Magnetic Variation",          r[74:79]),
-                ("Datum Code",                          r[84:87]),
-                ("Name Format Indicator",               r[95:98]),
-                ("Waypoint Name/Description",           r[98:123]),
-                ("File Record No",                      r[123:128]),
-                ("Cycle Date",                          r[128:132])
-            ]
+            return {
+                "Record Type":                         r[0],
+                "Customer / Area Code":                r[1:4],
+                "Section Code":                        r[4]+r[12],
+                "Heliport Identifier":                 r[6:10],
+                "ICAO Code":                           r[10:12],
+                "Waypoint Identifier":                 r[13:18],
+                "ICAO Code (2)":                       r[19:21],
+                "Continuation Record No":              r[21],
+                "Waypoint Type":                       r[26:29],
+                "Waypoint Usage":                      r[29:31],
+                "Waypoint Latitude":                   r[32:41],
+                "Waypoint Longitude":                  r[41:51],
+                "Dynamic Magnetic Variation":          r[74:79],
+                "Datum Code":                          r[84:87],
+                "Name Format Indicator":               r[95:98],
+                "Waypoint Name/Description":           r[98:123],
+                "File Record No":                      r[123:128],
+                "Cycle Date":                          r[128:132]
+            }
         else:
             # continuation record
             match r[self.app_idx]:
                 case 'A':
                     # standard ARINC continuation containing notes or other
                     # formatted data
-                    return [
-                        ("Record Type",                         r[0]),
-                        ("Customer / Area Code",                r[1:4]),
-                        ("Section Code",                        r[4]+r[12]),
-                        ("Heliport Identifier",                 r[6:10]),
-                        ("ICAO Code",                           r[10:12]),
-                        ("Waypoint Identifier",                 r[13:18]),
-                        ("ICAO Code",                           r[19:21]),
-                        ("Continuation Record No",              r[21]),
-                        ("Application Type",                    r[22]),
-                        ("Notes",                               r[23:92]),
-                        ("File Record No",                      r[123:128]),
-                        ("Cycle Date",                          r[128:132])
-                    ]
+                    return {
+                        "Record Type":                         r[0],
+                        "Customer / Area Code":                r[1:4],
+                        "Section Code":                        r[4]+r[12],
+                        "Heliport Identifier":                 r[6:10],
+                        "ICAO Code":                           r[10:12],
+                        "Waypoint Identifier":                 r[13:18],
+                        "ICAO Code (2)":                       r[19:21],
+                        "Continuation Record No":              r[21],
+                        "Application Type":                    r[22],
+                        "Notes":                               r[23:92],
+                        "File Record No":                      r[123:128],
+                        "Cycle Date":                          r[128:132]
+                    }
                 case 'B':
                     # combined controlling agency/call sign and formatted
                     # time of operation

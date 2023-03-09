@@ -78,7 +78,7 @@ class Record():
     def __init__(self):
         self.code = ''
         self.raw = ''
-        self.fields = []
+        self.fields = {}
 
     def validate(self, line):
         line = line.strip()
@@ -112,8 +112,8 @@ class Record():
             print("{:<32}: {}".format(i[0], i[1]))
 
     def decode(self):
-        for i in self.fields:
-            print("{:<32}: {}".format(i[0], decode_fn[i[0]](i[1])))
+        for key in self.fields:
+            print("{:<32}: {}".format(key, decode_fn[key](self.fields[key])))
 
     def json(self, single_line=True):
         if single_line:

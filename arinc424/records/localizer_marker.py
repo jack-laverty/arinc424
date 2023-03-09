@@ -4,49 +4,49 @@ class LocalizerMarker():
     def read(self, r):
         if int(r[21]) < 2:
             # primary record
-            return [
-                ("Record Type",                         r[0]),
-                ("Customer / Area Code",                r[1:4]),
-                ("Section Code",                        r[4]+r[12]),
-                ("Airport Identifier",                  r[6:10]),
-                ("ICAO Code",                           r[10:12]),
-                ("Localizer Identifier",                r[13:17]),
-                ("Marker Type",                         r[17:20]),
-                ("Continuation Record No",              r[21]),
-                ("Locator Frequency",                   r[22:27]),
-                ("Runway Identifier",                   r[27:32]),
-                ("Marker Latitude",                     r[32:41]),
-                ("Marker Longitude",                    r[41:51]),
-                ("Minor Axis Bearing",                  r[51:55]),
-                ("Locator Latitude",                    r[55:64]),
-                ("Locator Longitude",                   r[64:74]),
-                ("Localizer Class",                     r[74:79]),
-                ("Localizer Facility Characteristics",  r[79:83]),
-                ("Localizer Identifier",                r[84:88]),
-                ("Magnetic Variation",                  r[90:95]),
-                ("Facility Elevation",                  r[97:102]),
-                ("File Record No",                      r[123:128]),
-                ("Cycle Date",                          r[128:132])
-            ]
+            return {
+                "Record Type":                         r[0],
+                "Customer / Area Code":                r[1:4],
+                "Section Code":                        r[4]+r[12],
+                "Airport Identifier":                  r[6:10],
+                "ICAO Code":                           r[10:12],
+                "Localizer Identifier":                r[13:17],
+                "Marker Type":                         r[17:20],
+                "Continuation Record No":              r[21],
+                "Locator Frequency":                   r[22:27],
+                "Runway Identifier":                   r[27:32],
+                "Marker Latitude":                     r[32:41],
+                "Marker Longitude":                    r[41:51],
+                "Minor Axis Bearing":                  r[51:55],
+                "Locator Latitude":                    r[55:64],
+                "Locator Longitude":                   r[64:74],
+                "Localizer Class":                     r[74:79],
+                "Localizer Facility Characteristics":  r[79:83],
+                "Localizer Identifier (2)":            r[84:88],
+                "Magnetic Variation":                  r[90:95],
+                "Facility Elevation":                  r[97:102],
+                "File Record No":                      r[123:128],
+                "Cycle Date":                          r[128:132]
+            }
         else:
             # continuation record
             match r[22]:
                 case 'A':
                     # standard ARINC continuation containing notes or other
                     # formatted data
-                    return [
-                        ("Record Type",                         r[0]),
-                        ("Customer / Area Code",                r[1:4]),
-                        ("Section Code",                        r[4]+r[12]),
-                        ("Airport Identifier",                  r[6:10]),
-                        ("ICAO Code",                           r[10:12]),
-                        ("Localizer Identifier",                r[13:17]),
-                        ("Marker Type",                         r[17:20]),
-                        ("Continuation Record No",              r[21]),
-                        ("Application Type",                    r[22]),
-                        ("File Record No",                      r[123:128]),
-                        ("Cycle Date",                          r[128:132])
-                    ]
+                    return {
+                        "Record Type":                         r[0],
+                        "Customer / Area Code":                r[1:4],
+                        "Section Code":                        r[4]+r[12],
+                        "Airport Identifier":                  r[6:10],
+                        "ICAO Code":                           r[10:12],
+                        "Localizer Identifier":                r[13:17],
+                        "Marker Type":                         r[17:20],
+                        "Continuation Record No":              r[21],
+                        "Application Type":                    r[22],
+                        "File Record No":                      r[123:128],
+                        "Cycle Date":                          r[128:132]
+                    }
                 case 'B':
                     # combined controlling agency/call sign and formatted
                     # time of operation
