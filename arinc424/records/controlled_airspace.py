@@ -53,7 +53,7 @@ class ControlledAirspace():
     def read_cont(self, r):
         # standard ARINC continuation containing notes or other
         # formatted data
-        return {
+        return [
             Field("Record Type",                         r[0],          decoder.field_002),
             Field("Customer / Area Code",                r[1:4],        decoder.field_003),
             Field("Section Code",                        r[4:6],        decoder.field_004),
@@ -79,4 +79,4 @@ class ControlledAirspace():
             Field("Controlling Agency",                  r[99:123],     decoder.field_140),
             Field("File Record No",                      r[123:128],    decoder.field_031),
             Field("Cycle Date",                          r[128:132],    decoder.field_032)
-        }
+        ]
