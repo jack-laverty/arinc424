@@ -1,6 +1,4 @@
 import json
-from .decoder import decode_fn
-from .decoder import section
 from collections import defaultdict
 from .records import Airport,\
                      Airway,\
@@ -78,7 +76,7 @@ class Record():
     def __init__(self):
         self.code = ''
         self.raw = ''
-        self.fields = {}
+        self.fields = []
 
     def validate(self, line):
         line = line.strip()
@@ -106,22 +104,22 @@ class Record():
             return False
         return True
 
-    def parse_code(self):
-        return section(self.code)
-
     def dump(self):
-        for i in self.fields:
-            print("{:<32}: {}".format(i[0], i[1]))
+        for f in self.fields:
+            print("{:<32}: {}".format(f.name, f.value))
 
     def decode(self):
-        for key in self.fields:
-            print("{:<32}: {}".format(key, decode_fn[key](self.fields[key])))
+        for f in self.fields:
+            print("{:<32}: {}".format(f.name, f.decode(self)))
 
     def json(self, single_line=True):
+        d = {}
+        for i in self.fields:
+            d.update({i.name: i.value})
         if single_line:
-            return json.dumps(self.fields)
+            return json.dumps(d)
         else:
-            return json.dumps(self.fields,
+            return json.dumps(d,
                               sort_keys=True,
                               indent=4,
                               separators=(',', ': '))
