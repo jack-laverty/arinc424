@@ -221,36 +221,6 @@ def def_val():
 #                 return 'Localizer Marker without officially published five - letter identifier'
 #             case _:
 #                 return 'Unknown Name Format Indicator'
-#     elif field == "Application Type":
-#         match val:
-#             case 'A':
-#                 return 'Standard ARINC Continuation containing notes or other formatted data'
-#             case 'B':
-#                 return 'Combined Controlling Agency/Call Sign and formatted Time of Operation'
-#             case 'C':
-#                 return 'Call Sign/Controlling Agency Continuation'
-#             case 'E':
-#                 return 'Primary Record Extension'
-#             case 'L':
-#                 return 'VHF Navaid Limitation Continuation'
-#             case 'N':
-#                 return 'Sector Narrative Continuation'
-#             case 'T':
-#                 return 'Time of Operations Continuation "formatted time data"'
-#             case 'U':
-#                 return 'Time of Operations Continuation "Narrative time data"'
-#             case 'V':
-#                 return 'Time of Operations Continuation, Start/End Date'
-#             case 'P':
-#                 return 'Flight Planning Application Continuation'
-#             case 'Q':
-#                 return 'Flight Planning Application Primary Data Continuation'
-#             case 'S':
-#                 return 'Simulation Application Continuation'
-#             case 'W':
-#                 return 'Airport or Heliport Procedure Data Continuation with SBAS use authorization information'
-#             case _:
-#                 return 'Unknown Application Type: ' + str(val)
 #     elif field == "Marker Shape":
 #         match val:
 #             case 'E':
@@ -897,7 +867,35 @@ def field_090(value):
 
 # 5.91 Continuation Record Application Type (APPL)
 def field_091(value):
-    pass
+    match value:
+        case 'A':
+            return 'Standard ARINC Continuation containing notes or other formatted data'
+        case 'B':
+            return 'Combined Controlling Agency/Call Sign and formatted Time of Operation'
+        case 'C':
+            return 'Call Sign/Controlling Agency Continuation'
+        case 'E':
+            return 'Primary Record Extension'
+        case 'L':
+            return 'VHF Navaid Limitation Continuation'
+        case 'N':
+            return 'Sector Narrative Continuation'
+        case 'T':
+            return 'Time of Operations Continuation "formatted time data"'
+        case 'U':
+            return 'Time of Operations Continuation "Narrative time data"'
+        case 'V':
+            return 'Time of Operations Continuation, Start/End Date'
+        case 'P':
+            return 'Flight Planning Application Continuation'
+        case 'Q':
+            return 'Flight Planning Application Primary Data Continuation'
+        case 'S':
+            return 'Simulation Application Continuation'
+        case 'W':
+            return 'Airport or Heliport Procedure Data Continuation with SBAS use authorization information'
+        case _:
+            return 'Unknown Application Type: ' + str(value)
 
 
 # 5.92 Elevation (FAC ELEV)
