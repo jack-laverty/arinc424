@@ -1,122 +1,73 @@
+from arinc424.decoder import Field
+import arinc424.decoder as decoder
+
 
 class PathPoint():
 
-    def read(self, r):
-        if int(r[26]) < 2:
-            # primary record
-            return {
-                "Record Type":                             r[0],
-                "Customer / Area Code":                    r[1:4],
-                "Section Code":                            r[4]+r[12],
-                "Airport Identifier":                      r[6:10],
-                "ICAO Code":                               r[10:12],
-                "Approach Procedure Ident":                r[13:19],
-                "Runway or Helipad Ident":                 r[19:24],
-                "Operation Type":                          r[24:26],
-                "Continuation Record No":                  r[26],
-                "Route Identifier":                        r[27],
-                "SBAS Service Provider Ident":             r[28:30],
-                "Reference Path Data Selector":            r[30:32],
-                "Reference Path Identifier":               r[32:36],
-                "Approach Performance Designator":         r[36],
-                "Landing Threshold Point Latitude":        r[37:48],
-                "Landing Threshold Point Longitude":       r[48:60],
-                "(LTP) Ellipsoid Height":                  r[60:66],
-                "Glide Path Angle":                        r[66:70],
-                "Flight Path Alignment Point Latitude":    r[70:81],
-                "Flight Path Alignment Point Longitude":   r[81:93],
-                "Course Width at Threshold Note 4":        r[93:98],
-                "Length Offset":                           r[98:102],
-                "Path Point TCH":                          r[102:108],
-                "TCH Units Indicator":                     r[108],
-                "HAL":                                     r[109:112],
-                "VAL":                                     r[112:115],
-                "SBAS FAS Data CRC Remainder":             r[115:123],
-                "File Record No":                          r[123:128],
-                "Cycle Date":                              r[128:132]
-            }
+    cont_idx = 26
+    app_idx = 27
+
+    def read(self, line):
+        if int(line[self.cont_idx]) < 2:
+            return self.read_primary(line)
         else:
-            # continuation record
-            match r[27]:
-                case 'A':
-                    # standard ARINC continuation containing notes or other
-                    # formatted data
-                    return
-                case 'B':
-                    # combined controlling agency/call sign and formatted
-                    # time of operation
-                    return
-                case 'C':
-                    # call sign/controlling agency continuation
-                    return
+            match line[self.app_idx]:
                 case 'E':
-                    # primary record extension
-                    return {
-                        "Record Type":                      r[0],
-                        "Customer / Area Code":             r[1:4],
-                        "Section Code":                     r[4]+r[12],
-                        "Airport Identifier":               r[6:10],
-                        "ICAO Code":                        r[10:12],
-                        "Approach Procedure Ident":         r[13:19],
-                        "Runway or Helipad Ident":          r[19:24],
-                        "Operation Type":                   r[24:26],
-                        "Continuation Record No":           r[26],
-                        "Application Type":                 r[27],
-                        "(FPAP) Ellipsoid Height":          r[28:34],
-                        "(FPAP) Orthometric Height":        r[34:40],
-                        "(LTP) Orthometric Height":         r[40:46],
-                        "Approach Type Identifier":         r[46:56],
-                        "GNSS Channel Number":              r[56:61],
-                        "Helicopter Procedure Course":      r[71:123],
-                        "File Record No":                   r[123:128],
-                        "Cycle Date":                       r[128:132]
-                    }
-                case 'L':
-                    # VHF Navaid Limitation Continuation
-                    return
-                case 'N':
-                    # A sector narrative continuation
-                    return
-                case 'T':
-                    # a time of operations continuation
-                    # 'formatted time data'
-                    return
-                case 'U':
-                    # a time of operations continuation
-                    # 'narrative time data'
-                    return
-                case 'V':
-                    # a time of operations continuation
-                    # start/end date
-                    return
-                case 'P':
-                    # a flight planning application continuation
-                    return
-                case 'Q':
-                    # NOTE: ARINC spec appears to give conflicting info here:
-
-                    # 4.1.9.4 - "Flight Planning continuation records are
-                    # designed to carry off-cycle updates to the
-                    # primary record, and cannot carry an Application
-                    # Type column."
-
-                    # 5.91 - Continuation Record Application Type
-                    # 'Q' = Flight Planning Application Primary
-                    # Data Continuation
-
-                    # which is it? do they not carry an application type
-                    # column, or do they carry an application type column
-                    # set to 'Q'?
-                    return
-                case 'S':
-                    # simulation application continuation
-                    return
-                case 'W':
-                    # an airport or heliport procedure data continuation
-                    # with SBAS use authorization information
-                    return
+                    return self.read_ext(line)
                 case _:
-                    # a flight planning application primary data continuation
-                    # see notes above for case 'Q'
-                    # TODO make this less sketchy
-                    return
+                    raise ValueError("bad path point", line[self.app_idx])
+
+    def read_primary(self, r):
+        return [
+            Field("Record Type",                            r[0],           decoder.field_002),
+            Field("Customer / Area Code",                   r[1:4],         decoder.field_003),
+            Field("Section Code",                           r[4]+r[12],     decoder.field_004),
+            Field("Airport Identifier",                     r[6:10],        decoder.field_006),
+            Field("ICAO Code",                              r[10:12],       decoder.field_014),
+            Field("Approach Procedure Ident",               r[13:19],       decoder.field_010),
+            Field("Runway or Helipad Ident",                r[19:24],       decoder.field_046),  # TODO or 180
+            Field("Operation Type",                         r[24:26],       decoder.field_223),
+            Field("Continuation Record No",                 r[26],          decoder.field_016),
+            Field("Route Identifier",                       r[27],          decoder.field_224),
+            Field("SBAS Service Provider Ident",            r[28:30],       decoder.field_255),
+            Field("Reference Path Data Selector",           r[30:32],       decoder.field_256),
+            Field("Reference Path Identifier",              r[32:36],       decoder.field_257),
+            Field("Approach Performance Designator",        r[36],          decoder.field_258),
+            Field("Landing Threshold Point Latitude",       r[37:48],       decoder.field_267),
+            Field("Landing Threshold Point Longitude",      r[48:60],       decoder.field_268),
+            Field("(LTP) Ellipsoid Height",                 r[60:66],       decoder.field_225),
+            Field("Glide Path Angle",                       r[66:70],       decoder.field_226),
+            Field("Flight Path Alignment Point Latitude",   r[70:81],       decoder.field_267),
+            Field("Flight Path Alignment Point Longitude",  r[81:93],       decoder.field_268),
+            Field("Course Width at Threshold Note 4",       r[93:98],       decoder.field_228),
+            Field("Length Offset",                          r[98:102],      decoder.field_259),
+            Field("Path Point TCH",                         r[102:108],     decoder.field_265),
+            Field("TCH Units Indicator",                    r[108],         decoder.field_266),
+            Field("HAL",                                    r[109:112],     decoder.field_263),
+            Field("VAL",                                    r[112:115],     decoder.field_264),
+            Field("SBAS FAS Data CRC Remainder",            r[115:123],     decoder.field_229),
+            Field("File Record No",                         r[123:128],     decoder.field_031),
+            Field("Cycle Date",                             r[128:132],     decoder.field_032)
+        ]
+
+    def read_ext(self, r):
+        return [
+            Field("Record Type",                            r[0],           decoder.field_002),
+            Field("Customer / Area Code",                   r[1:4],         decoder.field_003),
+            Field("Section Code",                           r[4]+r[12],     decoder.field_004),
+            Field("Airport Identifier",                     r[6:10],        decoder.field_006),
+            Field("ICAO Code",                              r[10:12],       decoder.field_014),
+            Field("Approach Procedure Ident",               r[13:19],       decoder.field_010),
+            Field("Runway or Helipad Ident",                r[19:24],       decoder.field_046),  # TODO or 180
+            Field("Operation Type",                         r[24:26],       decoder.field_223),
+            Field("Continuation Record No",                 r[26],          decoder.field_016),
+            Field("Application Type",                       r[27],          decoder.field_091),
+            Field("(FPAP) Ellipsoid Height",                r[28:34],       decoder.field_225),
+            Field("(FPAP) Orthometric Height",              r[34:40],       decoder.field_227),
+            Field("(LTP) Orthometric Height",               r[40:46],       decoder.field_227),
+            Field("Approach Type Identifier",               r[46:56],       decoder.field_262),
+            Field("GNSS Channel Number",                    r[56:61],       decoder.field_244),
+            Field("Helicopter Procedure Course",            r[71:123],      decoder.field_269),
+            Field("File Record No",                         r[123:128],     decoder.field_031),
+            Field("Cycle Date",                             r[128:132],     decoder.field_032)
+        ]

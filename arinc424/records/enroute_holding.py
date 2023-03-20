@@ -1,3 +1,6 @@
+from arinc424.decoder import Field
+import arinc424.decoder as decoder
+
 
 class Holding():
 
@@ -16,45 +19,45 @@ class Holding():
                     return []
 
     def read_primary(self, r):
-        return {
-            "Record Type":                         r[0],
-            "Customer / Area Code":                r[1:4],
-            "Section Code":                        r[4:6],
-            "Region Code":                         r[6:10],
-            "ICAO Code":                           r[10:12],
-            "Duplicate Identifier":                r[27:29],
-            "Fix Identifier":                      r[29:34],
-            "ICAO Code (2)":                       r[34:36],
-            "Section Code (2)":                    r[36:38],
-            "Continuation Record No":              r[38],
-            "Inbound Holding Course":              r[39:43],
-            "Turn Direction":                      r[43],
-            "Leg Length":                          r[44:47],
-            "Leg Time":                            r[47:49],
-            "Minimum Altitude":                    r[49:54],
-            "Maximum Altitude":                    r[54:59],
-            "Holding Speed":                       r[59:62],
-            "RNP":                                 r[62:65],
-            "Arc Radius":                          r[65:71],
-            "Name":                                r[98:123],
-            "File Record No":                      r[123:128],
-            "Cycle Date":                          r[128:132],
-        }
+        return [
+            Field("Record Type",                         r[0],          decoder.field_002),
+            Field("Customer / Area Code",                r[1:4],        decoder.field_003),
+            Field("Section Code",                        r[4:6],        decoder.field_004),
+            Field("Region Code",                         r[6:10],       decoder.field_041),
+            Field("ICAO Code",                           r[10:12],      decoder.field_014),
+            Field("Duplicate Identifier",                r[27:29],      decoder.field_114),
+            Field("Fix Identifier",                      r[29:34],      decoder.field_013),
+            Field("ICAO Code (2)",                       r[34:36],      decoder.field_014),
+            Field("Section Code (2)",                    r[36:38],      decoder.field_004),
+            Field("Continuation Record No",              r[38],         decoder.field_016),
+            Field("Inbound Holding Course",              r[39:43],      decoder.field_062),
+            Field("Turn Direction",                      r[43],         decoder.field_063),
+            Field("Leg Length",                          r[44:47],      decoder.field_064),
+            Field("Leg Time",                            r[47:49],      decoder.field_065),
+            Field("Minimum Altitude",                    r[49:54],      decoder.field_030),
+            Field("Maximum Altitude",                    r[54:59],      decoder.field_127),
+            Field("Holding Speed",                       r[59:62],      decoder.field_175),
+            Field("RNP",                                 r[62:65],      decoder.field_211),
+            Field("Arc Radius",                          r[65:71],      decoder.field_204),
+            Field("Name",                                r[98:123],     decoder.field_060),
+            Field("File Record No",                      r[123:128],    decoder.field_031),
+            Field("Cycle Date",                          r[128:132],    decoder.field_032)
+        ]
 
     def read_cont(self, r):
-        return {
-            "Record Type":                         r[0],
-            "Customer / Area Code":                r[1:4],
-            "Section Code":                        r[4:6],
-            "Region Code":                         r[6:10],
-            "ICAO Code":                           r[10:12],
-            "Duplicate Identifier":                r[27:29],
-            "Fix Identifier":                      r[29:34],
-            "ICAO Code (2)":                       r[34:36],
-            "Section Code (2)":                    r[36:38],
-            "Continuation Record No":              r[38],
-            "Application Type":                    r[40],
-            "Notes":                               r[40:109],
-            "File Record No":                      r[123:128],
-            "Cycle Date":                          r[128:132],
-        }
+        return [
+            Field("Record Type",                         r[0],          decoder.field_002),
+            Field("Customer / Area Code",                r[1:4],        decoder.field_003),
+            Field("Section Code",                        r[4:6],        decoder.field_004),
+            Field("Region Code",                         r[6:10],       decoder.field_041),
+            Field("ICAO Code",                           r[10:12],      decoder.field_014),
+            Field("Duplicate Identifier",                r[27:29],      decoder.field_114),
+            Field("Fix Identifier",                      r[29:34],      decoder.field_013),
+            Field("ICAO Code (2)",                       r[34:36],      decoder.field_014),
+            Field("Section Code (2)",                    r[36:38],      decoder.field_004),
+            Field("Continuation Record No",              r[38],         decoder.field_016),
+            Field("Application Type",                    r[40],         decoder.field_091),
+            Field("Notes",                               r[40:109],     decoder.field_061),
+            Field("File Record No",                      r[123:128],    decoder.field_031),
+            Field("Cycle Date",                          r[128:132],    decoder.field_032)
+        ]

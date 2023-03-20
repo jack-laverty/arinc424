@@ -1,167 +1,99 @@
+from arinc424.decoder import Field
+import arinc424.decoder as decoder
 
+
+# 4.1.18 Restrictive Airspace Records (UR)
 class RestrictiveAirspace():
 
     cont_idx = 24
     app_idx = 25
 
-    def read(self, r):
-        if int(r[self.cont_idx]) < 2:
-            # primary record
-            return {
-                "Record Type":                         r[0],
-                "Customer / Area Code":                r[1:4],
-                "Section Code":                        r[4:6],
-                "ICAO Code":                           r[6:8],
-                "Restrictive Type":                    r[8],
-                "Restrictive Airspace Designation":    r[9:19],
-                "Multiple Code":                       r[19],
-                "Sequence Number":                     r[20:24],
-                "Continuation Record No":              r[24],
-                "Level":                               r[25],
-                "Time Code":                           r[26],
-                "NOTAM":                               r[27],
-                "Boundary Via":                        r[30:32],
-                "Latitude":                            r[32:41],
-                "Arc Origin Latitude":                 r[51:60],
-                "Arc Origin Longitude":                r[60:70],
-                "Arc Distance":                        r[70:74],
-                "Arc Bearing":                         r[74:78],
-                "Lower Limit":                         r[82:86],
-                "Unit Indicator":                      r[86],
-                "Upper Limit":                         r[87:92],
-                "Unit Indicator (2)":                  r[92],
-                "Restrictive Airspace Name":           r[93:123],
-                "File Record No":                      r[123:128],
-                "Cycle Date":                          r[128:132]
-            }
+    def read(self, line):
+        if int(line[self.cont_idx]) < 2:
+            return self.read_primary(line)
         else:
-            # continuation record
-            match r[self.app_idx]:
-                case 'A':
-                    # standard ARINC continuation containing notes or other
-                    # formatted data
-                    return {
-                        "Record Type":                         r[0],
-                        "Customer / Area Code":                r[1:4],
-                        "Section Code":                        r[4:6],
-                        "ICAO Code":                           r[6:8],
-                        "Restrictive Type":                    r[8],
-                        "Restrictive Airspace Designation":    r[9:19],
-                        "Multiple Code":                       r[19],
-                        "Sequence Number":                     r[20:24],
-                        "Continuation Record No":              r[24],
-                        "Application Type":                    r[25],
-                        "Time Code":                           r[26],
-                        "NOTAM":                               r[27],
-                        "Time Indicator":                      r[27],
-                        "Time of Operations":                  r[29:39],
-                        "Time of Operations (2)":              r[39:49],
-                        "Time of Operations (3)":              r[49:59],
-                        "Time of Operations (4)":              r[59:69],
-                        "Time of Operations (5)":              r[69:79],
-                        "Time of Operations (6)":              r[79:89],
-                        "Time of Operations (7)":              r[89:99],
-                        "Controlling Agency":                  r[99:123],
-                        "File Record No":                      r[123:128],
-                        "Cycle Date":                          r[128:132]
-                    }
-                    return
-                case 'B':
-                    # combined controlling agency/call sign and formatted
-                    # time of operation
-                    return
-                case 'C':
-                    # call sign/controlling agency continuation
-                    return {
-                        "Record Type":                         r[0],
-                        "Customer / Area Code":                r[1:4],
-                        "Section Code":                        r[4:6],
-                        "ICAO Code":                           r[6:8],
-                        "Restrictive Type":                    r[8],
-                        "Restrictive Airspace Designation":    r[9:19],
-                        "Multiple Code":                       r[19],
-                        "Sequence Number":                     r[20:24],
-                        "Continuation Record No":              r[24],
-                        "Application Type":                    r[25],
-                        "Time Code":                           r[26],
-                        "NOTAM":                               r[27],
-                        "Time Indicator":                      r[27],
-                        "Time of Operations":                  r[29:39],
-                        "Time of Operations (2)":              r[39:49],
-                        "Time of Operations (3)":              r[49:59],
-                        "Time of Operations (4)":              r[59:69],
-                        "Time of Operations (5)":              r[69:79],
-                        "Time of Operations (6)":              r[79:89],
-                        "Time of Operations (7)":              r[89:99],
-                        "Controlling Agency":                  r[99:123],
-                        "File Record No":                      r[123:128],
-                        "Cycle Date":                          r[128:132]
-                    }
-                    return
-                case 'E':
-                    # primary record extension
-                    return
-                case 'L':
-                    # VHF Navaid Limitation Continuation
-                    return
-                case 'N':
-                    # A sector narrative continuation
-                    return
+            match line[self.app_idx]:
                 case 'T':
-                    # a time of operations continuation
-                    # 'formatted time data'
-                    return
-                case 'U':
-                    # a time of operations continuation
-                    # 'narrative time data'
-                    return
-                case 'V':
-                    # a time of operations continuation
-                    # start/end date
-                    return
+                    return self.read_time(line)
                 case 'P':
-                    # a flight planning application continuation
-                    return {
-                        "Record Type":                         r[0],
-                        "Customer / Area Code":                r[1:4],
-                        "Section Code":                        r[4:6],
-                        "ICAO Code":                           r[6:8],
-                        "Restrictive Type":                    r[8],
-                        "Restrictive Airspace Designation":    r[9:19],
-                        "Multiple Code":                       r[19],
-                        "Sequence Number":                     r[20:24],
-                        "Continuation Record No":              r[24],
-                        "Application Type":                    r[25],
-                        "Start/End Indicator":                 r[29],
-                        "Start/End Date":                      r[30:41],
-                        "File Record No":                      r[123:128],
-                        "Cycle Date":                          r[128:132]
-                    }
-                case 'Q':
-                    # NOTE: ARINC spec appears to give conflicting info here:
-
-                    # 4.1.9.4 - "Flight Planning continuation records are
-                    # designed to carry off-cycle updates to the
-                    # primary record, and cannot carry an Application
-                    # Type column."
-
-                    # 5.91 - Continuation Record Application Type
-                    # 'Q' = Flight Planning Application Primary
-                    # Data Continuation
-
-                    # which is it? do they not carry an application type
-                    # column, or do they carry an application type column
-                    # set to 'Q'?
-                    return
-                case 'S':
-                    # simulation application continuation
-                    return
-                case 'W':
-                    # an airport or heliport procedure data continuation
-                    # with SBAS use authorization information
-                    return
+                    return self.read_flight0(line)
                 case _:
-                    # a flight planning application primary data continuation
-                    # see notes above for case 'Q'
-                    # TODO make this less sketchy
-                    return
+                    return []
+
+    # 4.1.18.1 Restrictive Airspace Primary Records
+    def read_primary(self, r):
+        return [
+            Field("Record Type",                         r[0],          decoder.field_002),
+            Field("Customer / Area Code",                r[1:4],        decoder.field_003),
+            Field("Section Code",                        r[4:6],        decoder.field_004),
+            Field("ICAO Code",                           r[6:8],        decoder.field_014),
+            Field("Restrictive Type",                    r[8],          decoder.field_128),
+            Field("Restrictive Airspace Designation",    r[9:19],       decoder.field_129),
+            Field("Multiple Code",                       r[19],         decoder.field_130),
+            Field("Sequence Number",                     r[20:24],      decoder.field_012),
+            Field("Continuation Record No",              r[24],         decoder.field_016),
+            Field("Level",                               r[25],         decoder.field_019),
+            Field("Time Code",                           r[26],         decoder.field_131),
+            Field("NOTAM",                               r[27],         decoder.field_132),
+            Field("Boundary Via",                        r[30:32],      decoder.field_118),
+            Field("Latitude",                            r[32:41],      decoder.field_036),
+            Field("Longitude",                           r[41:51],      decoder.field_037),
+            Field("Arc Origin Latitude",                 r[51:60],      decoder.field_036),
+            Field("Arc Origin Longitude",                r[60:70],      decoder.field_037),
+            Field("Arc Distance",                        r[70:74],      decoder.field_119),
+            Field("Arc Bearing",                         r[74:78],      decoder.field_120),
+            Field("Lower Limit",                         r[82:86],      decoder.field_121),
+            Field("Unit Indicator",                      r[86],         decoder.field_133),
+            Field("Upper Limit",                         r[87:92],      decoder.field_121),
+            Field("Unit Indicator (2)",                  r[92],         decoder.field_133),
+            Field("Restrictive Airspace Name",           r[93:123],     decoder.field_126),
+            Field("File Record No",                      r[123:128],    decoder.field_031),
+            Field("Cycle Date",                          r[128:132],    decoder.field_032)
+        ]
+
+    # 4.1.18.2 Restrictive Airspace Continuation Records
+    def read_time(self, r):
+        return [
+            Field("Record Type",                         r[0],          decoder.field_002),
+            Field("Customer / Area Code",                r[1:4],        decoder.field_003),
+            Field("Section Code",                        r[4:6],        decoder.field_004),
+            Field("ICAO Code",                           r[6:8],        decoder.field_014),
+            Field("Restrictive Type",                    r[8],          decoder.field_128),
+            Field("Restrictive Airspace Designation",    r[9:19],       decoder.field_129),
+            Field("Multiple Code",                       r[19],         decoder.field_130),
+            Field("Sequence Number",                     r[20:24],      decoder.field_012),
+            Field("Continuation Record No",              r[24],         decoder.field_016),
+            Field("Application Type",                    r[25],         decoder.field_091),
+            Field("Time Code",                           r[26],         decoder.field_131),
+            Field("NOTAM",                               r[27],         decoder.field_132),
+            Field("Time Indicator",                      r[27],         decoder.field_138),
+            Field("Time of Operations",                  r[29:39],      decoder.field_195),
+            Field("Time of Operations (2)",              r[39:49],      decoder.field_195),
+            Field("Time of Operations (3)",              r[49:59],      decoder.field_195),
+            Field("Time of Operations (4)",              r[59:69],      decoder.field_195),
+            Field("Time of Operations (5)",              r[69:79],      decoder.field_195),
+            Field("Time of Operations (6)",              r[79:89],      decoder.field_195),
+            Field("Time of Operations (7)",              r[89:99],      decoder.field_195),
+            Field("Controlling Agency",                  r[99:123],     decoder.field_140),
+            Field("File Record No",                      r[123:128],    decoder.field_031),
+            Field("Cycle Date",                          r[128:132],    decoder.field_032)
+        ]
+
+    # 4.1.18.3 Restrictive Airspace Flight Planning Continuation Record
+    def read_flight0(self, r):
+        return [
+            Field("Record Type",                         r[0],          decoder.field_002),
+            Field("Customer / Area Code",                r[1:4],        decoder.field_003),
+            Field("Section Code",                        r[4:6],        decoder.field_004),
+            Field("ICAO Code",                           r[6:8],        decoder.field_014),
+            Field("Restrictive Type",                    r[8],          decoder.field_128),
+            Field("Restrictive Airspace Designation",    r[9:19],       decoder.field_129),
+            Field("Multiple Code",                       r[19],         decoder.field_130),
+            Field("Sequence Number",                     r[20:24],      decoder.field_012),
+            Field("Continuation Record No",              r[24],         decoder.field_016),
+            Field("Application Type",                    r[25],         decoder.field_091),
+            Field("Start/End Indicator",                 r[29],         decoder.field_152),
+            Field("Start/End Date",                      r[30:41],      decoder.field_153),
+            Field("File Record No",                      r[123:128],    decoder.field_031),
+            Field("Cycle Date",                          r[128:132],    decoder.field_032)
+        ]

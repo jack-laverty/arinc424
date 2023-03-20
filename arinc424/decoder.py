@@ -1875,7 +1875,6 @@ def field_265(value):
 
 
 # 5.266 TCH Units Indicator
-
 def field_266(value):
     pass
 
@@ -1922,4 +1921,9 @@ def field_274(value):
 
 # 5.275 Level of Service Name (LSN)
 def field_275(value):
+    pass
+
+
+# 5.276 ??
+def field_276(value):
     pass

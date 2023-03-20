@@ -1,215 +1,155 @@
+from arinc424.decoder import Field
+import arinc424.decoder as decoder
+
 
 class SIDSTARApp():
 
-    def read(self, r):
-        if int(r[38]) < 2:
-            # primary record
-            return {
-                "Record Type":                         r[0],
-                "Customer / Area Code":                r[1:4],
-                "Section Code":                        r[4]+r[12],
-                "Airport Identifier":                  r[6:10],
-                "ICAO Code":                           r[10:12],
-                "SID/STAR/Approach Identifier":        r[13:19],
-                "Route Type":                          r[19],
-                "Transition Identifier":               r[20:25],
-                "Sequence Number":                     r[26:29],
-                "Fix Identifier":                      r[29:34],
-                "ICAO Code (2)":                       r[34:36],
-                "Section Code (2)":                    r[36:38],
-                "Continuation Record No":              r[38],
-                "Waypoint Description Code":           r[39:43],
-                "Turn Direction":                      r[43],
-                "RNP":                                 r[44:47],
-                "Path and Termination":                r[47:49],
-                "Turn Direction Valid":                r[49],
-                "Recommended Navaid":                  r[50:54],
-                "ICAO Code (3)":                       r[54:56],
-                "Arc Radius":                          r[56:62],
-                "Theta":                               r[62:66],
-                "Rho":                                 r[66:70],
-                "Magnetic Course":                     r[70:74],
-                "Route / Holding Distance or Time":    r[74:78],
-                "Recommended Navaid (2)":              r[78:80],
-                "Altitude Description":                r[82],
-                "ATC Indicator":                       r[83],
-                "Altitude":                            r[84:89],
-                "Altitude (2)":                        r[89:94],
-                "Transition Altitude":                 r[94:99],
-                "Speed Limit":                         r[99:102],
-                "Vertical Angle":                      r[102:106],
-                "Center Fix or TAA Procedure Turn Indicator": r[106:111],
-                "Multiple Code or TAA Sector Identifier": r[111],
-                "ICAO Code (4)":                       r[112:113],
-                "Section Code (3)":                    r[114:116],
-                "GNSS/FMS Indication":                 r[116],
-                "Speed Limit Description":             r[117],
-                "Apch Route Qualifier 1":              r[118],
-                "Apch Route Qualifier 2":              r[119],
-                "File Record No":                      r[123:128],
-                "Cycle Date":                          r[128:132]
-            }
+    cont_idx = 38
+    app_idx = 39
+
+    def read(self, line):
+        if int(line[self.cont_idx]) < 2:
+            return self.read_primary(line)
         else:
-            # continuation record
-            match r[39]:
-                case 'A':
-                    # standard ARINC continuation containing notes or other
-                    # formatted data
-                    return
-                case 'B':
-                    # combined controlling agency/call sign and formatted
-                    # time of operation
-                    return
-                case 'C':
-                    # call sign/controlling agency continuation
-                    return
+            match line[self.app_idx]:
                 case 'E':
-                    # primary record extension
-                    return {
-                        "Record Type":                         r[0],
-                        "Customer / Area Code":                r[1:4],
-                        "Section Code":                        r[4]+r[12],
-                        "Airport Identifier":                  r[6:10],
-                        "ICAO Code":                           r[10:12],
-                        "SID/STAR/Approach Identifier":        r[13:19],
-                        "Route Type":                          r[19],
-                        "Transition Identifier":               r[20:25],
-                        "Sequence Number":                     r[26:29],
-                        "Fix Identifier":                      r[29:34],
-                        "ICAO Code (2)":                       r[34:36],
-                        "Section Code (2)":                    r[36:38],
-                        "Continuation Record No":              r[38],
-                        "Application Type":                    r[39],
-                        "CAT A Decision Height":               r[40:44],
-                        "CAT B Decision Height":               r[44:48],
-                        "CAT C Decision Height":               r[48:52],
-                        "CAT D Decision Height":               r[52:56],
-                        "CAT A Minimum Descent Altitude":      r[56:60],
-                        "CAT B Minimum Descent Altitude":      r[60:64],
-                        "CAT C Minimum Descent Altitude":      r[64:68],
-                        "CAT D Minimum Descent Altitude":      r[68:72],
-                        "Procedure TCH":                       r[72:75],
-                        "Localizer Only Altitude Desc":        r[75],
-                        "Localizer Only Altitude":             r[76:81],
-                        "Localizer Only Vertical Angle":       r[81:85],
-                        "RNP":                                 r[89:92],
-                        "Apch Route Qualifier 1":              r[118],
-                        "Apch Route Qualifier 2":              r[119],
-                        "File Record No":                      r[123:128],
-                        "Cycle Date":                          r[128:132]
-                    }
-                case 'L':
-                    # VHF Navaid Limitation Continuation
-                    return
-                case 'N':
-                    # A sector narrative continuation
-                    return
-                case 'T':
-                    # a time of operations continuation
-                    # 'formatted time data'
-                    return
-                case 'U':
-                    # a time of operations continuation
-                    # 'narrative time data'
-                    return
-                case 'V':
-                    # a time of operations continuation
-                    # start/end date
-                    return
+                    return self.read_ext(line)
                 case 'P':
-                    # a flight planning application continuation
-                    return {
-                        "Record Type":                         r[0],
-                        "Customer / Area Code":                r[1:4],
-                        "Section Code":                        r[4]+r[12],
-                        "Airport Identifier":                  r[6:10],
-                        "ICAO Code":                           r[10:12],
-                        "SID/STAR/Approach Identifier":        r[13:19],
-                        "Route Type":                          r[19],
-                        "Transition Identifier":               r[20:25],
-                        "Sequence Number":                     r[26:29],
-                        "Fix Identifier":                      r[29:34],
-                        "ICAO Code (2)":                       r[34:36],
-                        "Section Code (2)":                    r[36:38],
-                        "Continuation Record No":              r[38],
-                        "Application Type":                    r[39],
-                        "Start/End Indicator":                 r[40],
-                        "Start/End Date":                      r[41:45],
-                        "Leg Distance":                        r[74:78],
-                        "File Record No":                      r[123:128],
-                        "Cycle Date":                          r[128:132]
-                    }
-                case 'Q':
-                    # NOTE: ARINC spec appears to give conflicting info here:
-
-                    # 4.1.9.4 - "Flight Planning continuation records are
-                    # designed to carry off-cycle updates to the
-                    # primary record, and cannot carry an Application
-                    # Type column."
-
-                    # 5.91 - Continuation Record Application Type
-                    # 'Q' = Flight Planning Application Primary
-                    # Data Continuation
-
-                    # which is it? do they not carry an application type
-                    # column, or do they carry an application type column
-                    # set to 'Q'?
-                    return
-                case 'S':
-                    # simulation application continuation
-                    return
+                    return self.read_flight0(line)
                 case 'W':
-                    # an airport or heliport procedure data continuation
-                    # with SBAS use authorization information
-                    return {
-                        "Record Type":                         r[0],
-                        "Customer / Area Code":                r[1:4],
-                        "Section Code":                        r[4]+r[12],
-                        "Airport Identifier":                  r[6:10],
-                        "ICAO Code":                           r[10:12],
-                        "SID/STAR/Approach Identifier":        r[13:19],
-                        "Route Type":                          r[19],
-                        "Transition Identifier":               r[20:25],
-                        "Sequence Number":                     r[26:29],
-                        "Fix Identifier":                      r[29:34],
-                        "ICAO Code (2)":                       r[34:36],
-                        "Section Code (2)":                    r[36:38],
-                        "Continuation Record No":              r[38],
-                        "Application Type":                    r[39],
-                        "FAS Block Provided":                  r[40],
-                        "FAS Block Provided Level of Service Name":
-                        r[41:51],
-                        "LNAV/VNAV Authorized for SBAS":       r[51],
-                        "LNAV/VNAV Level of Service Name":     r[52:62],
-                        "LNAV Authorized for SBAS":            r[62],
-                        "LNAV Level of Service Name":          r[63:73],
-                        "Apch Route Qualifier 1":              r[118],
-                        "Apch Route Qualifier 2":              r[119],
-                        "File Record No":                      r[123:128],
-                        "Cycle Date":                          r[128:132]
-                    }
+                    return self.read_data(line)
                 case _:
-                    # a flight planning application primary data continuation
-                    # see notes above for case 'Q'
-                    # TODO make this less sketchy
-                    return {
-                        "Record Type":                         r[0],
-                        "Customer / Area Code":                r[1:4],
-                        "Section Code":                        r[4]+r[12],
-                        "Airport Identifier":                  r[6:10],
-                        "ICAO Code":                           r[10:12],
-                        "SID/STAR/Approach Identifier":        r[13:19],
-                        "Route Type":                          r[19],
-                        "Transition Identifier":               r[20:25],
-                        "Sequence Number":                     r[26:29],
-                        "Fix Identifier":                      r[29:34],
-                        "ICAO Code (2)":                       r[34:36],
-                        "Section Code (2)":                    r[36:38],
-                        "Continuation Record No":              r[38],
-                        "Application Type":                    r[39],
-                        "Start/End Indicator":                 r[40],
-                        "Start/End Date":                      r[41:45],
-                        "Leg Distance":                        r[74:78],
-                        "File Record No":                      r[123:128],
-                        "Cycle Date":                          r[128:132]
-                    }
+                    raise ValueError("bad SID/STAR/APP")
+
+    def read_primary(self, r):
+        return [
+            Field("Record Type",                                r[0],           decoder.field_002),
+            Field("Customer / Area Code",                       r[1:4],         decoder.field_003),
+            Field("Section Code",                               r[4]+r[12],     decoder.field_004),
+            Field("Airport Identifier",                         r[6:10],        decoder.field_006),
+            Field("ICAO Code",                                  r[10:12],       decoder.field_014),
+            Field("SID/STAR/Approach Identifier",               r[13:19],       decoder.field_009),
+            Field("Route Type",                                 r[19],          decoder.field_007),
+            Field("Transition Identifier",                      r[20:25],       decoder.field_011),
+            Field("Sequence Number",                            r[26:29],       decoder.field_012),
+            Field("Fix Identifier",                             r[29:34],       decoder.field_013),
+            Field("ICAO Code (2)",                              r[34:36],       decoder.field_014),
+            Field("Section Code (2)",                           r[36:38],       decoder.field_004),
+            Field("Continuation Record No",                     r[38],          decoder.field_016),
+            Field("Waypoint Description Code",                  r[39:43],       decoder.field_017),
+            Field("Turn Direction",                             r[43],          decoder.field_020),
+            Field("RNP",                                        r[44:47],       decoder.field_211),
+            Field("Path and Termination",                       r[47:49],       decoder.field_021),
+            Field("Turn Direction Valid",                       r[49],          decoder.field_022),
+            Field("Recommended Navaid",                         r[50:54],       decoder.field_023),
+            Field("ICAO Code (3)",                              r[54:56],       decoder.field_014),
+            Field("Arc Radius",                                 r[56:62],       decoder.field_204),
+            Field("Theta",                                      r[62:66],       decoder.field_024),
+            Field("Rho",                                        r[66:70],       decoder.field_025),
+            Field("Magnetic Course",                            r[70:74],       decoder.field_026),
+            Field("Route / Holding Distance or Time",           r[74:78],       decoder.field_027),
+            Field("Recommended Navaid (2)",                     r[78:80],       decoder.field_004),
+            Field("Altitude Description",                       r[82],          decoder.field_029),
+            Field("ATC Indicator",                              r[83],          decoder.field_081),
+            Field("Altitude",                                   r[84:89],       decoder.field_030),
+            Field("Altitude (2)",                               r[89:94],       decoder.field_030),
+            Field("Transition Altitude",                        r[94:99],       decoder.field_053),
+            Field("Speed Limit",                                r[99:102],      decoder.field_072),
+            Field("Vertical Angle",                             r[102:106],     decoder.field_070),
+            Field("Center Fix or TAA Procedure Turn Indicator", r[106:111],     decoder.field_144),  # or 271
+            Field("Multiple Code or TAA Sector Identifier",     r[111],         decoder.field_130),  # or 272
+            Field("ICAO Code (4)",                              r[112:113],     decoder.field_014),
+            Field("Section Code (3)",                           r[114:116],     decoder.field_004),
+            Field("GNSS/FMS Indication",                        r[116],         decoder.field_222),
+            Field("Speed Limit Description",                    r[117],         decoder.field_261),
+            Field("Apch Route Qualifier 1",                     r[118],         decoder.field_007),
+            Field("Apch Route Qualifier 2",                     r[119],         decoder.field_007),
+            Field("File Record No",                             r[123:128],     decoder.field_031),
+            Field("Cycle Date",                                 r[128:132],     decoder.field_032)
+        ]
+
+    def read_ext(self, r):
+        return [
+            Field("Record Type",                                r[0],           decoder.field_002),
+            Field("Customer / Area Code",                       r[1:4],         decoder.field_003),
+            Field("Section Code",                               r[4]+r[12],     decoder.field_004),
+            Field("Airport Identifier",                         r[6:10],        decoder.field_006),
+            Field("ICAO Code",                                  r[10:12],       decoder.field_014),
+            Field("SID/STAR/Approach Identifier",               r[13:19],       decoder.field_009),
+            Field("Route Type",                                 r[19],          decoder.field_007),
+            Field("Transition Identifier",                      r[20:25],       decoder.field_011),
+            Field("Sequence Number",                            r[26:29],       decoder.field_012),
+            Field("Fix Identifier",                             r[29:34],       decoder.field_013),
+            Field("ICAO Code (2)",                              r[34:36],       decoder.field_014),
+            Field("Section Code (2)",                           r[36:38],       decoder.field_004),
+            Field("Continuation Record No",                     r[38],          decoder.field_016),
+            Field("Application Type",                           r[39],          decoder.field_091),
+            Field("CAT A Decision Height",                      r[40:44],       decoder.field_170),
+            Field("CAT B Decision Height",                      r[44:48],       decoder.field_170),
+            Field("CAT C Decision Height",                      r[48:52],       decoder.field_170),
+            Field("CAT D Decision Height",                      r[52:56],       decoder.field_170),
+            Field("CAT A Minimum Descent Altitude",             r[56:60],       decoder.field_171),
+            Field("CAT B Minimum Descent Altitude",             r[60:64],       decoder.field_171),
+            Field("CAT C Minimum Descent Altitude",             r[64:68],       decoder.field_171),
+            Field("CAT D Minimum Descent Altitude",             r[68:72],       decoder.field_171),
+            Field("Procedure TCH",                              r[72:75],       decoder.field_067),
+            Field("Localizer Only Altitude Desc",               r[75],          decoder.field_029),
+            Field("Localizer Only Altitude",                    r[76:81],       decoder.field_030),
+            Field("Localizer Only Vertical Angle",              r[81:85],       decoder.field_070),
+            Field("RNP",                                        r[89:92],       decoder.field_211),
+            Field("Apch Route Qualifier 1",                     r[118],         decoder.field_007),
+            Field("Apch Route Qualifier 2",                     r[119],         decoder.field_007),
+            Field("File Record No",                             r[123:128],     decoder.field_031),
+            Field("Cycle Date",                                 r[128:132],     decoder.field_032)
+        ]
+
+    def read_flight0(self, r):
+        return [
+            Field("Record Type",                                r[0],           decoder.field_002),
+            Field("Customer / Area Code",                       r[1:4],         decoder.field_003),
+            Field("Section Code",                               r[4]+r[12],     decoder.field_004),
+            Field("Airport Identifier",                         r[6:10],        decoder.field_006),
+            Field("ICAO Code",                                  r[10:12],       decoder.field_014),
+            Field("SID/STAR/Approach Identifier",               r[13:19],       decoder.field_009),
+            Field("Route Type",                                 r[19],          decoder.field_007),
+            Field("Transition Identifier",                      r[20:25],       decoder.field_011),
+            Field("Sequence Number",                            r[26:29],       decoder.field_012),
+            Field("Fix Identifier",                             r[29:34],       decoder.field_013),
+            Field("ICAO Code (2)",                              r[34:36],       decoder.field_014),
+            Field("Section Code (2)",                           r[36:38],       decoder.field_004),
+            Field("Continuation Record No",                     r[38],          decoder.field_016),
+            Field("Application Type",                           r[39],          decoder.field_091),
+            Field("Start/End Indicator",                        r[40],          decoder.field_152),
+            Field("Start/End Date",                             r[41:45],       decoder.field_153),
+            Field("Leg Distance",                               r[74:78],       decoder.field_260),
+            Field("File Record No",                             r[123:128],     decoder.field_031),
+            Field("Cycle Date",                                 r[128:132],     decoder.field_032)
+        ]
+
+    def read_data(self, r):
+        return [
+            Field("Record Type",                                r[0],           decoder.field_002),
+            Field("Customer / Area Code",                       r[1:4],         decoder.field_003),
+            Field("Section Code",                               r[4]+r[12],     decoder.field_004),
+            Field("Airport Identifier",                         r[6:10],        decoder.field_006),
+            Field("ICAO Code",                                  r[10:12],       decoder.field_014),
+            Field("SID/STAR/Approach Identifier",               r[13:19],       decoder.field_009),
+            Field("Route Type",                                 r[19],          decoder.field_007),
+            Field("Transition Identifier",                      r[20:25],       decoder.field_011),
+            Field("Sequence Number",                            r[26:29],       decoder.field_012),
+            Field("Fix Identifier",                             r[29:34],       decoder.field_013),
+            Field("ICAO Code (2)",                              r[34:36],       decoder.field_014),
+            Field("Section Code (2)",                           r[36:38],       decoder.field_004),
+            Field("Continuation Record No",                     r[38],          decoder.field_016),
+            Field("Application Type",                           r[39],          decoder.field_091),
+            Field("FAS Block Provided",                         r[40],          decoder.field_276),
+            Field("FAS Block Provided Level of Service Name",   r[41:51],       decoder.field_275),
+            Field("LNAV/VNAV Authorized for SBAS",              r[51],          decoder.field_276),
+            Field("LNAV/VNAV Level of Service Name",            r[52:62],       decoder.field_275),
+            Field("LNAV Authorized for SBAS",                   r[62],          decoder.field_276),
+            Field("LNAV Level of Service Name",                 r[63:73],       decoder.field_275),
+            Field("Apch Route Qualifier 1",                     r[118],         decoder.field_007),
+            Field("Apch Route Qualifier 2",                     r[119],         decoder.field_007),
+            Field("File Record No",                             r[123:128],     decoder.field_031),
+            Field("Cycle Date",                                 r[128:132],     decoder.field_032)
+        ]
