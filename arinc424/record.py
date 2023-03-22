@@ -105,12 +105,20 @@ class Record():
         return True
 
     def dump(self):
+        s = ''
         for f in self.fields:
-            print("{:<32}: {}".format(f.name, f.value))
+            q = "{:<32}: {}".format(f.name, f.value)
+            print(q)
+            s += q + '\n'
+        return s
 
     def decode(self):
+        s = ''
         for f in self.fields:
-            print("{:<32}: {}".format(f.name, f.decode(self)))
+            q = "{:<32}: {}".format(f.name, f.decode(self))
+            print(q)
+            s += q + '\n'
+        return s
 
     def json(self, single_line=True):
         d = {}
