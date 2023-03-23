@@ -29,6 +29,9 @@ from .records import Airport,\
                      Waypoint,\
                      VHFNavaid
 
+ERR_NONE = 0
+ERR_INVALID = 1
+ERR_UNKNOWN = 2
 
 class Record():
 
@@ -90,7 +93,8 @@ class Record():
 
     def read(self, line):
         if self.validate(line) is False:
-            return False
+            return ERR_INVALID
+
         self.raw = line
         x1, x2 = line[4:6], line[4] + line[12]
         if x1 in self.records.keys():
@@ -98,11 +102,13 @@ class Record():
         elif x2 in self.records.keys():
             self.code = x2
         else:
-            return False
+            return ERR_UNKNOWN
+
         self.fields = self.records[self.code].read(line)
-        if self.fields is None:
-            return False
-        return True
+        if not self.fields:
+            return ERR_UNKNOWN
+
+        return ERR_NONE
 
     def dump(self):
         s = ''

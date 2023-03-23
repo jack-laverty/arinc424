@@ -577,24 +577,12 @@ def field_035(value):
 
 # 5.36 Latitude (LATITUDE)
 def field_036(value):
-    if value.strip() == '':
-        return '<Blank>'
-    else:
-        return "{:03} {:02} {:02} {:02} {}".format(int(value[1:3]),
-                                                   int(value[3:5]),
-                                                   int(value[5:7]),
-                                                   int(value[7:9]), value[0])
+    return value
 
 
 # 5.37 Longitude (LONGITUDE)
 def field_037(value):
-    if value.strip() == '':
-        return '<Blank>'
-    else:
-        return "{:03} {:02} {:02} {:02} {}".format(int(value[1:3]),
-                                                   int(value[3:5]),
-                                                   int(value[5:7]),
-                                                   int(value[7:9]), value[0])
+    return value
 
 
 # 5.38 DME Identifier (DME IDENT)
