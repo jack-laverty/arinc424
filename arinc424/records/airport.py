@@ -2,12 +2,13 @@ from arinc424.decoder import Field
 import arinc424.decoder as decoder
 
 
+# 4.1.7 Airport Records (PA)
 class Airport():
 
     cont_idx = 21
     app_idx = 22
 
-    def read(self, line):
+    def read(self, line) -> list:
         if int(line[self.cont_idx]) < 2:
             return self.read_primary(line)
         else:
@@ -19,8 +20,9 @@ class Airport():
                 case 'Q':
                     return self.read_flight1(line)
                 case _:
-                    raise ValueError('Unknown Application Type')
+                    return []
 
+    # 4.1.7.1 Airport Primary Records
     def read_primary(self, r):
         return [
             Field("Record Type",                             r[0],          decoder.field_002),
@@ -53,6 +55,7 @@ class Airport():
             Field("Cycle Date",                              r[128:132],    decoder.field_032)
         ]
 
+    # 4.1.7.2 Airport Continuation Records
     def read_cont(self, r):
         return [
             Field("Record Type",                             r[0],          decoder.field_002),
@@ -68,6 +71,12 @@ class Airport():
             Field("Cycle Date",                              r[128:132],    decoder.field_032)
         ]
 
+    # 4.1.7.3 Airport Flight Planning Continuation Records
+    #
+    # This Continuation Record is used to indicate the FIR and UIR within which the Airport define in the Primary
+    # Record resides in and the Start/End validity dates/times of the Primary Record and provide an indication if the
+    # Airport defined in the Primary Record is associated with Controlled Airspace.
+    #
     def read_flight0(self, r):
         return [
             Field("Record Type",                             r[0],          decoder.field_002),
@@ -89,6 +98,16 @@ class Airport():
             Field("Cycle Date",                              r[128:132],    decoder.field_032)
         ]
 
+    # 4.1.7.4 Airport Flight Planning Continuation Records
+    #
+    # This Continuation Record is used to indicate the fields on
+    # the Primary Record that have changed, used in conjunction
+    # with Section 4.1.7.3.
+    #
+    # Note: Flight Planning continuation records are designed
+    # to carry off-cycle updates to the primary record,
+    # and cannot carry an Application Type column.
+    #
     def read_flight1(self, r):
         return [
             Field("Record Type",                             r[0],          decoder.field_002),

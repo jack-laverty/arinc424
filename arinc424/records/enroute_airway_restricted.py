@@ -2,6 +2,7 @@ from arinc424.decoder import Field
 import arinc424.decoder as decoder
 
 
+# 4.1.21 Enroute Airways Restriction Records (EU)
 class AirwayRestricted():
 
     def read(self, line):
@@ -29,6 +30,13 @@ class AirwayRestricted():
                 case _:
                     raise ValueError("Unknown Restricted Airway Type")
 
+    # 4.1.21.1 Enroute Airways Restriction Altitude Exclusion Primary Records
+    #
+    # Note 1: The standard length for the Route Identifier is
+    # five characters. Some users envisage the need for
+    # a six-character field. This reserved column will
+    # permit this usage.
+    #
     def primary_altitude_exclude(self, r):
         return [
             Field("Record Type",                             r[0],          decoder.field_002),
@@ -108,6 +116,13 @@ class AirwayRestricted():
             Field("Cycle Date",                              r[128:132],    decoder.field_032)
         ]
 
+    # 4.1.21A.1 Enroute Airways Restriction Note Restriction Primary Records
+    #
+    # Note 1: The standard length for the Route Identifier is
+    # five characters. Some users envisage the need
+    # for a six-character field. This reserved column
+    # will permit this usage.
+    #
     def primary_note_restriction(self, r):
         return [
             Field("Record Type",                             r[0],          decoder.field_002),
@@ -130,6 +145,7 @@ class AirwayRestricted():
             Field("Cycle Date",                              r[128:132],    decoder.field_032)
         ]
 
+    # 4.1.21A.2 Enroute Airways Restriction Note Restriction Continuation Records
     def cont_note_restriction(self, r):
         return [
             Field("Record Type",                             r[0],          decoder.field_002),
@@ -145,6 +161,13 @@ class AirwayRestricted():
             Field("Cycle Date",                              r[128:132],    decoder.field_032)
         ]
 
+    # 4.1.21B.1 Enroute Airways Restriction Seasonal Closure Primary Records
+    #
+    # Note 1: The standard length for the Route Identifier is
+    # five characters. Some users envisage the need for
+    # a six-character field. This reserved column will
+    # permit this usage.
+    #
     def primary_seasonal_closure(self, r):
         return [
             Field("Record Type",                             r[0],          decoder.field_002),
@@ -173,6 +196,13 @@ class AirwayRestricted():
             Field("Cycle Date",                              r[128:132],    decoder.field_032)
         ]
 
+    # 4.1.21C.1 Enroute Airways Restriction Cruising Table Replacement Primary Records
+    #
+    # Note 1: The standard length for the Route Identifier is
+    # five characters. Some users envisage the need for
+    # a six-character field. This reserved column will
+    # permit this usage.
+    #
     def primary_cruise_table(self, r):
         return [
             Field("Record Type",                             r[0],          decoder.field_002),
@@ -201,6 +231,7 @@ class AirwayRestricted():
             Field("Cycle Date",                              r[128:132],    decoder.field_032)
         ]
 
+    # 4.1.21C.2 Enroute Airways Restriction Cruising Table Replacement Continuation Records
     def cont_cruise_table(self, r):
         return [
             Field("Record Type",                             r[0],          decoder.field_002),

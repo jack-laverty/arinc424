@@ -2,11 +2,13 @@ from arinc424.decoder import Field
 import arinc424.decoder as decoder
 
 
+# 4.1.16 Cruising Tables Records (TC)
 class CruisingTables():
 
     def read(self, line):
         return self.read_primary(line)
 
+    # 4.1.16.1 Cruising Table Primary Records
     def read_primary(self, r):
         return [
             Field("Record Type",                             r[0],          decoder.field_002),

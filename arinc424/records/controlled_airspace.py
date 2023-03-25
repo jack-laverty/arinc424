@@ -2,12 +2,20 @@ from arinc424.decoder import Field
 import arinc424.decoder as decoder
 
 
+# 4.1.25 Controlled Airspace Records (UC)
+#
+# The Controlled Airspace Record file contains a
+# sequential listing of vertical and lateral limits of all types
+# and classifications of Controlled Airspace. It includes
+# Controlled Airspace associated with Airports and
+# Heliports.
+#
 class ControlledAirspace():
 
     cont_idx = 24
     app_idx = 25
 
-    def read(self, r):
+    def read(self, r) -> list:
         if int(r[self.cont_idx]) < 2:
             return self.read_primary(r)
         else:
@@ -15,8 +23,9 @@ class ControlledAirspace():
                 case 'A':
                     return self.read_cont(r)
                 case _:
-                    raise ValueError('Unknown Application Type')
+                    return []
 
+    # 4.1.25.1 Controlled Airspace Primary Records
     def read_primary(self, r):
         return [
             Field("Record Type",                         r[0],          decoder.field_002),
@@ -50,9 +59,8 @@ class ControlledAirspace():
             Field("Cycle Date",                          r[128:132],    decoder.field_032)
         ]
 
+    # 4.1.25.2 Controlled Airspace Continuation Records
     def read_cont(self, r):
-        # standard ARINC continuation containing notes or other
-        # formatted data
         return [
             Field("Record Type",                         r[0],          decoder.field_002),
             Field("Customer / Area Code",                r[1:4],        decoder.field_003),

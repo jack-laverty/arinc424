@@ -31,7 +31,9 @@ from .records import Airport,\
 
 ERR_NONE = 0
 ERR_INVALID = 1
-ERR_UNKNOWN = 2
+ERR_SECTION_CODE = 2
+ERR_APPLICATION_TYPE = 3
+
 
 class Record():
 
@@ -102,11 +104,11 @@ class Record():
         elif x2 in self.records.keys():
             self.code = x2
         else:
-            return ERR_UNKNOWN
+            return ERR_SECTION_CODE
 
         self.fields = self.records[self.code].read(line)
         if not self.fields:
-            return ERR_UNKNOWN
+            return ERR_APPLICATION_TYPE
 
         return ERR_NONE
 

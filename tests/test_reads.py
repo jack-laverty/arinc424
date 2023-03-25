@@ -10,7 +10,7 @@ class TestRead(unittest.TestCase):
         f2 = open('./UNKNOWN_' + s.rsplit('/', 1)[-1], 'w')
         for file in os.scandir(s):
             t, k, u = 0, 0, 0
-            print("\nreading: {}".format(file))
+            print('\n{:17}{}'.format('reading:', file.name))
             with open(file) as f:
                 for line in f.readlines():
                     t += 1
@@ -18,7 +18,7 @@ class TestRead(unittest.TestCase):
                     q = r.read(line)
                     if q != a424.ERR_INVALID:
                         k += 1
-                        if q == a424.ERR_UNKNOWN:
+                        if q == a424.ERR_SECTION_CODE or q == a424.ERR_APPLICATION_TYPE:
                             u += 1
                             f2.write(r.code + '\n')
                             f2.write(line)
@@ -32,7 +32,7 @@ class TestRead(unittest.TestCase):
         f2 = open('./UNKNOWN_' + s.rsplit('/', 1)[-1], 'w')
         for file in os.scandir(s):
             t, k, u = 0, 0, 0
-            print("\nreading: {}".format(file))
+            print("\nreading: {}".format(file.name))
             with open(file) as f:
                 for line in f.readlines():
                     t += 1
@@ -40,7 +40,7 @@ class TestRead(unittest.TestCase):
                     q = r.read(line)
                     if q != a424.ERR_INVALID:
                         k += 1
-                        if q == a424.ERR_UNKNOWN:
+                        if q == a424.ERR_SECTION_CODE or q == a424.ERR_APPLICATION_TYPE:
                             u += 1
                             f2.write(r.code + '\n')
                             f2.write(line)

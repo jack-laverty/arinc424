@@ -19,7 +19,7 @@ def read_file(path):
             q = r.read(line)
             if q == a424.ERR_NONE:
                 k += 1
-            elif q == a424.ERR_UNKNOWN:
+            elif q == a424.ERR_SECTION_CODE or q == a424.ERR_APPLICATION_TYPE:
                 u += 1
                 f2.write(line)
     f2.close()

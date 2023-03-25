@@ -2,30 +2,26 @@ from arinc424.decoder import Field
 import arinc424.decoder as decoder
 
 
+# 4.1.14 Airport Communications Records (PV)
 class AirportCommunication():
 
     cont_idx = 25
     app_idx = 26
 
-    def read(self, r):
+    def read(self, r) -> list:
         if int(r[self.cont_idx]) < 2:
             return self.read_primary(r)
         else:
             match r[self.app_idx]:
                 case 'N':
                     return self.read_cont_narr(r)
-                case 'L':
-                    # VHF Navaid Limitation Continuation
-                    return
-                case 'P':
-                    # flight plan
-                    return
-                case ' ':
-                    # no idea
-                    return
+                # TODO find a data set that has these continuation records to verify
+                # case 'T':
+                #     return self.read_time(r)
                 case _:
-                    raise ValueError('Unknown Application Type')
+                    return []
 
+    # 4.1.14.1 Airport Communications Primary Records
     def read_primary(self, r):
         return [
             Field("Record Type",                         r[0],          decoder.field_002),
@@ -64,6 +60,7 @@ class AirportCommunication():
             Field("Cycle Date",                          r[128:132],    decoder.field_032)
         ]
 
+    # 4.1.14.2 Airport Communications Continuation Records
     def read_cont_narr(self, r):
         return (
             Field("Record Type",                         r[0],          decoder.field_002),
@@ -80,4 +77,32 @@ class AirportCommunication():
             Field("Narrative",                           r[27:87],      decoder.field_186),
             Field("File Record No",                      r[123:128],    decoder.field_031),
             Field("Cycle Date",                          r[128:132],    decoder.field_032)
+        )
+
+    # 4.1.14.3 Airport Additional Continuation Records
+    def read_time(self, r):
+        return (
+            Field("Record Type",                        r[0],           decoder.field_002),
+            Field("Customer / Area Code",               r[1:4],         decoder.field_003),
+            Field("Section Code",                       r[4]+r[12],     decoder.field_004),
+            Field("Airport Identifier",                 r[6:10],        decoder.field_006),
+            Field("ICAO Code",                          r[10:12],       decoder.field_014),
+            Field("Communications Type",                r[13:16],       decoder.field_101),
+            Field("Communications Freq",                r[16:23],       decoder.field_103),
+            Field("Guard/Transmit",                     r[23],          decoder.field_182),
+            Field("Frequency Units",                    r[24],          decoder.field_104),
+            Field("Continuation Record No",             r[25],          decoder.field_016),
+            Field("Application Type",                   r[26],          decoder.field_091),
+            Field("Time Code",                          r[27],          decoder.field_131),
+            Field("NOTAM",                              r[28],          decoder.field_132),
+            Field("Time Indicator",                     r[29],          decoder.field_138),
+            Field("Time of Operaion",                   r[30:40],       decoder.field_195),
+            Field("Time of Operaion (2)",               r[40:50],       decoder.field_195),
+            Field("Time of Operaion (2)",               r[50:60],       decoder.field_195),
+            Field("Time of Operaion (3)",               r[60:70],       decoder.field_195),
+            Field("Time of Operaion (4)",               r[70:80],       decoder.field_195),
+            Field("Time of Operaion (5)",               r[80:90],       decoder.field_195),
+            Field("Time of Operaion (6)",               r[90:100],      decoder.field_195),
+            Field("File Record No",                     r[123:128],     decoder.field_031),
+            Field("Cycle Date",                         r[128:132],     decoder.field_032)
         )
