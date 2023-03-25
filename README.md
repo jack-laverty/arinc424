@@ -23,14 +23,15 @@ Create a record object. Use the **read()** method to read an ARINC-424 record in
 
 ```Python
 record = a424.Record()
-record.read(line)
+result = record.read(line)
 ```
 
 ### Viewing a record
 After [reading a record](#reading-a-record), **dump()** will print the record to the console.
 
 ```Python
-record.dump()
+if result == a424.ERR_NONE:
+    record.dump()
 ```
 
 ```console
@@ -48,7 +49,8 @@ Cycle Date                : 8704
 ### Decoding a record
 Similar to **dump()**, but each value in the key-value pair is decoded to be human readable without referencing the ARINC-424 spec.
 ```Python
-record.decode()
+if result == a424.ERR_NONE:
+    record.decode()
 ```
 
 ```console
@@ -85,6 +87,8 @@ When an ARINC-424 record is read, the result is stored in a **Record** object.
 ### Output Formats
 
 **Record** objects can output the data they hold. The data can be output in a several formats.
+In addition to printing to the console, **dump()** and **decode()** will return strings which can
+be written to files.
 
 * decoded - the most human readable format
 * JSON (single line) - useful for importing the records to a database
