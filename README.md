@@ -67,6 +67,13 @@ Cycle Date                : 1987, April
 
 ### Writing a record to a file
 
+In addition to printing to the console, **dump()** and **decode()** will return strings which can
+be written to files.
+
+* decoded - the most human readable format
+* JSON (single line) - useful for importing the records to a database
+* raw data - the unmodified string from which the record object was created
+
 ```Python
 f = open("output.txt", "w")
 
@@ -77,23 +84,7 @@ f.write(record.dump())
 f.write(record.json())
 ```
 
-## Details
+## Contribution
 
-### Record Module
-When an ARINC-424 record is read, the result is stored in a **Record** object.
-
-**Record** objects hold information about that record, such as what *type* of record it is, what *fields* the record contains, and what values are in those fields.
-
-### Output Formats
-
-**Record** objects can output the data they hold. The data can be output in a several formats.
-In addition to printing to the console, **dump()** and **decode()** will return strings which can
-be written to files.
-
-* decoded - the most human readable format
-* JSON (single line) - useful for importing the records to a database
-* raw data - the unmodified string from which the record object was created
-
-### Supported Versions
-* ARINC-424-18
-
+More examples of ARINC-424 records will always be useful. The small set of examples kept in ```/data``` are limited, despite
+being critical for testing. Feel free to add more examples to the ```/data``` folder, or send them to me directly. Thanks!
