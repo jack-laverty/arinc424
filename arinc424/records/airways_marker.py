@@ -2,7 +2,8 @@ from arinc424.decoder import Field
 import arinc424.decoder as decoder
 
 
-class Marker():
+# 4.1.15 Airways Marker Records (EM)
+class AirwaysMarker():
 
     cont_idx = 21
     app_idx = 22
@@ -18,6 +19,7 @@ class Marker():
                     print("Unsupported Application Type")
                     return []
 
+    # 4.1.15.1 Airways Marker Primary Records
     def read_primary(self, r):
         return [
             Field("Record Type",                         r[0],          decoder.field_002),
@@ -40,6 +42,7 @@ class Marker():
             Field("Cycle Date",                          r[128:132],    decoder.field_032)
         ]
 
+    # 4.1.15.2 Airways Marker Continuation Records
     def read_cont(self, r):
         return [
             Field("Record Type",                         r[0],          decoder.field_002),

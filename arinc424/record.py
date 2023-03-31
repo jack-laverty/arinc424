@@ -17,7 +17,7 @@ from .records import Airport,\
                      Holding,\
                      LocalizerGlideslope,\
                      LocalizerMarker,\
-                     Marker,\
+                     AirwaysMarker,\
                      MLS,\
                      MSA,\
                      MORA,\
@@ -44,7 +44,7 @@ class Record():
     records['D '] = VHFNavaid()
     records['DB'] = NDBNavaid()
     records['EA'] = Waypoint(True)
-    records['EM'] = Marker()
+    records['EM'] = AirwaysMarker()
     records['EP'] = Holding()
     records['ER'] = Airway()
     records['EU'] = AirwayRestricted()

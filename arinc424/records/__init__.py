@@ -1,6 +1,6 @@
 from .navaid_vhf import VHFNavaid  # noqa: F401
 from .navaid_ndb import NDBNavaid  # noqa: F401
-from .enroute_marker import Marker  # noqa: F401
+from .airways_marker import AirwaysMarker  # noqa: F401
 from .waypoint import Waypoint  # noqa: F401
 from .enroute_holding import Holding  # noqa: F401
 from .enroute_airway import Airway  # noqa: F401

@@ -2,6 +2,7 @@ from arinc424.decoder import Field
 import arinc424.decoder as decoder
 
 
+# 4.1.5 Holding Pattern Records (EP)
 class Holding():
 
     cont_idx = 38
@@ -18,6 +19,19 @@ class Holding():
                     print("Unsupported Application Type")
                     return []
 
+    # 4.1.5.1 Holding Pattern Primary Records
+    #
+    # Note1: In Enroute Fix Holding Pattern records, the code
+    # of “ENRT” is used in the Region Code field and
+    # the ICAO Code field is blank. In Terminal Fix
+    # Holding Records, the Region Code field contains
+    # the identifier of the Airport or Heliport with
+    # which the holding is associated. The ICAO Code
+    # field will not be blank. This information will
+    # uniquely identify the Terminal NDB, Airport
+    # Terminal Waypoint or Heliport Terminal
+    # Waypoint.
+    #
     def read_primary(self, r):
         return [
             Field("Record Type",                         r[0],          decoder.field_002),
@@ -44,6 +58,7 @@ class Holding():
             Field("Cycle Date",                          r[128:132],    decoder.field_032)
         ]
 
+    # 4.1.5.2 Holding Pattern Continuation Records
     def read_cont(self, r):
         return [
             Field("Record Type",                         r[0],          decoder.field_002),
