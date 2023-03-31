@@ -2,6 +2,7 @@ from arinc424.decoder import Field
 import arinc424.decoder as decoder
 
 
+# 4.1.23 Enroute Communications Records (EV)
 class EnrouteComms():
 
     cont_idx = 55
@@ -20,6 +21,7 @@ class EnrouteComms():
                     raise ValueError('{}\n{}\n{}'.format("Unknown Application",
                                                          r[self.app_idx], r))
 
+    # 4.1.23.1 Enroute Communications Primary Records
     def read_primary(self, r):
         return [
             Field("Record Type",                         r[0],          decoder.field_002),
@@ -53,6 +55,7 @@ class EnrouteComms():
             Field("Cycle Date",                          r[128:132],    decoder.field_032)
         ]
 
+    # 4.1.23.2 Enroute Communications Continuation Records
     def read_cont(self, r):
         return [
             Field("Record Type",                         r[0],          decoder.field_002),
@@ -77,6 +80,7 @@ class EnrouteComms():
             Field("Cycle Date",                          r[128:132],    decoder.field_032)
         ]
 
+    # 4.1.23.3 Enroute Communications Continuation Records
     def read_timeop(self, r):
         return [
             Field("Record Type",                         r[0],          decoder.field_002),

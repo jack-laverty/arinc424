@@ -2,6 +2,7 @@ from arinc424.decoder import Field
 import arinc424.decoder as decoder
 
 
+# 4.1.6 Enroute Airways Records (ER)
 class Airway():
 
     cont_idx = 38
@@ -21,6 +22,7 @@ class Airway():
                 case _:
                     raise ValueError('Unknown Application Type')
 
+    # 4.1.6.1 Enroute Airways Primary Records
     def read_primary(self, r):
         return [
             Field("Record Type",                             r[0],          decoder.field_002),
@@ -34,27 +36,28 @@ class Airway():
             Field("Continuation Record No",                  r[38],         decoder.field_016),
             Field("Waypoint Desc Code",                      r[39:43],      decoder.field_017),
             Field("Boundary Code",                           r[43],         decoder.field_018),
-            Field("Route Type",                              r[26:29],      decoder.field_007),
-            Field("Level",                                   r[29:31],      decoder.field_019),
-            Field("Direction Restriction",                   r[32:41],      decoder.field_115),
-            Field("Cruise Table Indicator",                  r[41:51],      decoder.field_134),
-            Field("EU Indicator",                            r[74:79],      decoder.field_164),
-            Field("Recommended NAVAID",                      r[84:87],      decoder.field_023),
-            Field("ICAO Code (2)",                           r[95:98],      decoder.field_014),
-            Field("RNP",                                     r[98:123],     decoder.field_211),
-            Field("Theta",                                   r[98:123],     decoder.field_024),
-            Field("Rho",                                     r[98:123],     decoder.field_025),
-            Field("Outbound Magnetic Course",                r[98:123],     decoder.field_026),
-            Field("Route Distance From",                     r[98:123],     decoder.field_027),
-            Field("Inbound Magnetic Course",                 r[98:123],     decoder.field_028),
-            Field("Minimum Altitude",                        r[98:123],     decoder.field_030),
-            Field("Minimum Altitude (2)",                    r[98:123],     decoder.field_030),
-            Field("Maximum Altitude",                        r[98:123],     decoder.field_127),
-            Field("Fix Radius Transition Indicator",         r[98:123],     decoder.field_254),
+            Field("Route Type",                              r[44],         decoder.field_007),
+            Field("Level",                                   r[45],         decoder.field_019),
+            Field("Direction Restriction",                   r[46],         decoder.field_115),
+            Field("Cruise Table Indicator",                  r[47:49],      decoder.field_134),
+            Field("EU Indicator",                            r[49],         decoder.field_164),
+            Field("Recommended NAVAID",                      r[50:54],      decoder.field_023),
+            Field("ICAO Code (2)",                           r[54:56],      decoder.field_014),
+            Field("RNP",                                     r[56:59],      decoder.field_211),
+            Field("Theta",                                   r[62:66],      decoder.field_024),
+            Field("Rho",                                     r[66:70],      decoder.field_025),
+            Field("Outbound Magnetic Course",                r[70:74],      decoder.field_026),
+            Field("Route Distance From",                     r[74:78],      decoder.field_027),
+            Field("Inbound Magnetic Course",                 r[78:82],      decoder.field_028),
+            Field("Minimum Altitude",                        r[83:88],      decoder.field_030),
+            Field("Minimum Altitude (2)",                    r[88:93],      decoder.field_030),
+            Field("Maximum Altitude",                        r[93:98],      decoder.field_127),
+            Field("Fix Radius Transition Indicator",         r[98:101],     decoder.field_254),
             Field("File Record No",                          r[123:128],    decoder.field_031),
             Field("Cycle Date",                              r[128:132],    decoder.field_032)
         ]
 
+    # 4.1.6.2 Enroute Airways Continuation Records
     def read_cont(self, r):
         return [
             Field("Record Type",                             r[0],          decoder.field_002),
@@ -72,6 +75,7 @@ class Airway():
             Field("Cycle Date",                              r[128:132],    decoder.field_032)
         ]
 
+    # 4.1.6.3 Enroute Airways Flight Planning Continuation Records
     def read_flight_plan0(self, r):
         return [
             Field("Record Type",                             r[0],          decoder.field_002),
@@ -106,6 +110,7 @@ class Airway():
             Field("Cycle Date",                              r[128:132],    decoder.field_032)
         ]
 
+    # 4.1.6.4 Enroute Airways Flight Planning Continuation Records
     def read_flight_plan1(self, r):
         return [
             Field("Record Type",                             r[0],          decoder.field_002),
@@ -119,23 +124,23 @@ class Airway():
             Field("Continuation Record No",                  r[38],         decoder.field_016),
             Field("Waypoint Desc Code",                      r[39:43],      decoder.field_017),
             Field("Boundary Code",                           r[43],         decoder.field_018),
-            Field("Route Type",                              r[26:29],      decoder.field_007),
-            Field("Level",                                   r[29:31],      decoder.field_019),
-            Field("Direction Restriction",                   r[32:41],      decoder.field_115),
-            Field("Cruise Table Indicator",                  r[41:51],      decoder.field_134),
-            Field("EU Indicator",                            r[74:79],      decoder.field_164),
-            Field("Recommended NAVAID",                      r[84:87],      decoder.field_023),
-            Field("ICAO Code (2)",                           r[95:98],      decoder.field_014),
-            Field("RNP",                                     r[98:123],     decoder.field_211),
-            Field("Theta",                                   r[98:123],     decoder.field_024),
-            Field("Rho",                                     r[98:123],     decoder.field_025),
-            Field("Outbound Magnetic Course",                r[98:123],     decoder.field_026),
-            Field("Route Distance From",                     r[98:123],     decoder.field_027),
-            Field("Inbound Magnetic Course",                 r[98:123],     decoder.field_028),
-            Field("Minimum Altitude",                        r[98:123],     decoder.field_030),
-            Field("Minimum Altitude (2)",                    r[98:123],     decoder.field_030),
-            Field("Maximum Altitude",                        r[98:123],     decoder.field_127),
-            Field("Fix Radius Transition Indicator",         r[98:123],     decoder.field_254),
+            Field("Route Type",                              r[44],         decoder.field_007),
+            Field("Level",                                   r[45],         decoder.field_019),
+            Field("Direction Restriction",                   r[46],         decoder.field_115),
+            Field("Cruise Table Indicator",                  r[47:49],      decoder.field_134),
+            Field("EU Indicator",                            r[49],         decoder.field_164),
+            Field("Recommended NAVAID",                      r[50:54],      decoder.field_023),
+            Field("ICAO Code (2)",                           r[54:56],      decoder.field_014),
+            Field("RNP",                                     r[56:59],      decoder.field_211),
+            Field("Theta",                                   r[62:66],      decoder.field_024),
+            Field("Rho",                                     r[66:70],      decoder.field_025),
+            Field("Outbound Magnetic Course",                r[70:74],      decoder.field_026),
+            Field("Route Distance From",                     r[74:78],      decoder.field_027),
+            Field("Inbound Magnetic Course",                 r[78:82],      decoder.field_028),
+            Field("Minimum Altitude",                        r[83:88],      decoder.field_030),
+            Field("Minimum Altitude (2)",                    r[88:93],      decoder.field_030),
+            Field("Maximum Altitude",                        r[93:98],      decoder.field_127),
+            Field("Fix Radius Transition Indicator",         r[98:101],     decoder.field_254),
             Field("File Record No",                          r[123:128],    decoder.field_031),
             Field("Cycle Date",                              r[128:132],    decoder.field_032)
         ]
