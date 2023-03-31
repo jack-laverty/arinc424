@@ -30,12 +30,13 @@ result = record.read(line)
 After [reading a record](#reading-a-record), **dump()** will print the record to the console.
 
 ```Python
+# example1.py
 if result == a424.ERR_NONE:
     record.dump()
 ```
 
 ```console
-foo@bar:~$ python3 dump.py
+foo@bar:~$ python3 exmaple1.py
 
 Record Type               : S
 Customer / Area Code      : USA
@@ -49,12 +50,13 @@ Cycle Date                : 8704
 ### Decoding a record
 Similar to **dump()**, but each value in the key-value pair is decoded to be human readable without referencing the ARINC-424 spec.
 ```Python
+# example2.py
 if result == a424.ERR_NONE:
     record.decode()
 ```
 
 ```console
-foo@bar:~$ python3 decode.py
+foo@bar:~$ python3 example2.py
 
 Record Type               : Standard Record
 Customer / Area Code      : United States of America
