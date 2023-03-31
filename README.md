@@ -36,7 +36,7 @@ if result == a424.ERR_NONE:
 ```
 
 ```console
-foo@bar:~$ python3 exmaple1.py
+foo@bar:~$ python3 example1.py
 
 Record Type               : S
 Customer / Area Code      : USA
