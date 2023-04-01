@@ -2,6 +2,7 @@ from arinc424.decoder import Field
 import arinc424.decoder as decoder
 
 
+# 4.1.17 FIR/UIR Records (UF)
 class FIR_UIR():
 
     cont_idx = 19
@@ -18,6 +19,7 @@ class FIR_UIR():
                     print("Unsupported Application Type")
                     return []
 
+    # 4.1.17.1 FIR/UIR Primary Records
     def read_primary(self, r):
         return [
             Field("Record Type",                         r[0],          decoder.field_002),
@@ -49,6 +51,7 @@ class FIR_UIR():
             Field("Cycle Date",                          r[128:132],    decoder.field_032)
         ]
 
+    # 4.1.17.2 FIR/UIR Continuation Records
     def read_cont(self, r):
         return [
             Field("Record Type",                         r[0],          decoder.field_002),
