@@ -2,7 +2,8 @@ from arinc424.decoder import Field
 import arinc424.decoder as decoder
 
 
-class Gate():
+# 4.1.8 Airport Gate Records (PB)
+class AirportGate():
 
     cont_idx = 21
     app_idx = 22
@@ -18,6 +19,7 @@ class Gate():
                     print("Unsupported Application Type")
                     return []
 
+    # 4.1.8.1 Airport Gate Primary Record
     def read_primary(self, r):
         return [
             Field("Record Type",                         r[0],          decoder.field_002),
@@ -34,6 +36,7 @@ class Gate():
             Field("Cycle Date",                          r[128:132],    decoder.field_032)
         ]
 
+    # 4.1.8.2 Airport Gate Continuation Records
     def read_cont(self, r):
         return [
             Field("Record Type",                         r[0],          decoder.field_002),

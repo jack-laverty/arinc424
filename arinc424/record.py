@@ -9,7 +9,7 @@ from .records import Airport,\
                      EnrouteComms,\
                      FIR_UIR,\
                      FlightPlanning,\
-                     Gate,\
+                     AirportGate,\
                      GLS,\
                      Heliport,\
                      HeliportComms,\
@@ -23,6 +23,7 @@ from .records import Airport,\
                      MORA,\
                      NDBNavaid,\
                      PathPoint,\
+                     PreferredRoute,\
                      RestrictiveAirspace,\
                      Runway,\
                      SIDSTARApp,\
@@ -40,24 +41,35 @@ class Record():
     def def_val():
         return None
 
+    # 5.5 Subsection Code (SUB CODE)
     records = defaultdict(def_val)
+    records['AS'] = MORA()
+
     records['D '] = VHFNavaid()
     records['DB'] = NDBNavaid()
+    
     records['EA'] = Waypoint(True)
     records['EM'] = AirwaysMarker()
     records['EP'] = Holding()
     records['ER'] = Airway()
+    records['ET'] = PreferredRoute()
     records['EU'] = AirwayRestricted()
     records['EV'] = EnrouteComms()
+
+    records['HA'] = Heliport()
+    records['HC'] = HeliportTerminalWaypoint()
+    records['HD'] = SIDSTARApp()
+    records['HE'] = SIDSTARApp()
+    records['HS'] = MSA(True)
+    records['HV'] = HeliportComms()
+
     records['PG'] = Runway()
     records['PA'] = Airport()
-    records['PB'] = Gate()
+    records['PB'] = AirportGate()
     records['PC'] = Waypoint(False)
     records['PD'] = SIDSTARApp()
     records['PE'] = SIDSTARApp()
     records['PF'] = SIDSTARApp()
-    records['HD'] = SIDSTARApp()
-    records['HE'] = SIDSTARApp()
     records['HF'] = SIDSTARApp()
     records['PI'] = LocalizerGlideslope()
     records['PL'] = MLS()
@@ -68,12 +80,7 @@ class Record():
     records['PS'] = MSA(False)
     records['PT'] = GLS()
     records['PV'] = AirportCommunication()
-    records['HA'] = Heliport()
-    records['HC'] = HeliportTerminalWaypoint()
-    records['HS'] = MSA(True)
-    records['HV'] = HeliportComms()
     records['TC'] = CruisingTables()
-    records['AS'] = MORA()
     records['UC'] = ControlledAirspace()
     records['UF'] = FIR_UIR()
     records['UR'] = RestrictiveAirspace()

@@ -20,9 +20,10 @@ from .airport_communication import AirportCommunication  # noqa: F401
 from .msa import MSA  # noqa: F401
 from .fir_uir import FIR_UIR  # noqa: F401
 from .enroute_comms import EnrouteComms  # noqa: F401
-from .gate import Gate  # noqa: F401
+from .airport_gate import AirportGate  # noqa: F401
 from .restrictive_airspace import RestrictiveAirspace  # noqa: F401
 from .path_point import PathPoint  # noqa: F401
 from .gls import GLS  # noqa: F401
 from .controlled_airspace import ControlledAirspace  # noqa: F401
 from .heliport_terminal_waypoint import HeliportTerminalWaypoint  # noqa: F401
+from .preferred_route import PreferredRoute  # noqa: F401

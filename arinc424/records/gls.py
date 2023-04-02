@@ -2,6 +2,7 @@ from arinc424.decoder import Field
 import arinc424.decoder as decoder
 
 
+# 4.1.29 GLS Record (PT)
 class GLS():
 
     cont_idx = 21
@@ -18,6 +19,7 @@ class GLS():
                     print("Unsupported Application Type")
                     return []
 
+    # 4.1.29.1 GLS Primary Records
     def read_primary(self, r):
         return [
             Field("Record Type",                         r[0],          decoder.field_002),
@@ -46,6 +48,7 @@ class GLS():
             Field("Cycle Date",                          r[128:132],    decoder.field_032)
         ]
 
+    # 4.1.29.2 GLS Continuation Records
     def read_cont(self, r):
         return [
             Field("Record Type",                         r[0],          decoder.field_002),
