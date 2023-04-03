@@ -4,6 +4,7 @@ from .records import Airport,\
                      Airway,\
                      AirportCommunication,\
                      AirwayRestricted,\
+                     AlternateRecord,\
                      CompanyRoute,\
                      ControlledAirspace,\
                      CruisingTables,\
@@ -86,7 +87,7 @@ class Record():
     records['PV'] = AirportCommunication()
 
     records['R '] = CompanyRoute()
-    # records['RA'] = AlternateRecords()
+    records['RA'] = AlternateRecord()
 
     records['TC'] = CruisingTables()
     # records['TG'] = GeographicalReference()

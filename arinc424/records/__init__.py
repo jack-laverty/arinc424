@@ -29,3 +29,4 @@ from .heliport_terminal_waypoint import HeliportTerminalWaypoint  # noqa: F401
 from .preferred_route import PreferredRoute  # noqa: F401
 from .taa import TAA  # noqa: F401
 from .company_route import CompanyRoute  # noqa: F401
+from .alternate_record import AlternateRecord  # noqa: F401
