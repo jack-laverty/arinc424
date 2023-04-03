@@ -28,3 +28,4 @@ from .controlled_airspace import ControlledAirspace  # noqa: F401
 from .heliport_terminal_waypoint import HeliportTerminalWaypoint  # noqa: F401
 from .preferred_route import PreferredRoute  # noqa: F401
 from .taa import TAA  # noqa: F401
+from .company_route import CompanyRoute  # noqa: F401

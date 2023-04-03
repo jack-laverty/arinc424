@@ -4,6 +4,7 @@ from .records import Airport,\
                      Airway,\
                      AirportCommunication,\
                      AirwayRestricted,\
+                     CompanyRoute,\
                      ControlledAirspace,\
                      CruisingTables,\
                      EnrouteComms,\
@@ -62,7 +63,7 @@ class Record():
     records['HD'] = SIDSTARApp()
     records['HE'] = SIDSTARApp()
     records['HF'] = SIDSTARApp()
-    # records['HK'] = TAA()
+    records['HK'] = TAA(True)
     records['HS'] = MSA(True)
     records['HV'] = HeliportComms()
 
@@ -84,7 +85,7 @@ class Record():
     records['PT'] = GLS()
     records['PV'] = AirportCommunication()
 
-    # records['R '] = CompanyRoutes()
+    records['R '] = CompanyRoute()
     # records['RA'] = AlternateRecords()
 
     records['TC'] = CruisingTables()

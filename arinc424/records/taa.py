@@ -8,6 +8,13 @@ class TAA():
     cont_idx = 38
     app_idx = 39
 
+    def __init__(self, heliport=False):
+        self.heliport = heliport
+        if self.heliport is False:
+            self.id_name = "Airport Identifier"
+        else:
+            self.id_name = "Heliport Identifier"
+
     def read(self, line):
         if int(line[self.cont_idx]) < 2:
             return self.read_primary(line)
@@ -25,7 +32,7 @@ class TAA():
             Field("Record Type",                        r[0],           decoder.field_002),
             Field("Customer / Area Code",               r[1:4],         decoder.field_003),
             Field("Section Code",                       r[4]+r[12],     decoder.field_004),
-            Field("Airport Identifier",                 r[6:10],        decoder.field_006),
+            Field(self.id_name,                         r[6:10],        decoder.field_006),
             Field("ICAO Code",                          r[10:12],       decoder.field_014),
             Field("Approach Identifier",                r[13:19],       decoder.field_010),
             Field("TAA Sector Identifier",              r[19],          decoder.field_272),
@@ -63,7 +70,7 @@ class TAA():
             Field("Record Type",                        r[0],           decoder.field_002),
             Field("Customer / Area Code",               r[1:4],         decoder.field_003),
             Field("Section Code",                       r[4]+r[12],     decoder.field_004),
-            Field("Airport Identifier",                 r[6:10],        decoder.field_006),
+            Field(self.id_name,                         r[6:10],        decoder.field_006),
             Field("ICAO Code",                          r[10:12],       decoder.field_014),
             Field("Approach Identifier",                r[13:19],       decoder.field_010),
             Field("TAA Sector Identifier",              r[19],          decoder.field_272),
