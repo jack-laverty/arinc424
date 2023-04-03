@@ -27,6 +27,7 @@ from .records import Airport,\
                      RestrictiveAirspace,\
                      Runway,\
                      SIDSTARApp,\
+                     TAA,\
                      Waypoint,\
                      VHFNavaid
 
@@ -47,7 +48,7 @@ class Record():
 
     records['D '] = VHFNavaid()
     records['DB'] = NDBNavaid()
-    
+
     records['EA'] = Waypoint(True)
     records['EM'] = AirwaysMarker()
     records['EP'] = Holding()
@@ -60,18 +61,20 @@ class Record():
     records['HC'] = HeliportTerminalWaypoint()
     records['HD'] = SIDSTARApp()
     records['HE'] = SIDSTARApp()
+    records['HF'] = SIDSTARApp()
+    # records['HK'] = TAA()
     records['HS'] = MSA(True)
     records['HV'] = HeliportComms()
 
-    records['PG'] = Runway()
     records['PA'] = Airport()
     records['PB'] = AirportGate()
     records['PC'] = Waypoint(False)
     records['PD'] = SIDSTARApp()
     records['PE'] = SIDSTARApp()
     records['PF'] = SIDSTARApp()
-    records['HF'] = SIDSTARApp()
+    records['PG'] = Runway()
     records['PI'] = LocalizerGlideslope()
+    records['PK'] = TAA()
     records['PL'] = MLS()
     records['PM'] = LocalizerMarker()
     records['PN'] = NDBNavaid()  # terminal
@@ -80,7 +83,14 @@ class Record():
     records['PS'] = MSA(False)
     records['PT'] = GLS()
     records['PV'] = AirportCommunication()
+
+    # records['R '] = CompanyRoutes()
+    # records['RA'] = AlternateRecords()
+
     records['TC'] = CruisingTables()
+    # records['TG'] = GeographicalReference()
+    # records['TN'] = RNAVNameTable()
+
     records['UC'] = ControlledAirspace()
     records['UF'] = FIR_UIR()
     records['UR'] = RestrictiveAirspace()
