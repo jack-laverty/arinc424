@@ -30,3 +30,4 @@ from .preferred_route import PreferredRoute  # noqa: F401
 from .taa import TAA  # noqa: F401
 from .company_route import CompanyRoute  # noqa: F401
 from .alternate_record import AlternateRecord  # noqa: F401
+from .geo_reference_table import GeoReferenceTable  # noqa: F401

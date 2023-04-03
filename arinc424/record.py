@@ -12,6 +12,7 @@ from .records import Airport,\
                      FIR_UIR,\
                      FlightPlanning,\
                      AirportGate,\
+                     GeoReferenceTable,\
                      GLS,\
                      Heliport,\
                      HeliportComms,\
@@ -90,8 +91,8 @@ class Record():
     records['RA'] = AlternateRecord()
 
     records['TC'] = CruisingTables()
-    # records['TG'] = GeographicalReference()
-    # records['TN'] = RNAVNameTable()
+    records['TG'] = GeoReferenceTable()
+    # records['TN'] = RNAV Name Table (OBSELETE)
 
     records['UC'] = ControlledAirspace()
     records['UF'] = FIR_UIR()
