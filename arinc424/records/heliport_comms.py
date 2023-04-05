@@ -2,6 +2,7 @@ from arinc424.decoder import Field
 import arinc424.decoder as decoder
 
 
+# 4.2.5 Heliport Communications Records (HV)
 class HeliportComms():
 
     cont_idx = 25
@@ -9,18 +10,17 @@ class HeliportComms():
 
     def read(self, line):
         if int(line[self.cont_idx]) < 2:
-            # continuation record # 0 = primary record with no continuation
-            # continuation record # 1 = primary record with continuation
             return self.read_primary(line)
         else:
             match line[self.app_idx]:
                 case 'A':
                     return self.read_cont(line)
-                # case '?':
-                #     return self.read_cont1(line)
+                case 'T':
+                    return self.read_timeop(line)
                 case _:
                     raise ValueError('Unknown Application Type')
 
+    # 4.2.5.1 Heliport Communications Primary Records
     def read_primary(self, r):
         return [
             Field("Record Type",                         r[0],          decoder.field_002),
@@ -59,6 +59,7 @@ class HeliportComms():
             Field("Cycle Date",                          r[128:132],    decoder.field_032)
         ]
 
+    # 4.2.5.2 Heliport Communications Continuation Records
     def read_cont(self, r):
         return [
             Field("Record Type",                         r[0],          decoder.field_002),
@@ -77,7 +78,8 @@ class HeliportComms():
             Field("Cycle Date",                          r[128:132],    decoder.field_032)
         ]
 
-    def read_cont1(self, r):
+    # 4.2.5.3 Heliport Communications Continuation Records
+    def read_timeop(self, r):
         return [
             Field("Record Type",                         r[0],          decoder.field_002),
             Field("Customer / Area Code",                r[1:4],        decoder.field_003),
