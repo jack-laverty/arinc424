@@ -92,7 +92,7 @@ def def_val():
 #         return d[val] if d[val] != "bad value" else val + " - BAD VALUE"
 
 #     elif altitude.contains(field):
-#         return val.lstrip('0') + " ft" if val.isnumeric() else '<Blank>'
+#         
 
 #     elif field == "Cycle Date":
 #         return '{}, {}'.format("19" + val[:2] if int(val[:2]) > 50 else "20" + val[:2], val[2:])
@@ -246,15 +246,15 @@ def def_val():
 #             case _:
 #                 raise ValueError('Invalid IFR Capability')
 #     elif field == "Longest Runway":
-#         if val.isnumeric():
-#             return val.lstrip('0')+"00" + " ft"
+#         if value.isnumeric():
+#             return value.lstrip('0')+"00" + " ft"
 #         else:
 #             raise ValueError('Invalid runway length')
 
 #     elif field == "Speed Limit":
-#         if val.isnumeric():
+#         if value.isnumeric():
 #             return val + " knots (IAS)"
-#         elif val.strip() == '':
+#         elif value.strip() == '':
 #             return '<Blank>'
 #         else:
 #             raise ValueError('Invalid speed' + val)
@@ -343,7 +343,7 @@ def def_val():
 #         else:
 #             raise ValueError("Invalid Boundary Via")
 #     else:  # text
-#         return val.strip() if val.strip() != '' else '<Blank>'
+#         return value.strip() if value.strip() != '' else '<Blank>'
 
 
 # 5.2 Record Type
@@ -539,12 +539,12 @@ def field_028(value):
 
 # 5.29 Altitude Description (ALT DESC)
 def field_029(value):
-    pass
+    return value.lstrip('0') + " ft" if value.isnumeric() else '<Blank>'
 
 
 # 5.30 Altitude/Minimum Altitude
 def field_030(value):
-    pass
+    return value.lstrip('0') + " ft" if value.isnumeric() else '<Blank>'
 
 
 # 5.31 File Record Number (FRN)
@@ -665,7 +665,7 @@ def field_052(value):
 
 # 5.53 Transition Altitude/Level (TRANS ALTITUDE/LEVEL)
 def field_053(value):
-    pass
+    return value.lstrip('0') + " ft" if value.isnumeric() else '<Blank>'
 
 
 # 5.54 Longest Runway (LONGEST RWY)
@@ -765,7 +765,7 @@ def field_072(value):
 
 # 5.73 Speed Limit Altitude
 def field_073(value):
-    pass
+    return value.lstrip('0') + " ft" if value.isnumeric() else '<Blank>'
 
 
 # 5.74 Component Elevation (GS ELEV, EL ELEV, AZ ELEV, BAZ ELEV)
@@ -830,7 +830,7 @@ def field_085(value):
 
 # 5.86 Cruise Altitude
 def field_086(value):
-    pass
+    return value.lstrip('0') + " ft" if value.isnumeric() else '<Blank>'
 
 
 # 5.87 Terminal/Alternate Airport (TERM/ALT ARPT)
@@ -1124,7 +1124,7 @@ def field_122(value):
 
 # 5.123 FIR/UIR ATC Reporting Units Altitude (RUA)
 def field_123(value):
-    pass
+    return value.lstrip('0') + " ft" if value.isnumeric() else '<Blank>'
 
 
 # 5.124 FIR/UIR Entry Report (ENTRY)
@@ -1144,7 +1144,7 @@ def field_126(value):
 
 # 5.127 Maximum Altitude (MAX ALT)
 def field_127(value):
-    pass
+    return value.lstrip('0') + " ft" if value.isnumeric() else '<Blank>'
 
 
 # 5.128 Restrictive Airspace Type (REST TYPE)
@@ -1244,7 +1244,7 @@ def field_146(value):
 
 # 5.147 Sector Altitude (SEC ALT)
 def field_147(value):
-    pass
+    return value.lstrip('0') + " ft" if value.isnumeric() else '<Blank>'
 
 
 # 5.148 Enroute Alternate Airport (EAA)
@@ -1314,7 +1314,7 @@ def field_160(value):
 
 # 5.161 Restriction Altitude (REST ALT)
 def field_161(value):
-    pass
+    return value.lstrip('0') + " ft" if value.isnumeric() else '<Blank>'
 
 
 # 5.162 Step Climb Indicator (STEP)
@@ -1441,7 +1441,7 @@ def field_183(value):
 
 # 5.184 Communication Altitude (COMM ALTITUDE)
 def field_184(value):
-    pass
+    return value.lstrip('0') + " ft" if value.isnumeric() else '<Blank>'
 
 
 # 5.185 Sector Facility (SEC FAC)
@@ -1579,7 +1579,7 @@ def field_208(value):
 
 # 5.209 Altitude Limitation (ALT LIMIT)
 def field_209(value):
-    pass
+    return value.lstrip('0') + " ft" if value.isnumeric() else '<Blank>'
 
 
 # 5.210 Sequence End Indicator (SEQ END)
@@ -1734,7 +1734,7 @@ def field_239(value):
 
 # 5.240 Altitude (ALT)
 def field_240(value):
-    pass
+    return value.lstrip('0') + " ft" if value.isnumeric() else '<Blank>'
 
 
 # 5.241 Fix Related Transition Code (FRT Code)
