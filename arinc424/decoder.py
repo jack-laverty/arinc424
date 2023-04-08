@@ -1,4 +1,5 @@
 from collections import defaultdict
+import string
 
 
 class Field():
@@ -91,12 +92,6 @@ def def_val():
 #             d['Z'] = 'Missed Approach'
 #         return d[val] if d[val] != "bad value" else val + " - BAD VALUE"
 
-#     elif altitude.contains(field):
-#         
-
-#     elif field == "Cycle Date":
-#         return '{}, {}'.format("19" + val[:2] if int(val[:2]) > 50 else "20" + val[:2], val[2:])
-
 #     elif facility.contains(field):
 #         d = defaultdict(def_val)
 #         d['V'] = 'VOR'
@@ -130,105 +125,11 @@ def def_val():
 #         collocation[' '] = 'Collocated Navaids'
 #         collocation['N'] = 'Non-Collocated Navaids'
 #         return str(collocation[val])
-#     elif field == "Waypoint Type":
-#         match val[0]:
-#             case 'C':
-#                 return "Combined Named Intersection and RNAV"
-#             case 'I':
-#                 return 'Unnamed, Charted Intersection'
-#             case 'N':
-#                 return 'NDB Navaid as Waypoint' + val[1:]
-#             case 'R':
-#                 return 'Named Intersection'
-#             case 'U':
-#                 return 'Uncharted Airway Intersection'
-#             case 'V':
-#                 return 'VFR Waypoint'
-#             case 'W':
-#                 return 'RNAV Waypoint'
-#         match val[1]:
-#             case 'A':
-#                 return 'Final Approach Fix'
-#             case 'B':
-#                 return 'Initial and Final Approach Fix'
-#             case 'C':
-#                 return 'Final Approach Course Fix'
-#             case 'D':
-#                 return 'Intermediate Approach Fix'
-#             case 'E':
-#                 return 'Off-Route intersection in FAA National Reference System'
-#             case 'F':
-#                 return 'Off-Route Intersection'
-#             case 'I':
-#                 return 'Initial Approach Fix'
-#             case 'K':
-#                 return 'Final Approach Course Fix at Initial Approach Fix'
-#             case 'L':
-#                 return 'Final Approach Course Fix at Intermediate Approach Fix'
-#             case 'M':
-#                 return 'Missed Approach Fix'
-#             case 'N':
-#                 return 'Initial Approach Fix and Missed Approach Fix'
-#             case 'O':
-#                 return 'Oceanic Entry/Exit Waypoint'
-#             case 'P':
-#                 return 'Pitch and Catch Point in the FAA High Altitude Redesign'
-#             case 'S':
-#                 return 'AACAA and SUA Waypoints in the FAA High Altitude Redesign'
-#             case 'U':
-#                 return 'FIR/UIR or Controlled Airspace Intersection'
-#             case 'V':
-#                 return 'Latitude/Longitude Intersection, Full Degree of Latitude'
-#             case 'W':
-#                 return 'Latitude/Longitude Intersection, Half Degree of Latitude'
-#             case _:
-#                 return "Unknown Waypoint Type"
-#     elif field == "Name Format Indicator":
-#         match val[0]:
-#             case 'A':
-#                 return 'Abeam Fix'
-#             case 'B':
-#                 return 'Bearing and Distance Fix '
-#             case 'D':
-#                 return 'Airport Name as Fix'
-#             case 'F':
-#                 return 'FIR Fix'
-#             case 'H':
-#                 return 'Phonetic Letter Name Fix'
-#             case 'I':
-#                 return 'Airport Ident as Fix'
-#             case 'L':
-#                 return 'Latitude/Longitude Fix '
-#             case 'M':
-#                 return 'Multiple Word Name Fix'
-#             case 'N':
-#                 return 'Navaid Ident as Fix'
-#             case 'P':
-#                 return 'Published Five - Letter - Name - Fix'
-#             case 'Q':
-#                 return 'Published Name Fix, less than five letters'
-#             case 'R':
-#                 return 'Published Name Fix, more than five letters'
-#             case 'T':
-#                 return 'Airport/Rwy Related Fix (Note 2)'
-#             case 'U':
-#                 return 'UIR Fix'
 
-#         match val[1]:
-#             case 'O':
-#                 return 'Localizer Marker with officially published five - letter identifier'
-#             case 'M':
-#                 return 'Localizer Marker without officially published five - letter identifier'
-#             case _:
-#                 return 'Unknown Name Format Indicator'
-#     elif field == "Marker Shape":
-#         match val:
-#             case 'E':
-#                 return 'Elliptical'
-#             case 'B':
-#                 return 'Bone'
-#             case _:
-#                 return val
+
+
+
+
 #     elif field == "Marker Power":
 #         match val:
 #             case 'H':
@@ -237,83 +138,18 @@ def def_val():
 #                 return 'Low Power (low altitude use)'
 #             case _:
 #                 return val
-#     elif field == "IFR Capability":
-#         match val:
-#             case 'Y':
-#                 return 'Official'
-#             case 'N':
-#                 return 'Non-official'
-#             case _:
-#                 raise ValueError('Invalid IFR Capability')
-#     elif field == "Longest Runway":
-#         if value.isnumeric():
-#             return value.lstrip('0')+"00" + " ft"
-#         else:
-#             raise ValueError('Invalid runway length')
 
-#     elif field == "Speed Limit":
-#         if value.isnumeric():
-#             return val + " knots (IAS)"
-#         elif value.strip() == '':
-#             return '<Blank>'
-#         else:
-#             raise ValueError('Invalid speed' + val)
-#     elif course.contains(field):
-#         return float(val)/10
-#     elif field == "Public Military Indicator":
-#         match val:
-#             case 'C':
-#                 return 'Public / Civil'
-#             case 'M':
-#                 return 'Military'
-#             case 'P':
-#                 return 'Private (not open to public)'
-#             case _:
-#                 raise ValueError('Invalid Pub/Mil')
-#     elif field == "Daylight Indicator":
-#         match val:
-#             case 'Y':
-#                 return 'Yes'
-#             case 'N':
-#                 return 'No'
-#             case _:
-#                 raise ValueError('Invalid Daylight')
-#     elif field == "Time Zone":
-#         if val[0].isalpha() and val[1:].isnumeric():
-#             x = string.ascii_uppercase.index(val[0]) - 12
-#             y = 'GMT +' + str(x) if x >= 0 else 'GMT -' + str(x)
-#             return y + ':' + str(val[1:])
-#         else:
-#             raise ValueError('Invalid Time Zone')
 
-#     elif field == "FIR/UIR Indicator":
-#         if val == 'F':
-#             return 'FIR'
-#         elif val == 'U ':
-#             return 'UIR'
-#         elif val == 'B':
-#             return 'Combined FIR/UIR'
-#         else:
-#             raise ValueError("Invalid FIR/UIR Indicator")
-#     elif field == "Leg Time":
-#         return '{}m {}s'.format(int(val[0]), int(val[1])*6)
-#     elif field == "Mag/True":
-#         if val == 'M':
-#             return 'Magnetic'
-#         elif val == 'T':
-#             return 'True'
-#         else:
-#             raise ValueError("Invalid Mag/True Indicator")
-#     elif field == "Turn Direction":
-#         if val == 'R':
-#             return 'Right'
-#         elif val == 'L':
-#             return 'Left'
-#         # TODO check this
-#         elif val == 'E' or val == ' ':
-#             return 'Either'
-#         else:
-#             raise ValueError("Invalid Turn Direction" + val)
+
+
+
+
+
+
+
+
+
+
 #     elif field == "Waypoint Usage":
 #         if val == ' B':
 #             return 'HI and LO Altitude'
@@ -327,21 +163,7 @@ def def_val():
 #             return 'RNAV'
 #         else:
 #             raise ValueError("Invalid Waypoint Usage")
-#     elif field == "Boundary Via":
-#         if val == 'C ':
-#             return 'Circle'
-#         elif val == 'G ':
-#             return 'Great Circle'
-#         elif val == 'H ':
-#             return 'Rhumb Line'
-#         elif val == 'L ':
-#             return 'Counter Clockwise ARC'
-#         elif val == 'R ':
-#             return 'Clockwise ARC'
-#         elif val == ' E':
-#             return 'End of description, return to origin point'
-#         else:
-#             raise ValueError("Invalid Boundary Via")
+
 #     else:  # text
 #         return value.strip() if value.strip() != '' else '<Blank>'
 
@@ -494,7 +316,15 @@ def field_019(value):
 
 # 5.20 Turn Direction (TURN DIR)
 def field_020(value):
-    pass
+    if value == 'R':
+        return 'Right'
+    elif value == 'L':
+        return 'Left'
+    # TODO check this
+    elif value == 'E' or value == ' ':
+        return 'Either'
+    else:
+        raise ValueError("Invalid Turn Direction" + value)
 
 
 # 5.21 Path and Termination (PATH TERM)
@@ -554,7 +384,7 @@ def field_031(value):
 
 # 5.32 Cycle Date (CYCLE)
 def field_032(value):
-    pass
+    return '{}, {}'.format("19" + value[:2] if int(value[:2]) > 50 else "20" + value[:2], value[2:])
 
 
 # 5.33 VOR/NDB Identifier (VOR IDENT/NDB IDENT)
@@ -607,7 +437,58 @@ def field_041(value):
 
 # 5.42 Waypoint Type (TYPE)
 def field_042(value):
-    pass
+    match value[0]:
+        case 'C':
+            return "Combined Named Intersection and RNAV"
+        case 'I':
+            return 'Unnamed, Charted Intersection'
+        case 'N':
+            return 'NDB Navaid as Waypoint' + value[1:]
+        case 'R':
+            return 'Named Intersection'
+        case 'U':
+            return 'Uncharted Airway Intersection'
+        case 'V':
+            return 'VFR Waypoint'
+        case 'W':
+            return 'RNAV Waypoint'
+    match value[1]:
+        case 'A':
+            return 'Final Approach Fix'
+        case 'B':
+            return 'Initial and Final Approach Fix'
+        case 'C':
+            return 'Final Approach Course Fix'
+        case 'D':
+            return 'Intermediate Approach Fix'
+        case 'E':
+            return 'Off-Route intersection in FAA National Reference System'
+        case 'F':
+            return 'Off-Route Intersection'
+        case 'I':
+            return 'Initial Approach Fix'
+        case 'K':
+            return 'Final Approach Course Fix at Initial Approach Fix'
+        case 'L':
+            return 'Final Approach Course Fix at Intermediate Approach Fix'
+        case 'M':
+            return 'Missed Approach Fix'
+        case 'N':
+            return 'Initial Approach Fix and Missed Approach Fix'
+        case 'O':
+            return 'Oceanic Entry/Exit Waypoint'
+        case 'P':
+            return 'Pitch and Catch Point in the FAA High Altitude Redesign'
+        case 'S':
+            return 'AACAA and SUA Waypoints in the FAA High Altitude Redesign'
+        case 'U':
+            return 'FIR/UIR or Controlled Airspace Intersection'
+        case 'V':
+            return 'Latitude/Longitude Intersection, Full Degree of Latitude'
+        case 'W':
+            return 'Latitude/Longitude Intersection, Half Degree of Latitude'
+        case _:
+            return "Unknown Waypoint Type"
 
 
 # 5.43 Waypoint Name/Description (NAME/DESC)
@@ -670,8 +551,10 @@ def field_053(value):
 
 # 5.54 Longest Runway (LONGEST RWY)
 def field_054(value):
-    pass
-
+    if value.isnumeric():
+        return value.lstrip('0')+"00" + " ft"
+    else:
+        return '<Blank>'
 
 # 5.55 Airport/Heliport Elevation (ELEV)
 def field_055(value):
@@ -710,7 +593,7 @@ def field_061(value):
 
 # 5.62 Inbound Holding Course (IB HOLD CRS)
 def field_062(value):
-    pass
+    return float(value)/10
 
 
 # 5.63 Turn (TURN)
@@ -725,7 +608,8 @@ def field_064(value):
 
 # 5.65 Leg Time (LEG TIME)
 def field_065(value):
-    pass
+    return '{}m {}s'.format(int(value[0]), int(value[1])*6)
+
 
 
 # 5.66 Station Declination (STN DEC)
@@ -760,7 +644,12 @@ def field_071(value):
 
 # 5.72 Speed Limit (SPEED LIMIT)
 def field_072(value):
-    pass
+    if value.isnumeric():
+        return value + " knots (IAS)"
+    elif value.strip() == '':
+        return '<Blank>'
+    else:
+        raise ValueError('Invalid speed' + value)
 
 
 # 5.73 Speed Limit Altitude
@@ -1049,7 +938,13 @@ def field_107(value):
 
 # 5.108 IFR Capability (IFR)
 def field_108(value):
-    pass
+    match value:
+        case 'Y':
+            return 'Official'
+        case 'N':
+            return 'Non-official'
+        case _:
+            raise ValueError('Invalid IFR Capability')
 
 
 # 5.109 Runway Width (WIDTH)
@@ -1069,7 +964,13 @@ def field_111(value):
 
 # 5.112 Marker Shape (SHAPE)
 def field_112(value):
-    pass
+    match value:
+        case 'E':
+            return 'Elliptical'
+        case 'B':
+            return 'Bone'
+        case _:
+            return value
 
 
 # 5.113 High/Low (HIGH/LOW)
@@ -1094,12 +995,33 @@ def field_116(value):
 
 # 5.117 FIR/UIR Indicator (IND)
 def field_117(value):
-    pass
+    if value == 'F':
+        return 'FIR'
+    elif value == 'U ':
+        return 'UIR'
+    elif value == 'B':
+        return 'Combined FIR/UIR'
+    else:
+        raise ValueError("Invalid FIR/UIR Indicator")
 
 
 # 5.118 Boundary Via (BDRY VIA)
 def field_118(value):
-    pass
+    match value:
+        case 'C ':
+            return 'Circle' 
+        case 'G ':
+            return 'Great Circle'
+        case 'H ':
+            return 'Rhumb Line'
+        case 'L ':
+            return 'Counter Clockwise ARC'
+        case 'R ':
+            return 'Clockwise ARC'
+        case ' E':
+            return 'End of description, return to origin point'
+        case _:
+            raise ValueError("Invalid Boundary Via")
 
 
 # 5.119 Arc Distance (ARC DIST)
@@ -1184,7 +1106,7 @@ def field_134(value):
 
 # 5.135 Course FROM/TO.
 def field_135(value):
-    pass
+    return float(value)/10
 
 
 # 5.136 Cruise Level From/To
@@ -1334,7 +1256,12 @@ def field_164(value):
 
 # 5.165 Magnetic/True Indicator (M/T IND)
 def field_165(value):
-    pass
+    if value == 'M':
+        return 'Magnetic'
+    elif value == 'T':
+        return 'True'
+    else:
+        pass
 
 
 # 5.166 Channel
@@ -1395,17 +1322,36 @@ def field_176(value):
 
 # 5.177 Public/Military Indicator (PUB/MIL)
 def field_177(value):
-    pass
+    match value:
+        case 'C':
+            return 'Public / Civil'
+        case 'M':
+            return 'Military'
+        case 'P':
+            return 'Private (not open to public)'
+        case _:
+            raise ValueError('Invalid Pub/Mil')
 
 
 # 5.178 Time Zone
 def field_178(value):
-    pass
+    if value[0].isalpha() and value[1:].isnumeric():
+        x = string.ascii_uppercase.index(value[0]) - 12
+        y = 'GMT +' + str(x) if x >= 0 else 'GMT -' + str(x)
+        return y + ':' + str(value[1:])
+    else:
+        raise ValueError('Invalid Time Zone')
 
 
 # 5.179 Daylight Time Indicator (DAY TIME)
 def field_179(value):
-    pass
+    match value:
+        case 'Y':
+            return 'Yes'
+        case 'N':
+            return 'No'
+        case _:
+            raise ValueError('Invalid Daylight')
 
 
 # 5.180 Pad Identifier (PAD IDENT)
@@ -1501,7 +1447,42 @@ def field_195(value):
 
 # 5.196 Name Format Indicator (NAME IND)
 def field_196(value):
-    pass
+    match value[0]:
+        case 'A':
+            return 'Abeam Fix'
+        case 'B':
+            return 'Bearing and Distance Fix '
+        case 'D':
+            return 'Airport Name as Fix'
+        case 'F':
+            return 'FIR Fix'
+        case 'H':
+            return 'Phonetic Letter Name Fix'
+        case 'I':
+            return 'Airport Ident as Fix'
+        case 'L':
+            return 'Latitude/Longitude Fix '
+        case 'M':
+            return 'Multiple Word Name Fix'
+        case 'N':
+            return 'Navaid Ident as Fix'
+        case 'P':
+            return 'Published Five - Letter - Name - Fix'
+        case 'Q':
+            return 'Published Name Fix, less than five letters'
+        case 'R':
+            return 'Published Name Fix, more than five letters'
+        case 'T':
+            return 'Airport/Rwy Related Fix (Note 2)'
+        case 'U':
+            return 'UIR Fix'
+    match value[1]:
+        case 'O':
+            return 'Localizer Marker with officially published five - letter identifier'
+        case 'M':
+            return 'Localizer Marker without officially published five - letter identifier'
+        case _:
+            return 'Unknown Name Format Indicator'
 
 
 # 5.197 Datum Code (DATUM)
@@ -1879,7 +1860,7 @@ def field_268(value):
 
 # 5.269 Helicopter Procedure Course (HPC)
 def field_269(value):
-    pass
+    return float(val)/10
 
 
 # 5.270 TCH Value Indicator (TCHVI)
