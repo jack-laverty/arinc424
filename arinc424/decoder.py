@@ -1,7 +1,6 @@
 from collections import defaultdict
 import string
 
-
 class Field():
 
     def __init__(self, name, value, decode_fn):
@@ -13,90 +12,11 @@ class Field():
         return self.decode_fn(self.value, record)
 
 
+# This file decodes fields within records based on
+# Chapter 5 - Field Definitions
+
 def def_val():
     return "bad value"
-
-
-# This function decodes fields within records based on
-# Chapter 5 - Field Definitions, of the ARINC-424-18 spec
-# def decode(record, field, val):
-
-
-
-#     elif facility.contains(field):
-#         d = defaultdict(def_val)
-#         d['V'] = 'VOR'
-#         d[' '] = ''
-#         d['D'] = 'DME'
-#         d['T'] = 'TACAN'
-#         d['M'] = 'MIL TACAN'
-#         d['I'] = 'ILS/DME or ILS/TACAN'
-#         d['N'] = 'MLS/DME/N'
-#         d['P'] = 'MLS/DME/P'
-#         return ' '.join([d[val[0]], d[val[1]]]).strip()
-#     elif power.contains(field):
-#         d = defaultdict(def_val)
-#         d['T'] = 'Terminal'
-#         d['L'] = 'Low Altitude'
-#         d['H'] = 'High Altitude'
-#         d['U'] = 'Undefined'
-#         d['C'] = 'ILS/TACAN'
-#         return str(d[val])
-#     elif field == "Class Info":
-#         d = defaultdict(def_val)
-#         d['D'] = 'Biased ILS/DME or ILS/TACAN'
-#         d['A'] = 'Automatic Transcribed Weather Broadcast'
-#         d['B'] = 'Scheduled Weather Broadcast'
-#         d['W'] = 'No Voice on Frequency'
-#         d[' '] = 'Voice on Frequency'
-#         return str(d[val])
-
-#     elif colloc.contains(field):
-#         collocation = defaultdict(def_val)
-#         collocation[' '] = 'Collocated Navaids'
-#         collocation['N'] = 'Non-Collocated Navaids'
-#         return str(collocation[val])
-
-
-
-
-
-#     elif field == "Marker Power":
-#         match val:
-#             case 'H':
-#                 return 'High Power (general use)'
-#             case 'L':
-#                 return 'Low Power (low altitude use)'
-#             case _:
-#                 return val
-
-
-
-
-
-
-
-
-
-
-
-
-#     elif field == "Waypoint Usage":
-#         if val == ' B':
-#             return 'HI and LO Altitude'
-#         elif val == ' H':
-#             return 'HI Altitude'
-#         elif val == ' L':
-#             return 'LO Altitude'
-#         elif val == '  ':
-#             return 'Terminal Use Only'
-#         elif val == 'R ':
-#             return 'RNAV'
-#         else:
-#             raise ValueError("Invalid Waypoint Usage")
-
-#     else:  # text
-#         return value.strip() if value.strip() != '' else '<Blank>'
 
 
 # 5.2 Record Type
@@ -401,6 +321,36 @@ def field_034(value, record):
 
 # 5.35 NAVAID Class (CLASS)
 def field_035(value, record):
+    # elif facility.contains(field):
+    #     d = defaultdict(def_val)
+    #     d['V'] = 'VOR'
+    #     d[' '] = ''
+    #     d['D'] = 'DME'
+    #     d['T'] = 'TACAN'
+    #     d['M'] = 'MIL TACAN'
+    #     d['I'] = 'ILS/DME or ILS/TACAN'
+    #     d['N'] = 'MLS/DME/N'
+    #     d['P'] = 'MLS/DME/P'
+    #     return ' '.join([d[val[0]], d[val[1]]]).strip()
+    # elif power.contains(field):
+    #     d = defaultdict(def_val)
+    #     d['T'] = 'Terminal'
+    #     d['L'] = 'Low Altitude'
+    #     d['H'] = 'High Altitude'
+    #     d['U'] = 'Undefined'
+    #     d['C'] = 'ILS/TACAN'
+    #     return str(d[val])
+    # elif field == "Class Info":
+    #     d = defaultdict(def_val)
+    #     d['D'] = 'Biased ILS/DME or ILS/TACAN'
+    #     d['A'] = 'Automatic Transcribed Weather Broadcast'
+    #     d['B'] = 'Scheduled Weather Broadcast'
+    #     d['W'] = 'No Voice on Frequency'
+    #     d[' '] = 'Voice on Frequency'
+    #     return str(d[val])
+    # elif colloc.contains(field):
+    #     collocation[' '] = 'Collocated Navaids'
+    #     collocation['N'] = 'Non-Collocated Navaids'
     pass
 
 
@@ -698,7 +648,18 @@ def field_081(value, record):
 
 # 5.82 Waypoint Usage
 def field_082(value, record):
-    pass
+    if value == ' B':
+        return 'HI and LO Altitude'
+    elif value == ' H':
+        return 'HI Altitude'
+    elif value == ' L':
+        return 'LO Altitude'
+    elif value == '  ':
+        return 'Terminal Use Only'
+    elif value == 'R ':
+        return 'RNAV'
+    else:
+        raise ValueError("Invalid Waypoint Usage")
 
 
 # 5.83 To FIX
@@ -974,7 +935,13 @@ def field_112(value, record):
 
 # 5.113 High/Low (HIGH/LOW)
 def field_113(value, record):
-    pass
+    match value:
+        case 'H':
+            return 'High Power (general use)'
+        case 'L':
+            return 'Low Power (low altitude use)'
+        case _:
+            return value
 
 
 # 5.114 Duplicate Identifier (DUP IND)
