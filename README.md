@@ -86,13 +86,6 @@ f.write(record.dump())
 f.write(record.json())
 ```
 
-## Command Line Interface
-
-* search
-  * field, substring etc
-* filter
-* read and dump/decode
-
 ## Contribution
 
 More examples of ARINC-424 records will always be useful. The small set of examples kept in ```/data``` are limited, despite
