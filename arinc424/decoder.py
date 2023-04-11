@@ -1,6 +1,7 @@
 from collections import defaultdict
 import string
 
+
 class Field():
 
     def __init__(self, name, value, decode_fn):
@@ -40,7 +41,7 @@ def field_003(value, record):
             # TODO: wat
             return 'XYZ - No Idea'
         case _:
-            raise ValueError('Invalid Area')
+            print("UNKNOWN:", value)
 
 
 # 5.4 & 5.5 Section Code & Subsection Code
@@ -174,12 +175,15 @@ def field_007(value, record):
 
 # 5.8 Route Identifier (ROUTE IDENT)
 def field_008(value, record):
-    pass
+    return value
 
 
 # 5.9 SID/STAR Route Identifier (SID/STAR IDENT)
 def field_009(value, record):
-    pass
+    if value.strip().isalnum():
+        return value
+    else:
+        return "UNKNOWN: " + value
 
 
 # 5.10 Approach Route Identifier (APPROACH IDENT)
@@ -505,6 +509,7 @@ def field_054(value, record):
     else:
         return '<Blank>'
 
+
 # 5.55 Airport/Heliport Elevation (ELEV)
 def field_055(value, record):
     pass
@@ -542,7 +547,10 @@ def field_061(value, record):
 
 # 5.62 Inbound Holding Course (IB HOLD CRS)
 def field_062(value, record):
-    return float(value)/10
+    if (value.isnumeric()):
+        return float(value)/10
+    else:
+        return "BAD VALUE"
 
 
 # 5.63 Turn (TURN)
@@ -558,7 +566,6 @@ def field_064(value, record):
 # 5.65 Leg Time (LEG TIME)
 def field_065(value, record):
     return '{}m {}s'.format(int(value[0]), int(value[1])*6)
-
 
 
 # 5.66 Station Declination (STN DEC)
@@ -968,26 +975,32 @@ def field_117(value, record):
     elif value == 'B':
         return 'Combined FIR/UIR'
     else:
-        raise ValueError("Invalid FIR/UIR Indicator")
+        print("UNKNOWN:", value)
+        # raise ValueError("Invalid FIR/UIR Indicator")
 
 
 # 5.118 Boundary Via (BDRY VIA)
 def field_118(value, record):
-    match value:
-        case 'C ':
-            return 'Circle' 
-        case 'G ':
-            return 'Great Circle'
-        case 'H ':
-            return 'Rhumb Line'
-        case 'L ':
-            return 'Counter Clockwise ARC'
-        case 'R ':
-            return 'Clockwise ARC'
-        case ' E':
-            return 'End of description, return to origin point'
+    s = ''
+    match value[0]:
+        case 'C':
+            s += 'Circle'
+        case 'G':
+            s += 'Great Circle'
+        case 'H':
+            s += 'Rhumb Line'
+        case 'L':
+            s += 'Counter Clockwise ARC'
+        case 'R':
+            s += 'Clockwise ARC'
         case _:
+            print("UNKNOWN:", value)
             raise ValueError("Invalid Boundary Via")
+
+    if value[1] == 'E':
+        s += ', End of description, return to origin point'
+
+    return s
 
 
 # 5.119 Arc Distance (ARC DIST)
@@ -1072,7 +1085,10 @@ def field_134(value, record):
 
 # 5.135 Course FROM/TO.
 def field_135(value, record):
-    return float(value)/10
+    if (value.isnumeric()):
+        return float(value)/10
+    else:
+        return "BAD VALUE"
 
 
 # 5.136 Cruise Level From/To
@@ -1306,7 +1322,7 @@ def field_178(value, record):
         y = 'GMT +' + str(x) if x >= 0 else 'GMT -' + str(x)
         return y + ':' + str(value[1:])
     else:
-        raise ValueError('Invalid Time Zone')
+        print("UNKNOWN:", value)
 
 
 # 5.179 Daylight Time Indicator (DAY TIME)
@@ -1317,7 +1333,7 @@ def field_179(value, record):
         case 'N':
             return 'No'
         case _:
-            raise ValueError('Invalid Daylight')
+            print("UNKNOWN:", value)
 
 
 # 5.180 Pad Identifier (PAD IDENT)
@@ -1826,7 +1842,10 @@ def field_268(value, record):
 
 # 5.269 Helicopter Procedure Course (HPC)
 def field_269(value, record):
-    return float(value)/10
+    if (value.isnumeric()):
+        return float(value)/10
+    else:
+        return "BAD VALUE"
 
 
 # 5.270 TCH Value Indicator (TCHVI)

@@ -3,9 +3,9 @@
 
 RESTRICTIVE AIRSPACE (UR)
 
-SUSAURK1A680       A00101LN  CE                    N48110000W1223800000030       GND   03000MA-680                         060518807 
+SUSAURK1A680       A00101LN   CE                   N48110000W1223800000030       GND   03000MA-680                         060518807 
 SUSAURK1A680       A00102T T15120024001500010200                                                                           060528808
-SUSAURK1A680       B00101LN  CE                    N48110000W1223800000030       03000M10000MA-680                         060538807
+SUSAURK1A680       B00101LN   CE                   N48110000W1223800000030       03000M10000MA-680                         060538807
 SUSAURK1A680       B00102T T15120024001500010130                                                                           060548808
 SUSAURK1MCHINOOK A  00101LN   G N48060300W122371500                              00300M05000MCHINOOK A                     060558807
 SUSAURK1MCHINOOK A  00102H T1707001700                                                            FAA SEATTLE ARTCC        060568811
