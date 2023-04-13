@@ -8,33 +8,17 @@ def read_folder(path):
 
 
 def read_file(path):
-    t, k, u = 0, 0, 0
     file = path.rsplit('/', 1)[-1]
-    f2 = open('./UNKNOWN_' + file.rsplit('/', 1)[-1], 'w')
     print("\nreading: {}".format(file))
     with open(path) as f:
         for line in f.readlines():
-            t += 1
             r = a424.Record()
-            q = r.read(line)
-            if q == a424.ERR_NONE:
-                k += 1
-            elif q == a424.ERR_SECTION_CODE or q == a424.ERR_APPLICATION_TYPE:
-                u += 1
-                f2.write(line)
-    f2.close()
-    print('{:17}{}'.format('lines read', t))
-    print('{:17}{}'.format('records found', k))
-    print('{:17}{}'.format('unknown records', u))
+            r.read(line)
 
 
 def read_file_and_dec(file):
     with open(file) as f:
         for line in f.readlines():
             r = a424.Record()
-            if r.read(line) == a424.ERR_NONE:
+            if r.read(line):
                 print("\n{}".format(r.decode()))
-
-
-def filter(line, sub) -> bool:
-    return sub in line
