@@ -1,1 +1,1 @@
-python -m unittest discover -s ./tests -p 'test_read*.py'
+python -m unittest discover -s ./tests -p 'test_*.py'
