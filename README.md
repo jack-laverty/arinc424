@@ -20,10 +20,10 @@ pip install arinc424
 Create a record object. Use the **read()** method to read an ARINC-424 record in string format.
 
 ```Python
-import arinc424.record as a424
+import arinc424.record as arinc424
 
-record = a424.Record()
-result = record.read(line)
+record = arinc424.Record()
+record.read(line)
 ```
 
 ### Viewing a record

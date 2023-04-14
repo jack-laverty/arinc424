@@ -1,5 +1,5 @@
 import unittest
-import arinc424.record as a424
+import arinc424.record as arinc424
 import os
 
 
@@ -11,7 +11,7 @@ class TestRead(unittest.TestCase):
             print('{:17}{}'.format('reading:', file.name))
             with open(file) as f:
                 for line in f.readlines():
-                    r = a424.Record()
+                    r = arinc424.Record()
                     r.read(line)
 
     def test_cifp(self):
@@ -20,7 +20,7 @@ class TestRead(unittest.TestCase):
             print("reading: {}".format(file.name))
             with open(file) as f:
                 for line in f.readlines():
-                    r = a424.Record()
+                    r = arinc424.Record()
                     r.read(line)
 
 
