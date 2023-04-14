@@ -8,7 +8,7 @@ version = "0.1.0"
 authors = [
   { name="Jack Laverty", email="jacktlaverty@gmail.com" },
 ]
-description = "A python package for reading ARINC-424 data"
+description = "A library for ARINC-424, the international standard file format for aircraft navigation data."
 readme = "README.md"
 requires-python = ">=3.10"
 classifiers = [
