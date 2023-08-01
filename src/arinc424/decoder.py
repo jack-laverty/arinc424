@@ -37,6 +37,8 @@ def field_003(value, record):
             return 'USA - United States of America'
         case 'AFR':
             return 'AFR - Africa'
+        case 'CAN':
+            return 'CAN - Canada'
         case 'XYZ':
             # TODO: wat
             return 'XYZ - No Idea'
@@ -247,31 +249,51 @@ def field_020(value, record):
     elif value == 'E' or value == ' ':
         return 'Either'
     else:
-        raise ValueError("Invalid Turn Direction" + value)
+        raise ValueError("Invalid Turn Direction:", value)
 
 
 # 5.21 Path and Termination (PATH TERM)
 def field_021(value, record):
+    value = value.strip()
+    if len(value) > 0:
+        if value.isalpha() is False:
+            raise ValueError("Invalid Path and Termination:", value)
     return value
 
 
 # 5.22 Turn Direction Valid (TDV)
 def field_022(value, record):
+    value = value.strip()
+    if len(value) > 0:
+        if value.isalpha() is False:
+            raise ValueError("Invalid Turn Direction Valid (TDV):", value)
     return value
 
 
 # 5.23 Recommended NAVAID (RECD NAV)
 def field_023(value, record):
+    value = value.strip()
+    if len(value) > 0:
+        if value.isalnum() is False or len(value) > 4:
+            raise ValueError("Invalid Recommended NAVAID (RECD NAV):", value)
     return value
 
 
 # 5.24 Theta (THETA)
 def field_024(value, record):
+    value = value.strip()
+    if len(value) > 0:
+        if value.isalnum() is False or len(value) > 4:
+            raise ValueError("Invalid Theta:", value)
     return value
 
 
 # 5.25 Rho (RHO)
 def field_025(value, record):
+    value = value.strip()
+    if len(value) > 0:
+        if value.isalnum() is False or len(value) > 4:
+            raise ValueError("Invalid Rho:", value)
     return value
 
 

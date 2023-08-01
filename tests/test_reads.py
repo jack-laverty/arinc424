@@ -6,8 +6,8 @@ import os
 class TestRead(unittest.TestCase):
 
     def test_a424(self):
-        s = '../data/ARINC-424-18'
-        for file in os.scandir(s):
+        os.chdir(os.path.dirname(__file__))
+        for file in os.scandir('../data/ARINC-424-18'):
             print('{:17}{}'.format('reading:', file.name))
             with open(file) as f:
                 for line in f.readlines():
@@ -15,8 +15,8 @@ class TestRead(unittest.TestCase):
                     r.read(line)
 
     def test_cifp(self):
-        s = '../data/CIFP'
-        for file in os.scandir(s):
+        os.chdir(os.path.dirname(__file__))
+        for file in os.scandir('../data/CIFP'):
             print("reading: {}".format(file.name))
             with open(file) as f:
                 for line in f.readlines():

@@ -19,4 +19,4 @@ def read_file_and_dec(file):
         for line in f.readlines():
             r = arinc424.Record()
             if r.read(line):
-                print("\n{}".format(r.decode()))
+                r.decode()
