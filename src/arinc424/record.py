@@ -14,10 +14,13 @@ class Record():
     def validate(self, line):
         line = line.strip()
         if line.startswith(('S', 'T')) is False:
+            # print("Error Parsing: record doesn't start with record type")
             return False
         if len(line) != 132:
+            # print("Error Parsing: record not 132 characters in length")
             return False
         if line[-9:].isnumeric() is False:
+            # print("Error Parsing: record doesn't end in file record and cycle date")
             return False
         return True
 
@@ -74,7 +77,7 @@ class Record():
         if self.validate(line) is False:
             return False
 
-        self.raw = line
+        self.raw = line.strip()
         x1, x2 = line[4:6], line[4] + line[12]
         if x1 in records.keys():
             self.code = x1
