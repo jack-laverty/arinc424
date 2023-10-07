@@ -1,4 +1,3 @@
-import json
 import arinc424.decoder as decoder
 from collections import defaultdict
 from arinc424.decoder import Field
