@@ -16,6 +16,9 @@ classifiers = [
     "License :: OSI Approved :: MIT License",
     "Operating System :: OS Independent",
 ]
+dependencies = [
+  "termcolor==2.3.0",
+]
 
 [project.urls]
 "Homepage" = "https://github.com/jack-laverty/arinc424"

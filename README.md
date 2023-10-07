@@ -10,8 +10,16 @@ A python library for parsing and decoding ARINC-424, the international standard 
 
 ## Installation
 
+Install the latest release with:
 ```bash
 pip install arinc424
+```
+
+or clone the repository and install the package [from local source](https://packaging.python.org/en/latest/tutorials/installing-packages/#installing-from-a-local-src-tree)
+for an editable local version of the library.
+```bash
+cd /arinc424
+python3 -m pip install -e .
 ```
 
 ## Getting Started
