@@ -16,68 +16,86 @@ pip install arinc424
 
 ## Getting Started
 
-### Reading a record
-Create a record object. Use the **read()** method to read an ARINC-424 record in string format.
+### Parsing a Record
 
 ```Python
-import arinc424.record as arinc424
+# parse_example.py
+
+import arinc424
+
+arinc424.parse("SUSAP KSEAK1ASEA     110000119Y N47265700W122182910E019900429250SEA K11800018000CU00Y NAS    SEATTLE-TACOMA INTL           045698808")
+```
+
+```console
+foo@bar:~$ python3 parse_example.py
+
++---------------------------------+----------------------------------+--------------------------------+
+| Field                           | Raw                              | Decoded                        |
++---------------------------------+----------------------------------+--------------------------------+
+| Record Type                     | 'S'                              | Standard                       |
+| Customer / Area Code            | 'USA'                            | United States of America       |
+| Section Code                    | 'PA'                             | Airport Reference Point        |
+| Airport ICAO Identifier         | 'KSEA'                           | KSEA                           |
+| ICAO Code                       | 'K1'                             | K1                             |
+| ATA/IATA Designator             | 'SEA'                            | SEA                            |
+| Continuation Record No          | '1'                              | Primary Record (with Cont.)    |
+| Speed Limit Altitude            | '10000'                          | 10000 ft                       |
+| Longest Runway                  | '119'                            | 11900 ft                       |
+| IFR Capability                  | 'Y'                              | Official                       |
+| Longest Runway Surface Code     | ' '                              |                                |
+| Airport Reference Pt. Latitude  | 'N47265700'                      | N47265700                      |
+| Airport Reference Pt. Longitude | 'W122182910'                     | W122182910                     |
+| Magnetic Variation              | 'E0199'                          | 199 E                          |
+| Airport Elevation               | '00429'                          | 00429                          |
+| Speed Limit                     | '250'                            | 250 knots (IAS)                |
+| Recommended Navaid              | 'SEA '                           | SEA                            |
+| ICAO Code (2)                   | 'K1'                             | K1                             |
+| Transition Altitude             | '18000'                          | 18000 ft                       |
+| Transition Level                | '18000'                          | 18000 ft                       |
+| Public Military Indicator       | 'C'                              | Public / Civil                 |
+| Time Zone                       | 'U00'                            | GMT +8:00                      |
+| Daylight Indicator              | 'Y'                              | Yes                            |
+| Magnetic/True Indicator         | ' '                              |                                |
+| Datum Code                      | 'NAS'                            | NAS                            |
+| Airport Name                    | 'SEATTLE-TACOMA INTL           ' | SEATTLE-TACOMA INTL            |
+| File Record No                  | '04569'                          | 04569                          |
+| Cycle Date                      | '8808'                           | 1988, Release 08               |
++---------------------------------+----------------------------------+--------------------------------+
+```
+
+### Parsing a File
+
+This function calls arinc424.parse() for every line of a given file.
+
+```Python
+path = 'dir/to/some/arinc424_file'
+arinc424.read_file(path)
+```
+
+## The Record Class
+
+The examples in the [Getting Started](#getting-started) section utilise the ```arinc424.parse()``` function. Under the hood this function is creating a Record object, populating the fields of the record object with data from the provided record, and then calling the ```decode()``` function. This can also be done manually.
+
+### Reading a Record
+
+```Python
+import arinc424
 
 record = arinc424.Record()
-record.read(line)
+record.read("SUSAP KSEAK1ASEA     110000119Y N47265700W122182910E019900429250SEA K11800018000CU00Y NAS    SEATTLE-TACOMA INTL           045698808")
 ```
 
-### Viewing a record
-After [reading a record](#reading-a-record), **dump()** will print the record to the console.
+### Writing a Record to a File
 
-```Python
-record.dump()
-```
-
-```console
-foo@bar:~$ python3 dump_example.py
-
-Record Type               : S
-Customer / Area Code      : USA
-Section Code              : ER
-.
-.
-.
-Cycle Date                : 8704
-```
-
-### Decoding a record
-Similar to **dump()**, but each value in the key-value pair is decoded to be human readable without referencing the ARINC-424 spec.
-```Python
-record.decode()
-```
-
-```console
-foo@bar:~$ python3 decode_example.py
-
-Record Type               : Standard Record
-Customer / Area Code      : United States of America
-Section Code              : Airways and Routes
-.
-.
-.
-Cycle Date                : 1987, April
-```
-
-### Writing a record to a file
-
-In addition to printing to the console, **dump()** and **decode()** will return strings which can
-be written to files.
-
-* decoded - the most human readable format
-* JSON (single line) - useful for importing the records to a database
-* raw data - the unmodified string from which the record object was created
+In addition to printing to the console, **decode()** will return a string which can be written to a file.
 
 ```Python
 f = open("output.txt", "w")
 
-# writes the fields as they are
-f.write(record.dump())
+# writes the record as plaintext
+f.write(record.decode())
 
-# writes the record in single-line JSON format
-f.write(record.json())
+# writes the record in JSON format
+f.write(record.decode('json'))
+
 ```

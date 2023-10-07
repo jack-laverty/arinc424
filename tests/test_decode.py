@@ -1,5 +1,5 @@
 import unittest
-import arinc424.utils as arinc424
+import arinc424
 import os
 
 
@@ -7,13 +7,11 @@ class TestDecode(unittest.TestCase):
 
     def test_a424(self):
         os.chdir(os.path.dirname(__file__))
-        for file in os.scandir('../data/ARINC-424-18'):
-            arinc424.read_file_and_dec(file)
+        arinc424.read_folder(os.path.join('..', 'data', 'ARINC-424-18'))
 
     def test_cifp(self):
         os.chdir(os.path.dirname(__file__))
-        for file in os.scandir('../data/CIFP'):
-            arinc424.read_file_and_dec(file)
+        arinc424.read_folder(os.path.join('..', 'data', 'CIFP'))
 
 
 if __name__ == '__main__':

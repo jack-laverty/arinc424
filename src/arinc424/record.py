@@ -2,6 +2,7 @@ import json
 import arinc424.decoder as decoder
 from collections import defaultdict
 from arinc424.decoder import Field
+from prettytable import PrettyTable
 
 
 class Record():
@@ -92,33 +93,20 @@ class Record():
 
         return True
 
-    def dump(self):
-        s = ''
-        for f in self.fields:
-            q = "{:<32}: {}".format(f.name, f.value)
-            print(q)
-            s += q + '\n'
-        return s
-
-    def decode(self):
-        s = ''
-        for f in self.fields:
-            q = "{:<32}: {}".format(f.name, f.decode(self))
-            print(q)
-            s += q + '\n'
-        return s
-
-    def json(self, single_line=True):
-        d = {}
-        for i in self.fields:
-            d.update({i.name: i.value})
-        if single_line:
-            return json.dumps(d)
-        else:
-            return json.dumps(d,
-                              sort_keys=True,
-                              indent=4,
-                              separators=(',', ': '))
+    def decode(self, format=None):
+        table = PrettyTable(field_names=['Field', 'Value', 'Decoded'])
+        table.align = 'l'
+        for field in self.fields:
+            table.add_row([field.name, "'{}'".format(field.value), field.decode(self)])
+        match format:
+            case None:
+                print(table)
+                return table.get_string()
+            case 'json':
+                print(table.get_json_string())
+                return table.get_json_string()
+            case _:
+                print(f'Error: Invalid Output Format "{format}"')
 
 
 # 4.1.5 Holding Pattern Records (EP)

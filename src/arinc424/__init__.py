@@ -1,5 +1,6 @@
 from termcolor import colored
 from .record import Record
+import os
 
 
 def parse(line):
@@ -10,11 +11,13 @@ def parse(line):
     r = Record()
     if r.read(line):
         r.decode()
+        return True
+    return False
 
 
 def search(file, filters):
     """
-    Parse an ARINC-424 file and find all the
+    Search an ARINC-424 file and find all the
     records that contain given substrings.
     """
     with open(file) as f:
@@ -32,3 +35,21 @@ def search(file, filters):
             print(r.raw)
             count = count + 1
         print(colored(f"Found {count} records that contain {filters}", 'green' if count else 'red'))
+
+
+def read_file(path):
+    """
+    Parse all ARINC-424 records within a file.
+    """
+    with open(path) as f:
+        for line in f.readlines():
+            print()
+            parse(line)
+
+
+def read_folder(path):
+    """
+    Parse all ARINC-424 records for every file in a given folder.
+    """
+    for file in os.scandir(path):
+        read_file(os.path.join(path, file.name))
