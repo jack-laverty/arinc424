@@ -17,7 +17,7 @@ class Field():
 # Chapter 5 - Field Definitions
 
 def def_val():
-    return "bad value"
+    return "<UNKNOWN>"
 
 
 # 5.2 Record Type
