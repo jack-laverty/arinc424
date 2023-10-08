@@ -1,7 +1,7 @@
 # This workflow will install Python dependencies, run tests and lint with a variety of Python versions
 # For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-python
 
-name: build-and-test
+name: build
 
 on:
   push:
@@ -10,10 +10,10 @@ on:
     branches: [ "main" ]
   schedule:
     # * is a special character in YAML so you have to quote this string
-    - cron:  '00 1 * * *'
+    - cron:  '00 4 * * *'
 
 jobs:
-  build-and-test-all-OS:
+  build-and-test:
 
     runs-on: ${{ matrix.os }}
 
