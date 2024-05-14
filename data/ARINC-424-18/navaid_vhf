@@ -5,7 +5,7 @@ VHF NAVAID (D )
 (With Simulation and Flight Planning Continuations)
 
 SUSAD        ACV   K2111020VDTA N40585370W124062570    N40585370W124062570E0170001910  256NASARCATA                        015638502
-SUSAD        ACV   K22 TB030100+040000B100040                                                                              015648502
+SUSAD        ACV   K22 TB030100+040000B100040                                                                              015648502 (TODO: make sense of this)
 SUSAD        ACV   K23PKZSEKZSE                                                                                            015658613
 SUSAD        ACV   K24S    UY                                             E017500191                                       015668502
 SUSAD        AHC   K2110900VDTW N40160466W120090328    N40160466W120090328E0170040080  206NASAMEDEE (HERLONG)              015678811

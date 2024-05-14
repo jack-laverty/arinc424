@@ -2985,7 +2985,7 @@ class Runway():
             Field("Displaced Threshold Dist",               r[71:75],       decoder.field_069),
             Field("Threshold Crossing Height",              r[75:77],       decoder.field_067),
             Field("Runway Width",                           r[77:80],       decoder.field_109),
-            Field("TCH Value Indicator",                    r[80],          decoder.field_109),
+            Field("TCH Value Indicator",                    r[80],          decoder.field_270),
             Field("Localizer/MLS/GLS Ref Path Ident",       r[81:85],       decoder.field_044),
             Field("Localizer/MLS/GLS Category/Class",       r[85],          decoder.field_080),
             Field("Stopway",                                r[86:90],       decoder.field_079),

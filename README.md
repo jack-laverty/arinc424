@@ -38,7 +38,7 @@ arinc424.parse("SUSAP KSEAK1ASEA     110000119Y N47265700W122182910E019900429250
 foo@bar:~$ python3 parse_example.py
 
 +---------------------------------+----------------------------------+--------------------------------+
-| Field                           | Raw                              | Decoded                        |
+| Field                           | Value                              | Decoded                      |
 +---------------------------------+----------------------------------+--------------------------------+
 | Record Type                     | 'S'                              | Standard                       |
 | Customer / Area Code            | 'USA'                            | United States of America       |
@@ -76,7 +76,7 @@ foo@bar:~$ python3 parse_example.py
 This function calls arinc424.parse() for every line of a given file.
 
 ```Python
-path = 'dir/to/some/arinc424_file'
+path = 'path/to/arinc424_file'
 arinc424.read_file(path)
 ```
 
@@ -91,6 +91,7 @@ import arinc424
 
 record = arinc424.Record()
 record.read("SUSAP KSEAK1ASEA     110000119Y N47265700W122182910E019900429250SEA K11800018000CU00Y NAS    SEATTLE-TACOMA INTL           045698808")
+record.decode()
 ```
 
 ### Writing a Record to a File
@@ -107,3 +108,11 @@ f.write(record.decode())
 f.write(record.decode('json'))
 
 ```
+
+
+# TODO
+
+* requirements for field decoding, options are as follows:
+  * raise errors
+  * return "UNKNOWN"
+  * return a string describing the error, without actually raising it, so the show goes on?
