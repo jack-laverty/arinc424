@@ -520,7 +520,7 @@ class AirportGate():
 
 # 4.1.12 Company Route Records (R)
 #
-# This file contains company tailored route information
+# This record contains company tailored route information
 #
 class CompanyRoute():
 

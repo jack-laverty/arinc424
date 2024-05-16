@@ -738,18 +738,20 @@ def field_081(value, record):
 
 # 5.82 Waypoint Usage
 def field_082(value, record):
-    if value == ' B':
-        return 'HI and LO Altitude'
-    elif value == ' H':
-        return 'HI Altitude'
-    elif value == ' L':
-        return 'LO Altitude'
-    elif value == '  ':
-        return 'Terminal Use Only'
-    elif value == 'R ':
-        return 'RNAV'
+    wp = ''
+    if value[1] == 'B':
+        wp = wp + 'HI and LO Altitude'
+    elif value[1] == 'H':
+        wp = wp + 'HI Altitude'
+    elif value[1] == 'L':
+        wp = wp + 'LO Altitude'
+    elif value[1] == ' ':
+        wp = wp + 'Terminal Use Only'
+    elif value[0] == 'R':
+        wp = wp + 'RNAV'
     else:
-        raise ValueError("Invalid Waypoint Usage")
+        raise ValueError(f"Invalid Waypoint Usage: '{value}'")
+    return wp
 
 
 # 5.83 To FIX
@@ -1935,13 +1937,15 @@ def field_269(value, record):
 def field_270(value, record):
     match value:
         case 'I':
-            return 'Electronic Glideslope'
+            return 'ILS or MLS Glideslope'
         case 'R':
             return 'RNAV Procedure'
+        case 'V':
+            return 'Visual Glideslope Indicator (VGSI)'
         case 'D':
             return 'Default Value (40 or 50 feet)'
         case _:
-            return value
+            raise ValueError(f'Bad TCH Value Indicator: {value}')
 
 
 # 5.271 Procedure Turn (PROC TURN)
