@@ -1930,7 +1930,7 @@ def field_269(value, record):
     if (value.isnumeric()):
         return float(value)/10
     else:
-        return "BAD VALUE"
+        raise ValueError(f'Bad Helicopter Procedure Course: {value}')
 
 
 # 5.270 TCH Value Indicator (TCHVI)
@@ -1944,6 +1944,8 @@ def field_270(value, record):
             return 'Visual Glideslope Indicator (VGSI)'
         case 'D':
             return 'Default Value (40 or 50 feet)'
+        case ' ':   # this is apparently allowed to be empty, see ARINC SPECIFICATION 424 - Page 165
+            return value
         case _:
             raise ValueError(f'Bad TCH Value Indicator: {value}')
 

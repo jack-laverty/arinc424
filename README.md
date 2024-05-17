@@ -108,11 +108,3 @@ f.write(record.decode())
 f.write(record.decode('json'))
 
 ```
-
-
-# TODO
-
-* requirements for field decoding, options are as follows:
-  * raise errors
-  * return "UNKNOWN"
-  * return a string describing the error, without actually raising it, so the show goes on?
