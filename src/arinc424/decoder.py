@@ -557,17 +557,26 @@ def field_047(value, record):
 
 # 5.48 Localizer Position (LOC FR RW END Azimuth/Back Azimuth Position (AZ/BAZ FR RWEND)
 def field_048(value, record):
-    return value
+    return value.lstrip('0') + " ft" if value.isnumeric() else value
 
 
 # 5.49 Localizer/Azimuth Position Reference (@, +, -)
 def field_049(value, record):
-    return value
+    match value:
+        case '@':
+            return 'Beyond stop end of runway'
+        case '+':
+            return 'Ahead of approach end of runway'
+        case '-':
+            return 'To the side of runway'
+        case _:
+            return value
+            # raise ValueError(f'Invalid Localizer Position Reference "{value}"')
 
 
 # 5.50 Glide Slope Position (GS FR RW THRES) Elevation Position (EL FR RW THRES)
 def field_050(value, record):
-    return value
+    return value.lstrip('0') + " ft" if value.isnumeric() else value
 
 
 # 5.51 Localizer Width (LOC WIDTH)

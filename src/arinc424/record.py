@@ -2346,6 +2346,7 @@ class HeliportComms():
         ]
 
 
+# 4.1.11 Airport and Heliport Localizer and Glide Slope
 class LocalizerGlideslope():
 
     cont_idx = 21
@@ -2604,7 +2605,7 @@ class NDBNavaid():
                 case 'S':
                     return self.read_sim(line)
                 case _:
-                    raise ValueError('Unknown NDB MAVAID Application Type')
+                    raise ValueError('Unknown NDB NAVAID Application Type')
 
     def read_primary(self, r):
         return [
@@ -2720,7 +2721,7 @@ class VHFNavaid():
                 case 'S':
                     return self.read_sim(line)
                 case _:
-                    return self.read_flight_plan1(line)
+                    raise ValueError(f'Unknown VHF NAVAID Continuation Record Application Type character: "{line[self.app_idx]}"')
 
     def read_primary(self, r):
         return [
