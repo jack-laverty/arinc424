@@ -1,3 +1,4 @@
+import json
 import arinc424.decoder as decoder
 from collections import defaultdict
 from arinc424.decoder import Field
@@ -102,8 +103,15 @@ class Record():
                 print(table)
                 return table.get_string()
             case 'json':
-                print(table.get_json_string())
-                return table.get_json_string()
+                data = {}
+                for field in self.fields:
+                    data[field.name] = {
+                        'value': field.value,
+                        'decoded_value': field.decode(self)
+                    }
+
+                print(json.dumps(data, indent=2, separators=(',', ': ')))
+                return json.dumps(data)
             case _:
                 print(f'Error: Invalid Output Format "{format}"')
 
