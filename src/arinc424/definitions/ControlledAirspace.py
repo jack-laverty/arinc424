@@ -14,16 +14,29 @@ class ControlledAirspace():
 
   cont_idx = 24
   app_idx = 25
+  continuations = ['A']
+  name = 'Controlled Airspace'
 
   def read(self, r) -> list:
-    if int(r[self.cont_idx]) < 2:
+
+    continuation_record_no = r[self.cont_idx]
+    if continuation_record_no.isnumeric() == False:
+      print(f'Unsupported Controlled Airspace Continuation Record Number: "{continuation_record_no}"')
+      print(f'Continuation Record Numbers must be 0 -> N')
+      return []
+
+    if int(continuation_record_no) < 2:
       return self.read_primary(r)
 
-    match r[self.app_idx]:
+    application = r[self.app_idx]
+    match application:
       case 'A':
         return self.read_cont(r)
       case _:
-        return []
+        print("how i get here2")
+        exit()
+        # print(f'Unsupported Controlled Airspace Continuation Record Type: "{application}"')
+        # return []
 
   # 4.1.25.1 Controlled Airspace Primary Records
   def read_primary(self, r):

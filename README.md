@@ -105,6 +105,6 @@ f = open("output.txt", "w")
 f.write(record.decode())
 
 # writes the record in JSON format
-f.write(record.decode('json'))
+f.write(record.json())
 
 ```

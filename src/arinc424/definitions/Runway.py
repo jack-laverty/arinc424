@@ -12,13 +12,15 @@ class Runway():
     if int(line[self.cont_idx]) < 2:
         return self.read_primary(line)
 
-    match line[self.app_idx]:
+    application = line[self.app_idx]
+    match application:
       case 'A':
         return self.read_cont(line)
       case 'S':
         return self.read_sim(line)
       case _:
-        raise ValueError("bad runway")
+        print(f'Unsupported Runway Continuation Record Type: "{application}"')
+        return []
 
   def read_primary(self, r):
     return [

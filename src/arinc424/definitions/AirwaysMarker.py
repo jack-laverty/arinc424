@@ -11,13 +11,16 @@ class AirwaysMarker():
   def read(self, line):
     if int(line[self.cont_idx]) < 2:
       return self.read_primary(line)
-    else:
-      match line[self.app_idx]:
-        case 'A':
-          return self.read_cont(line)
-        case _:
-          print("Unsupported Application Type")
-          return []
+
+    application = line[self.app_idx]
+    match application:
+      case 'A':
+        return self.read_cont(line)
+      case _:
+        print("how i get here3")
+        exit()
+        # print(f'Unsupported Airways Marker Continuation Record Type: "{application}"')
+        # return []
 
   # 4.1.15.1 Airways Marker Primary Records
   def read_primary(self, r):

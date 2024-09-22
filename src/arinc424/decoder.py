@@ -653,7 +653,11 @@ def field_064(value, record):
 
 # 5.65 Leg Time (LEG TIME)
 def field_065(value, record):
-  return '{}m {}s'.format(int(value[0]), int(value[1])*6)
+  try:
+    return '{}m {}s'.format(int(value[0]), int(value[1])*6)
+  except (ValueError, IndexError) as e:
+    print(f'Error: Invalid value passed to format_time. Value: "{value}". Error: {str(e)}')
+    return f'Invalid Value: "{value}"'
 
 
 # 5.66 Station Declination (STN DEC)
@@ -1065,8 +1069,8 @@ def field_117(value, record):
   elif value == 'B':
     return 'Combined FIR/UIR'
   else:
-    print("UNKNOWN:", value)
-    # raise ValueError("Invalid FIR/UIR Indicator")
+    print(f'Unsupported FIR/UIR Indicator: "{value}"')
+    return f'Unsupported Value: "{value}"'
 
 
 # 5.118 Boundary Via (BDRY VIA)
@@ -1084,8 +1088,8 @@ def field_118(value, record):
     case 'R':
       s += 'Clockwise ARC'
     case _:
-      print("UNKNOWN:", value)
-      raise ValueError("Invalid Boundary Via")
+      print(f'Unsupported Boundary Via: "{value}"')
+      return f'Unsupported Value: "{value}"'
 
   if value[1] == 'E':
     s += ', End of description, return to origin point'
@@ -1412,7 +1416,8 @@ def field_178(value, record):
     y = 'GMT +' + str(x) if x >= 0 else 'GMT -' + str(x)
     return y + ':' + str(value[1:])
   else:
-    print("UNKNOWN:", value)
+    print(f'Unsupported Time Zone: "{value}"')
+    return f'Unsupported Value: "{value}"'
 
 
 # 5.179 Daylight Time Indicator (DAY TIME)
@@ -1423,7 +1428,8 @@ def field_179(value, record):
     case 'N':
       return 'No'
     case _:
-      print("UNKNOWN:", value)
+      print(f'Unsupported Daylight Time Indicator Indicator: "{value}"')
+      return f'Unsupported Value: "{value}"'
 
 
 # 5.180 Pad Identifier (PAD IDENT)
@@ -1932,10 +1938,11 @@ def field_268(value, record):
 
 # 5.269 Helicopter Procedure Course (HPC)
 def field_269(value, record):
-  if (value.isnumeric()):
+  try:
     return float(value)/10
-  else:
-    raise ValueError(f'Bad Helicopter Procedure Course: {value}')
+  except (ValueError) as e:
+    print(f'Unsupported Helicopter Procedure Course Value: "{value}"')
+    return f'Invalid Value: "{value}"'
 
 
 # 5.270 TCH Value Indicator (TCHVI)

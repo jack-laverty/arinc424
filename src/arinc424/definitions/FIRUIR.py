@@ -11,13 +11,14 @@ class FIRUIR():
   def read(self, line):
     if int(line[self.cont_idx]) < 2:
       return self.read_primary(line)
-    else:
-      match line[self.app_idx]:
-        case 'A':
-          return self.read_cont(line)
-        case _:
-          print("Unsupported Application Type")
-          return []
+    
+    application = line[self.app_idx] 
+    match application:
+      case 'A':
+        return self.read_cont(line)
+      case _:
+        print(f'Unsupported FIR/UIR Continuation Record Type: "{application}"')
+        return []
 
   # 4.1.17.1 FIR/UIR Primary Records
   def read_primary(self, r):

@@ -16,14 +16,22 @@ class TAA():
       self.id_name = "Heliport Identifier"
 
   def read(self, line):
-    if int(line[self.cont_idx]) < 2:
+
+    continuation_record_no = line[self.cont_idx]
+    if continuation_record_no.isnumeric() == False:
+      print(f'Unsupported TAA Continuation Record Number: "{continuation_record_no}"')
+      print(f'Continuation Record Numbers must be 0 -> N')
+      return []
+
+    if int(continuation_record_no) < 2:
       return self.read_primary(line)
 
-    match line[self.app_idx]:
+    application = line[self.app_idx]
+    match application:
       case 'A':
         return self.read_cont(line)
       case _:
-        print("Unsupported Application Type")
+        print(f'Unsupported TAA Continuation Record Type: "{application}"')
         return []
 
   # 4.1.31.1 Airport TAA Primary Records

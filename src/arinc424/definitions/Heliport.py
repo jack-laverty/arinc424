@@ -12,7 +12,8 @@ class Heliport():
     if int(line[self.cont_idx]) < 2:
       return self.read_primary(line)
 
-    match line[self.app_idx]:
+    application = line[self.app_idx]
+    match application:
       case 'A':
         return self.read_cont(line)
       case 'P':
@@ -20,7 +21,8 @@ class Heliport():
       case 'Q':
         return self.read_flight1(line)
       case _:
-        raise ValueError('Unknown Application Type')
+        print(f'Unsupported Heliport Continuation Record Type: "{application}"')
+        return []
 
   # 4.2.1.1  Heliport Primary Records 
   def read_primary(self, r):

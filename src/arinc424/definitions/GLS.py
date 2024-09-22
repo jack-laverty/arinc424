@@ -12,11 +12,12 @@ class GLS():
     if int(line[self.cont_idx]) < 2:
       return self.read_primary(line)
 
-    match line[self.app_idx]:
+    application = line[self.app_idx]
+    match application:
       case 'A':
         return self.read_cont(line)
       case _:
-        print("Unsupported Application Type")
+        print(f'Unsupported GLS Continuation Record Type: "{application}"')
         return []
 
   # 4.1.29.1 GLS Primary Records

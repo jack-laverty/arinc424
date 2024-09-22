@@ -12,13 +12,14 @@ class FlightPlanning():
     if int(line[self.cont_idx]) < 2:
       return self.read_primary(line)
 
+    application = line[self.app_idx]
     match line[self.app_idx]:
       case 'A':
         return self.read_cont(line)
       case 'T':
         return self.read_timeop(line)
       case _:
-        print("Unsupported Application Type")
+        print(f'Unsupported Flight Planning Arrival/Departure Continuation Record Type: "{application}"')
         return []
 
   # 4.1.27.1 Flight Planning Primary Records
