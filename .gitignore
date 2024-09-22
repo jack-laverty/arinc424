@@ -160,4 +160,4 @@ cython_debug/
 #.idea/
 
 tests/scratchpad.py
-data/CIFP*
+data/secret
