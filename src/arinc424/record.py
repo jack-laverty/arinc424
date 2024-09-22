@@ -93,27 +93,21 @@ class Record():
 
         return True
 
-    def decode(self, format=None):
+    def decode(self):
         table = PrettyTable(field_names=['Field', 'Value', 'Decoded'])
         table.align = 'l'
         for field in self.fields:
             table.add_row([field.name, "'{}'".format(field.value), field.decode(self)])
-        match format:
-            case None:
-                print(table)
-                return table.get_string()
-            case 'json':
-                data = {}
-                for field in self.fields:
-                    data[field.name] = {
-                        'value': field.value,
-                        'decoded_value': field.decode(self)
-                    }
+        print(table)
+        return table.get_string()
 
-                print(json.dumps(data, indent=2, separators=(',', ': ')))
-                return json.dumps(data)
-            case _:
-                print(f'Error: Invalid Output Format "{format}"')
+    def json(self, single_line=True):
+        d = {}
+        for field in self.fields:
+            d.update({field.name: field.value})
+        if single_line:
+            return json.dumps(d)
+        return json.dumps(d, sort_keys=True, indent=4, separators=(',', ': '))
 
 
 # 4.1.5 Holding Pattern Records (EP)
