@@ -7,9 +7,15 @@ class AirwaysMarker():
 
   cont_idx = 21
   app_idx = 22
+  continuations = ['A']
+  name = 'Airways Marker'
 
-  def read(self, line):
-    if int(line[self.cont_idx]) < 2:
+  def application_type(self, line):
+    return line[self.app_idx]
+
+  def read(self, line, primary) -> list:
+
+    if primary:
       return self.read_primary(line)
 
     application = line[self.app_idx]
@@ -17,10 +23,7 @@ class AirwaysMarker():
       case 'A':
         return self.read_cont(line)
       case _:
-        print("how i get here3")
-        exit()
-        # print(f'Unsupported Airways Marker Continuation Record Type: "{application}"')
-        # return []
+        return []
 
   # 4.1.15.1 Airways Marker Primary Records
   def read_primary(self, r):

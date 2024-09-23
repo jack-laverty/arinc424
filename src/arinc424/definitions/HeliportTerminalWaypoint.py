@@ -7,12 +7,19 @@ class HeliportTerminalWaypoint():
 
   cont_idx = 21
   app_idx = 22
+  continuations = ['A', 'P']
+  name = 'Heliport Terminal Waypoint'
 
-  def read(self, line):
-    if int(line[self.cont_idx]) < 2:
+  def application_type(self, line):
+    return line[self.app_idx]
+
+  def read(self, line, primary) -> list:
+
+    if primary:
       return self.read_primary(line)
 
-    match line[self.app_idx]:
+    application = line[self.app_idx]
+    match application:
       case 'A':
         return self.read_cont(line)
       case 'P':

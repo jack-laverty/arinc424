@@ -6,6 +6,11 @@ class MSA():
 
   cont_idx = 38
   app_idx = 39
+  continuations = ['A']
+  name = 'MSA'
+
+  def application_type(self, line):
+    return line[self.app_idx]
 
   def __init__(self, heliport) -> None:
     self.heliport = heliport
@@ -14,15 +19,17 @@ class MSA():
     else:
       self.id_name = "Heliport Identifier"
 
-  def read(self, line):
-    if int(line[self.cont_idx]) < 2:
+  def read(self, line, primary) -> list:
+
+    if primary:
       return self.read_primary(line)
 
-    match line[self.app_idx]:
+    application = line[self.app_idx]
+    match application:
       case 'A':
         return self.read_cont(line)
       case _:
-        raise ValueError("Unsupported MLS record")
+        return []
 
   def read_primary(self, r):
     return [

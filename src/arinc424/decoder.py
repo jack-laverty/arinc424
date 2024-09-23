@@ -116,7 +116,7 @@ def field_006(value, record):
 # 5.7 Route Type
 def field_007(value, record):
   d = defaultdict(def_val)
-  if record.code == 'ER':
+  if record.ident == 'ER':
     # Enroute Airway Records (ER)
     d['A'] = 'Airline Airway (Tailored Data)'
     d['C'] = 'Control'
@@ -125,14 +125,14 @@ def field_007(value, record):
     d['O'] = 'Officially Designated Airways'
     d['R'] = 'RNAV Airways'
     d['S'] = 'Undesignated ATS Route'
-  elif record.code == 'ET':
+  elif record.ident == 'ET':
     # Preferred Route Records (ET)
     d['C'] = 'North American Routes for North Atlantic Traffic Common Portion'
     d['D'] = 'Preferential Routes'
     d['J'] = 'Pacific Oceanic Transition Routes (PACOTS)'
     d['M'] = 'RNAV Airways'
     d['N'] = 'Undesignated ATS Route'
-  elif record.code == 'HD':
+  elif record.ident == 'HD':
     # Preferred Route Records (HD)
     d['0'] = 'Engine Out SID'
     d['1'] = 'SID Runway Transition'
@@ -146,7 +146,7 @@ def field_007(value, record):
     d['S'] = 'FMS SID Enroute Transition'
     d['T'] = 'Vector SID Runway Transition'
     d['V'] = 'Vector SID Enroute Transition'
-  elif record.code == 'PE' or record.code == 'HE':
+  elif record.ident == 'PE' or record.ident == 'HE':
     # Airport STAR (PE) and Heliport STAR (HE) Records
     d['1'] = 'STAR Enroute Transition'
     d['2'] = 'STAR or STAR Common Route'
@@ -160,7 +160,7 @@ def field_007(value, record):
     d['F'] = 'FMS STAR Enroute Transition'
     d['M'] = 'FMS STAR or STAR Common Route'
     d['S'] = 'FMS STAR Runway Transition'
-  elif record.code == 'PF' or record.code == 'HF':
+  elif record.ident == 'PF' or record.ident == 'HF':
     # Airport STAR (PF) and Heliport STAR (HF) Records
     d['A'] = 'Approach Transition'
     d['B'] = 'Localizer/Backcourse Approach'
@@ -346,13 +346,24 @@ def field_025(value, record):
 
 # 5.26 Outbound Magnetic Course (OB MAG CRS)
 def field_026(value, record):
-  value = value.strip()
-  if len(value) > 0:
-    if value.isalnum() is False or len(value) > 4:
-      raise ValueError('Invalid Outbound Magnetic Course', value)
+    value = value.strip()
+
+    # Handle the 'T' in the tenths position for degrees true
+    if value.endswith('T'):
+        value = value[:-1]  # Remove the 'T' character
+        is_true_course = True
     else:
-      return "{:.1f}".format(float(value)/10)
-  return value
+        is_true_course = False
+
+    # Validate the remaining value
+    if len(value) > 0:
+        if value.isalnum() is False or len(value) > 4:
+            raise ValueError('Invalid Outbound Magnetic Course', value)
+        else:
+            magnetic_course = "{:.1f}".format(float(value) / 10)
+            return magnetic_course + "T" if is_true_course else magnetic_course
+
+    return value
 
 
 # 5.27 Route Distance From, Holding Distance/Time (RTE DIST FROM, HOLD DIST/TIME)
@@ -396,7 +407,9 @@ def field_034(value, record):
   value = value.strip()
   if len(value) > 0:
     if value.isnumeric() is False:
-      raise ValueError('Invalid VOR/NDB Frequency', value)
+      print(f'Unsupported VOR/NDB Frequency: "{value}"')
+      print(f'from record type "{record.ident}": "{record.raw}"')
+      exit()
     else:
       return "{:.2f}".format(float(value)/100)
   return value
@@ -653,6 +666,9 @@ def field_064(value, record):
 
 # 5.65 Leg Time (LEG TIME)
 def field_065(value, record):
+  if value.strip() == '':
+    return
+
   try:
     return '{}m {}s'.format(int(value[0]), int(value[1])*6)
   except (ValueError, IndexError) as e:
@@ -1064,13 +1080,12 @@ def field_116(value, record):
 def field_117(value, record):
   if value == 'F':
     return 'FIR'
-  elif value == 'U ':
+  elif value == 'U':
     return 'UIR'
   elif value == 'B':
     return 'Combined FIR/UIR'
   else:
-    print(f'Unsupported FIR/UIR Indicator: "{value}"')
-    return f'Unsupported Value: "{value}"'
+    return value
 
 
 # 5.118 Boundary Via (BDRY VIA)
@@ -1406,7 +1421,7 @@ def field_177(value, record):
     case 'P':
       return 'Private (not open to public)'
     case _:
-      raise ValueError('Invalid Pub/Mil')
+      return f'Unsupported Value: "{value}"'
 
 
 # 5.178 Time Zone
@@ -1416,7 +1431,6 @@ def field_178(value, record):
     y = 'GMT +' + str(x) if x >= 0 else 'GMT -' + str(x)
     return y + ':' + str(value[1:])
   else:
-    print(f'Unsupported Time Zone: "{value}"')
     return f'Unsupported Value: "{value}"'
 
 
@@ -1428,7 +1442,6 @@ def field_179(value, record):
     case 'N':
       return 'No'
     case _:
-      print(f'Unsupported Daylight Time Indicator Indicator: "{value}"')
       return f'Unsupported Value: "{value}"'
 
 
@@ -1938,11 +1951,9 @@ def field_268(value, record):
 
 # 5.269 Helicopter Procedure Course (HPC)
 def field_269(value, record):
-  try:
+  if value.strip() != '': # this is allowed to be empty for non-heli records?
     return float(value)/10
-  except (ValueError) as e:
-    print(f'Unsupported Helicopter Procedure Course Value: "{value}"')
-    return f'Invalid Value: "{value}"'
+  return value
 
 
 # 5.270 TCH Value Indicator (TCHVI)

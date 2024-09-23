@@ -6,7 +6,7 @@ import arinc424.decoder as decoder
 class Alternate():
 
   # 4.1.30.1 Alternate Primary Records
-  def read(self, r):
+  def read(self, line, primary):
     return [
       Field("Record Type",                            r[0],          decoder.field_002),
       Field("Customer / Area Code",                   r[1:4],        decoder.field_003),

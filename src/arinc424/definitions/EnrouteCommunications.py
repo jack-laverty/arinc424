@@ -7,18 +7,25 @@ class EnrouteCommunications():
 
   cont_idx = 55
   app_idx = 56
+  continuations = [' ', 'T']
+  name = 'Enroute Communications'
 
-  def read(self, r):
-    if int(r[self.cont_idx]) < 2:
-        return self.read_primary(r)
+  def application_type(self, line):
+    return line[self.app_idx]
 
-    match r[self.app_idx]:
+  def read(self, line, primary) -> list:
+
+    if primary:
+      return self.read_primary(line)
+
+    application = line[self.app_idx]
+    match application:
       case ' ':
-        return self.read_cont(r)
+        return self.read_cont(line)
       case 'T':
-        return self.read_timeop(r)
+        return self.read_timeop(line)
       case _:
-        raise ValueError('{}\n{}\n{}'.format("Unknown Application", r[self.app_idx], r))
+        raise ValueError('{}\n{}\n{}'.format("Unknown Application", application, line))
 
   # 4.1.23.1 Enroute Communications Primary Records
   def read_primary(self, r):

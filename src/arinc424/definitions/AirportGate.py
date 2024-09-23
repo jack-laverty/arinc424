@@ -7,20 +7,23 @@ class AirportGate():
 
   cont_idx = 21
   app_idx = 22
+  continuations = ['A']
+  name = 'Airport Gate'
 
-  def read(self, line):
-    if int(line[self.cont_idx]) < 2:
+  def application_type(self, line):
+    return line[self.app_idx]
+
+  def read(self, line, primary) -> list:
+
+    if primary:
       return self.read_primary(line)
 
-    application = line[self.app_idx] 
+    application = line[self.app_idx]
     match application:
       case 'A':
         return self.read_cont(line)
       case _:
-        print("how i get here4")
-        exit()
-        # print(f'Unsupported Airport Gate Continuation Record Type: "{application}"')
-        # return []
+        return []
 
   # 4.1.8.1 Airport Gate Primary Record
   def read_primary(self, r):

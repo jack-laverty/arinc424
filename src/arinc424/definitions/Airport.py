@@ -7,20 +7,27 @@ class Airport():
 
   cont_idx = 21
   app_idx = 22
+  continuations = ['A', 'P', 'Q']
+  name = 'Airport'
 
-  def read(self, line) -> list:
-    if int(line[self.cont_idx]) < 2:
+  def application_type(self, line):
+    return line[self.app_idx]
+
+  def read(self, line, primary) -> list:
+
+    if primary:
       return self.read_primary(line)
-    else:
-      match line[self.app_idx]:
-        case 'A':
-          return self.read_cont(line)
-        case 'P':
-          return self.read_flight0(line)
-        case 'Q':
-          return self.read_flight1(line)
-        case _:
-          return []
+
+    application = line[self.app_idx]
+    match line[self.app_idx]:
+      case 'A':
+        return self.read_cont(line)
+      case 'P':
+        return self.read_flight0(line)
+      case 'Q':
+        return self.read_flight1(line)
+      case _:
+        return []
 
   # 4.1.7.1 Airport Primary Records
   def read_primary(self, r):

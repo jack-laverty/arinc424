@@ -7,9 +7,15 @@ class GLS():
 
   cont_idx = 21
   app_idx = 22
+  continuations = ['A']
+  name = 'GLS'
 
-  def read(self, line):
-    if int(line[self.cont_idx]) < 2:
+  def application_type(self, line):
+    return line[self.app_idx]
+
+  def read(self, line, primary) -> list:
+
+    if primary:
       return self.read_primary(line)
 
     application = line[self.app_idx]
@@ -17,7 +23,6 @@ class GLS():
       case 'A':
         return self.read_cont(line)
       case _:
-        print(f'Unsupported GLS Continuation Record Type: "{application}"')
         return []
 
   # 4.1.29.1 GLS Primary Records

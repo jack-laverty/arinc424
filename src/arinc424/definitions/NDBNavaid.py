@@ -7,19 +7,19 @@ class NDBNavaid():
 
   cont_idx = 21
   app_idx = 22
+  continuations = ['A', 'P', 'Q', 'S']
+  name = 'NDB Navaid'
 
-  def read(self, line):
+  def application_type(self, line):
+    return line[self.app_idx]
 
-    continuation_record_no = line[self.cont_idx]
-    if continuation_record_no.isnumeric() == False:
-      print(f'Unsupported NDB NAVAID Continuation Record Number: "{continuation_record_no}"')
-      print(f'Continuation Record Numbers must be 0 -> N')
-      return []
+  def read(self, line, primary) -> list:
 
-    if int(continuation_record_no) < 2:
+    if primary:
       return self.read_primary(line)
 
-    match line[self.app_idx]:
+    application = line[self.app_idx]
+    match application:
       case 'A':
         return self.read_cont(line)
       case 'P':
@@ -29,8 +29,6 @@ class NDBNavaid():
       case 'S':
         return self.read_sim(line)
       case _:
-        # raise ValueError(f'Unknown NDB NAVAID Continuation Record Application Type character: "{line[self.app_idx]}"')
-        print(f'Unsupported NDB NAVAID Continuation Record Type: "{line[self.app_idx]}"')
         return []
 
   # 4.1.3.1  NDB NAVAID Primary Records

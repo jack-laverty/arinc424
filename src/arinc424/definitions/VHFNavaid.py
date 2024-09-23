@@ -21,8 +21,12 @@ class VHFNavaid():
   continuations = ['A', 'L', 'P', 'S']
   name = 'VHF Navaid'
 
-  def read(self, line):
-    if int(line[self.cont_idx]) < 2:
+  def application_type(self, line):
+    return line[self.app_idx]
+
+  def read(self, line, primary) -> list:
+
+    if primary:
       return self.read_primary(line)
 
     application = line[self.app_idx]
@@ -36,10 +40,6 @@ class VHFNavaid():
       case 'S':
         return self.read_sim(line)
       case _:
-        print("how i get here1")
-        exit()
-        # raise ValueError(f'Unknown VHF NAVAID Continuation Record Application Type character: "{line[self.app_idx]}"')
-        print(f'Unsupported VHF NAVAID Continuation Record Type: "{application}"')
         return []
 
   # 4.1.2.1  VHF NAVAID Primary Records

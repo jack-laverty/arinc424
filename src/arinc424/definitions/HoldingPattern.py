@@ -7,9 +7,15 @@ class HoldingPattern():
 
   cont_idx = 38
   app_idx = 39
+  continuations = ['A']
+  name = 'Holding Pattern'
 
-  def read(self, line):
-    if int(line[self.cont_idx]) < 2:
+  def application_type(self, line):
+    return line[self.app_idx]
+
+  def read(self, line, primary) -> list:
+
+    if primary:
       return self.read_primary(line)
 
     application = line[self.app_idx]
@@ -17,7 +23,6 @@ class HoldingPattern():
       case 'A':
         return self.read_cont(line)
       case _:
-        print(f'Unsupported Holding Pattern Continuation Record Type: "{application}"')
         return []
 
   # 4.1.5.1 Holding Pattern Primary Records

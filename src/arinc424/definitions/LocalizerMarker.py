@@ -7,17 +7,23 @@ class LocalizerMarker():
 
   cont_idx = 21
   app_idx = 22
+  continuations = ['A']
+  name = 'Localizer Marker'
 
-  def read(self, line):
-    if int(line[self.cont_idx]) < 2:
+  def application_type(self, line):
+    return line[self.app_idx]
+
+  def read(self, line, primary) -> list:
+
+    if primary:
       return self.read_primary(line)
-    else:
-      match line[self.app_idx]:
-        case 'A':
-          return self.read_cont(line)
-        case _:
-          print(line)
-          # raise ValueError("Unsupported Localizer Marker record", line[self.app_idx])
+
+    application = line[self.app_idx]
+    match application:
+      case 'A':
+        return self.read_cont(line)
+      case _:
+        return []
 
   # 4.1.13.1
   def read_primary(self, r):

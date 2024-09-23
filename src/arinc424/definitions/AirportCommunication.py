@@ -7,19 +7,26 @@ class AirportCommunication():
 
   cont_idx = 25
   app_idx = 26
+  continuations = ['N']
+  name = 'Airport Communications'
 
-  def read(self, r) -> list:
-    if int(r[self.cont_idx]) < 2:
-      return self.read_primary(r)
-    else:
-      match r[self.app_idx]:
-        case 'N':
-          return self.read_cont_narr(r)
-        # TODO find a data set that has these continuation records to verify
-        # case 'T':
-        #     return self.read_time(r)
-        case _:
-          return []
+  def application_type(self, line):
+    return line[self.app_idx]
+
+  def read(self, line, primary) -> list:
+
+    if primary:
+      return self.read_primary(line)
+
+    application = line[self.app_idx]
+    match application:
+      case 'N':
+        return self.read_cont_narr(r)
+      # TODO find a data set that has these continuation records to verify
+      # case 'T':
+      #     return self.read_time(r)
+      case _:
+        return []
 
   # 4.1.14.1 Airport Communications Primary Records
   def read_primary(self, r):

@@ -7,20 +7,27 @@ class EnrouteAirways():
 
   cont_idx = 38
   app_idx = 39
+  continuations = ['A', 'P', 'Q']
+  name = 'Enroute Airways'
 
-  def read(self, line):
-    if int(line[self.cont_idx]) < 2:
+  def application_type(self, line):
+    return line[self.app_idx]
+
+  def read(self, line, primary) -> list:
+
+    if primary:
       return self.read_primary(line)
-    else:
-      match line[self.app_idx]:
-        case 'A':
-          return self.read_cont(line)
-        case 'P':
-          return self.read_flight_plan0(line)
-        case 'Q':
-          return self.read_flight_plan1(line)
-        case _:
-          raise ValueError('Unknown Application Type')
+
+    application = line[self.app_idx]
+    match application:
+      case 'A':
+        return self.read_cont(line)
+      case 'P':
+        return self.read_flight_plan0(line)
+      case 'Q':
+        return self.read_flight_plan1(line)
+      case _:
+        raise ValueError('Unknown Application Type')
 
   # 4.1.6.1 Enroute Airways Primary Records
   def read_primary(self, r):

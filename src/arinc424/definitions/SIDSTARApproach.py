@@ -7,12 +7,19 @@ class SIDSTARApproach():
 
   cont_idx = 38
   app_idx = 39
+  continuations = ['E', 'P', 'W']
+  name = 'SID/STAR/Approach'
 
-  def read(self, line):
-    if int(line[self.cont_idx]) < 2:
+  def application_type(self, line):
+    return line[self.app_idx]
+
+  def read(self, line, primary) -> list:
+
+    if primary:
       return self.read_primary(line)
 
-    match line[self.app_idx]:
+    application = line[self.app_idx]
+    match application:
       case 'E':
         return self.read_ext(line)
       case 'P':
@@ -20,7 +27,7 @@ class SIDSTARApproach():
       case 'W':
         return self.read_data(line)
       case _:
-        raise ValueError("bad SID/STAR/APP")
+        return []
 
   # 4.1.9.1 Airport SID/STAR/Approach Primary Records
   # 4.2.3.1 Heliport SID/STAR/Approach Primary Records 

@@ -5,7 +5,7 @@ import arinc424.decoder as decoder
 # 4.1.16 Cruising Tables Records (TC)
 class CruisingTables():
 
-  def read(self, line):
+  def read(self, line, primary):
     return self.read_primary(line)
 
   # 4.1.16.1 Cruising Table Primary Records

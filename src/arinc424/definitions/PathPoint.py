@@ -7,12 +7,19 @@ class PathPoint():
 
   cont_idx = 26
   app_idx = 27
+  continuations = ['E']
+  name = 'Path Point'
 
-  def read(self, line):
-    if int(line[self.cont_idx]) < 2:
+  def application_type(self, line):
+    return line[self.app_idx]
+
+  def read(self, line, primary) -> list:
+
+    if primary:
       return self.read_primary(line)
 
-    match line[self.app_idx]:
+    application = line[self.app_idx]
+    match application:
       case 'E':
         return self.read_cont(line)
       case _:
@@ -70,7 +77,7 @@ class PathPoint():
       Field("(LTP) Orthometric Height",               r[40:46],       decoder.field_227),
       Field("Approach Type Identifier",               r[46:56],       decoder.field_262),
       Field("GNSS Channel Number",                    r[56:61],       decoder.field_244),
-      Field("Helicopter Procedure Course",            r[71:123],      decoder.field_269),
+      Field("Helicopter Procedure Course",            r[71:74],       decoder.field_269),
       Field("File Record No",                         r[123:128],     decoder.field_031),
       Field("Cycle Date",                             r[128:132],     decoder.field_032)
     ]

@@ -7,20 +7,27 @@ class RestrictiveAirspace():
 
   cont_idx = 24
   app_idx = 25
+  continuations = ['T', 'P', 'C']
+  name = 'Restrictive Airspace'
 
-  def read(self, line):
-    if int(line[self.cont_idx]) < 2:
+  def application_type(self, line):
+    return line[self.app_idx]
+
+  def read(self, line, primary) -> list:
+
+    if primary:
       return self.read_primary(line)
-    else:
-      match line[self.app_idx]:
-        case 'T':
-          return self.read_time(line)
-        case 'P':
-          return self.read_flight0(line)
-        case 'C':
-          return self.read_callsign(line)
-        case _:
-          return []
+
+    application = line[self.app_idx]
+    match application:
+      case 'T':
+        return self.read_time(line)
+      case 'P':
+        return self.read_flight0(line)
+      case 'C':
+        return self.read_callsign(line)
+      case _:
+        return []
 
   # 4.1.18.1 Restrictive Airspace Primary Records
   def read_primary(self, r):

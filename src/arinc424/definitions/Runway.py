@@ -7,10 +7,16 @@ class Runway():
 
   cont_idx = 21
   app_idx = 22
+  continuations = ['A', 'S']
+  name = 'Runway'
 
-  def read(self, line):
-    if int(line[self.cont_idx]) < 2:
-        return self.read_primary(line)
+  def application_type(self, line):
+    return line[self.app_idx]
+
+  def read(self, line, primary) -> list:
+
+    if primary:
+      return self.read_primary(line)
 
     application = line[self.app_idx]
     match application:
@@ -19,7 +25,6 @@ class Runway():
       case 'S':
         return self.read_sim(line)
       case _:
-        print(f'Unsupported Runway Continuation Record Type: "{application}"')
         return []
 
   def read_primary(self, r):

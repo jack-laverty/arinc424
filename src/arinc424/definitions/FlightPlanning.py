@@ -7,19 +7,24 @@ class FlightPlanning():
 
   cont_idx = 69
   app_idx = 70
+  continuations = ['A', 'T']
+  name = 'Flight Planning Arrival/Departure'
 
-  def read(self, line):
-    if int(line[self.cont_idx]) < 2:
+  def application_type(self, line):
+    return line[self.app_idx]
+
+  def read(self, line, primary) -> list:
+
+    if primary:
       return self.read_primary(line)
 
     application = line[self.app_idx]
-    match line[self.app_idx]:
+    match application:
       case 'A':
         return self.read_cont(line)
       case 'T':
         return self.read_timeop(line)
       case _:
-        print(f'Unsupported Flight Planning Arrival/Departure Continuation Record Type: "{application}"')
         return []
 
   # 4.1.27.1 Flight Planning Primary Records

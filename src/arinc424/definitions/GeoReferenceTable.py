@@ -17,12 +17,19 @@ class GeoReferenceTable():
 
   cont_idx = 38
   app_idx = 39
+  continuations = ['A']
+  name = 'Geographical Reference Table'
 
-  def read(self, r) -> list:
-    if int(r[self.cont_idx]) < 2:
-        return self.read_primary(r)
+  def application_type(self, line):
+    return line[self.app_idx]
 
-    match r[self.app_idx]:
+  def read(self, line, primary) -> list:
+
+    if primary:
+      return self.read_primary(line)
+
+    application = line[self.app_idx]
+    match application:
       case 'A':
         return self.read_cont(r)
       case _:

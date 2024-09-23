@@ -7,18 +7,25 @@ class LocalizerGlideslope():
 
   cont_idx = 21
   app_idx = 22
+  continuations = ['A', 'S']
+  name = 'Localizer and Glide Slope'
 
-  def read(self, line):
-    if int(line[self.cont_idx]) < 2:
+  def application_type(self, line):
+    return line[self.app_idx]
+
+  def read(self, line, primary) -> list:
+
+    if primary:
       return self.read_primary(line)
-       
-    match line[self.app_idx]:
+
+    application = line[self.app_idx]
+    match application:
       case 'A':
         return self.read_cont(line)
       case 'S':
         return self.read_sim(line)
       case _:
-        raise ValueError("Unsupported Localizer/Glideslope record")
+        return []
 
   # 4.1.11.1  Airport and Heliport Localizer and Glide Slope Primary Records
   def read_primary(self, r):

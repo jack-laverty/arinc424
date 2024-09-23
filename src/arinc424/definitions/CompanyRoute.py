@@ -9,7 +9,7 @@ import arinc424.decoder as decoder
 class CompanyRoute():
 
   # 4.1.12.1 Company Route Primary Records
-  def read(self, r) -> list:
+  def read(self, line, primary) -> list:
     return [
       Field("Record Type",                        r[0],           decoder.field_002),
       Field("Customer",                           r[1:4],         decoder.field_003),

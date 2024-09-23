@@ -7,12 +7,19 @@ class HeliportCommunications():
 
   cont_idx = 25
   app_idx = 26
+  continuations = ['A', 'T']
+  name = 'Heliport Communications'
 
-  def read(self, line):
-    if int(line[self.cont_idx]) < 2:
+  def application_type(self, line):
+    return line[self.app_idx]
+
+  def read(self, line, primary) -> list:
+
+    if primary:
       return self.read_primary(line)
 
-    match line[self.app_idx]:
+    application = line[self.app_idx]
+    match application:
       case 'A':
         return self.read_cont(line)
       case 'T':

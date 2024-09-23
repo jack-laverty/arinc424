@@ -7,11 +7,7 @@ import arinc424.decoder as decoder
 # contains a table of Minimum Off Route Altitudes. 
 class GridMORA():
 
-  def __init__(self):
-        # Initialization code here
-        pass
-
-  def read(self, line):
+  def read(self, line, primary):
     return self.read_primary(line)
 
   # 4.1.19.1  Grid MORA Primary Records

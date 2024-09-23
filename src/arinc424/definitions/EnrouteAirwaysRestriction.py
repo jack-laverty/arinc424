@@ -5,10 +5,18 @@ import arinc424.decoder as decoder
 # 4.1.21 Enroute Airways Restriction Records (EU)
 class EnrouteAirwaysRestriction():
 
-  def read(self, line):
+  continuations = ['AE', 'TC', 'NR']
+  name = 'Enroute Airways'
 
-    if int(line[17]) < 2:
-      match line[15:17]:
+  def application_type(self, line):
+    return line[15:17]
+
+  def read(self, line, primary) -> list:
+
+    application = self.application_type(line)
+
+    if primary:
+      match application:
         case 'AE':
           return self.primary_altitude_exclude(line)
         case 'TC':
@@ -20,7 +28,7 @@ class EnrouteAirwaysRestriction():
         case _:
           raise ValueError("Unknown Restricted Airway Type")
     else:
-      match line[15:17]:
+      match application:
         case 'AE':
           return self.cont_altitude_exclude(line)
         case 'TC':

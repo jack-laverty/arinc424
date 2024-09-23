@@ -7,15 +7,22 @@ class Waypoint():
 
   cont_idx = 21
   app_idx = 22
+  continuations = ['A', 'P', 'Q']
+  name = 'Waypoint'
+
+  def application_type(self, line):
+    return line[self.app_idx]
 
   def __init__(self, enroute) -> None:
     self.enroute = enroute
 
-  def read(self, line) -> list:
-    if int(line[self.cont_idx]) < 2:
+  def read(self, line, primary) -> list:
+
+    if primary:
       return self.read_primary(line)
 
-    match line[self.app_idx]:
+    application = line[self.app_idx]
+    match application:
       case 'A':
         return self.read_cont(line)
       case 'P':
@@ -23,7 +30,7 @@ class Waypoint():
       case 'Q':
         return self.read_flight_plan1(line)
       case _:
-        raise ValueError("bad waypoint record")
+        return []
 
   # 4.1.4.1 Waypoint Primary Records
   def read_primary(self, r) -> list:

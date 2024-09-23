@@ -26,7 +26,6 @@ from arinc424.definitions.Waypoint import Waypoint
 from arinc424.definitions.Runway import Runway
 from arinc424.definitions.LocalizerGlideslope import LocalizerGlideslope
 from arinc424.definitions.LocalizerMarker import LocalizerMarker
-from arinc424.definitions.NDBNavaid import NDBNavaid
 from arinc424.definitions.PathPoint import PathPoint
 from arinc424.definitions.FlightPlanning import FlightPlanning
 from arinc424.definitions.GLS import GLS
@@ -89,9 +88,21 @@ records['UR'] = RestrictiveAirspace()
 class Record():
 
   def __init__(self):
-    self.code = ''
+    self.ident = ''
     self.raw = ''
+    self.continuation = ''
     self.fields = []
+    self.definition = -1
+
+  def primary(self):
+    if self.definition == -1:
+      return False
+    return self.continuation == '0' or self.continuation == '1'
+
+  def hasCont(self):
+    if self.primary() is False:
+      return False
+    return self.continuation == '1'
 
   def validate(self, line):
     line = line.strip()
@@ -115,48 +126,39 @@ class Record():
     identifier_2 = line[4] + line[12]
     
     if identifier_1 in records:
-      self.identifier = identifier_1
+      self.ident = identifier_1
     elif identifier_2 in records:
-      self.identifier = identifier_2
+      self.ident = identifier_2
     else:
       return False
     
-    definition = records[self.identifier]
+    self.definition = records[self.ident]
     
     # validate the continuation record number
-    if hasattr(definition, 'cont_idx'):
-      continuation_record_no = self.raw[definition.cont_idx]
-      if continuation_record_no.isdigit() == False:
-        print(f'Unsupported {definition.name} Continuation Record Number: "{continuation_record_no}"')
-        print(f'Continuation Record Numbers must be 0 -> N')
-        print(f'Offending Record: {self.raw}')
-        exit()
+    if hasattr(self.definition, 'cont_idx'):
+      self.continuation = self.raw[self.definition.cont_idx]
+      if self.continuation.isalnum() == False:
+        print(f'Unsupported {self.definition.name} Continuation Record Number: "{self.continuation}"')
+        print(f'Valid Continuation Record Numbers are 0, 1, 2 (through 9) A, B, C (through Z)')
+        print(f'Record: {self.raw}')
         return False
 
-      if int(continuation_record_no) > 1:
-        # validate the continuation record type
-        if hasattr(definition, 'app_idx'):
-          application_type = self.raw[definition.app_idx]
-          if application_type not in definition.continuations:
-            print(f'Unsupported {definition.name} Application Type: "{application_type}"')
-            print(f'Supported application types for {definition.name} are: {definition.continuations}')
-            print(f'Offending Record:\n {self.raw}')
-            exit()
+      # validate the continuation record type
+      if self.primary() is False:
+        if hasattr(self.definition, 'app_idx'):
+          application_type = self.definition.application_type(self.raw)
+          if (application_type not in self.definition.continuations) and not 'J':
+            print(f'Unsupported {self.definition.name} Application Type: "{application_type}"')
+            print(f'Supported application types for {self.definition.name} are: {self.definition.continuations}')
+            print(f'Record: {self.raw}')
             return False
-          else:
-            print("found the application type!")
-            exit()
         else:
-          print("no definition")
-    else:
-      print("no hasattr(definition, 'cont_idx')")
-
+          raise ValueError("no hasattr(self.definition, 'app_idx')")
 
     # read the record into a record object based on identifier
-    self.fields = definition.read(line)
+    self.fields = self.definition.read(line, self.primary())
     if not self.fields:
       return False
-
 
     return True
 
@@ -169,10 +171,16 @@ class Record():
       print(table)
     return table.get_string()
 
-  def json(self, single_line=True):
+  def json(self, output=True, single_line=True):
     d = {}
     for field in self.fields:
       d.update({field.name: field.value})
     if single_line:
-      return json.dumps(d)
-    return json.dumps(d, sort_keys=True, indent=4, separators=(',', ': '))
+      data = json.dumps(d)
+    else:
+      data = json.dumps(d, sort_keys=True, indent=4, separators=(',', ': '))
+    
+    if output is True:
+      print(data)
+
+    return data
