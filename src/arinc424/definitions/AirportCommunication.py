@@ -21,10 +21,10 @@ class AirportCommunication():
     application = line[self.app_idx]
     match application:
       case 'N':
-        return self.read_cont_narr(r)
+        return self.read_cont_narr(line)
       # TODO find a data set that has these continuation records to verify
       # case 'T':
-      #     return self.read_time(r)
+      #     return self.read_time(line)
       case _:
         return []
 
