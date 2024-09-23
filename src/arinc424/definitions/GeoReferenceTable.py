@@ -31,7 +31,7 @@ class GeoReferenceTable():
     application = line[self.app_idx]
     match application:
       case 'A':
-        return self.read_cont(r)
+        return self.read_cont(line)
       case _:
         return []
 
