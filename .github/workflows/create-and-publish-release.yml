@@ -1,10 +1,14 @@
-name: create and publish release
+name: Publish Python Package and Create Release
 
 on:
   push:
     tags:
       - 'v*'
   workflow_dispatch:
+    inputs:
+      tag:
+        description: 'Tag for release (e.g., v1.0.0)'
+        required: true
 
 jobs:
   deploy:
@@ -14,9 +18,9 @@ jobs:
       id-token: write
       contents: write
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
     - name: Set up Python
-      uses: actions/setup-python@v4
+      uses: actions/setup-python@v5
       with:
         python-version: '3.x'
     - name: Install dependencies
@@ -28,11 +32,13 @@ jobs:
     - name: Publish package to PyPI
       uses: pypa/gh-action-pypi-publish@release/v1
     - name: Create GitHub Release
-      uses: actions/create-release@v1
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        tag_name: ${{ github.ref }}
-        release_name: Release ${{ github.ref }}
-        draft: false
-        prerelease: false
+      run: |
+        TAG_NAME="${{ github.ref_name }}"
+        if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+          TAG_NAME="${{ github.event.inputs.tag }}"
+        fi
+        gh release create "$TAG_NAME" \
+          --title "Release $TAG_NAME" \
+          --generate-notes
