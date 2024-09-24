@@ -1,9 +1,10 @@
-name: Publish Python Package and Create Release
+name: create and publish release
 
 on:
   push:
     tags:
       - 'v*'
+  workflow_dispatch:
 
 jobs:
   deploy:
