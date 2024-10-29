@@ -132,8 +132,8 @@ def field_007(value, record):
     d['J'] = 'Pacific Oceanic Transition Routes (PACOTS)'
     d['M'] = 'RNAV Airways'
     d['N'] = 'Undesignated ATS Route'
-  elif record.ident == 'HD':
-    # Preferred Route Records (HD)
+  elif record.ident == 'PD' or record.ident == 'HD':
+    # Airport SID (PD) and Heliport SID (HD) Records
     d['0'] = 'Engine Out SID'
     d['1'] = 'SID Runway Transition'
     d['2'] = 'SID or SID Common Route'
