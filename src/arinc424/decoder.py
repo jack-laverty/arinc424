@@ -144,6 +144,9 @@ def field_007(value, record):
     d['F'] = 'FMS SID Runway Transition'
     d['M'] = 'FMS SID or SID Common Route'
     d['S'] = 'FMS SID Enroute Transition'
+    d['R'] = 'RNP SID Runway Transition'
+    d['N'] = 'RNP SID or SID Common Route'
+    d['P'] = 'RNP SID Enroute Transition'    
     d['T'] = 'Vector SID Runway Transition'
     d['V'] = 'Vector SID Enroute Transition'
   elif record.ident == 'PE' or record.ident == 'HE':
@@ -160,13 +163,17 @@ def field_007(value, record):
     d['F'] = 'FMS STAR Enroute Transition'
     d['M'] = 'FMS STAR or STAR Common Route'
     d['S'] = 'FMS STAR Runway Transition'
+    d['R'] = 'RNP STAR Enroute Transition'
+    d['N'] = 'RNP STAR or STAR Common Route'
+    d['P'] = 'RNP STAR Runway Transition'
   elif record.ident == 'PF' or record.ident == 'HF':
-    # Airport STAR (PF) and Heliport STAR (HF) Records
+    # Airport Approach (PF) and Heliport Approach (HF) Records
     d['A'] = 'Approach Transition'
     d['B'] = 'Localizer/Backcourse Approach'
     d['D'] = 'VORDME Approach'
     d['F'] = 'Flight Management System (FMS) Approach'
     d['G'] = 'Instrument Guidance System (IGS) Approach'
+    d['H'] = 'Area Navigation (RNAV) Approach with Required Navigation Performance (RNP) Approach'
     d['I'] = 'Instrument Landing System (ILS) Approach'
     d['J'] = 'GNSS Landing System (GLS) Approach'
     d['L'] = 'Localizer Only (LOC) Approach'
