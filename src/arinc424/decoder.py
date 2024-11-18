@@ -375,6 +375,14 @@ def field_026(value, record):
 
 # 5.27 Route Distance From, Holding Distance/Time (RTE DIST FROM, HOLD DIST/TIME)
 def field_027(value, record):
+  value = value.strip()
+
+  if len(value) > 0:
+    if value[0] == 'T':
+      return "{:.1f} min".format(float(value[1:]) / 10)
+    else:
+      return "{:.1f} nm".format(float(value) / 10)
+
   return value
 
 
