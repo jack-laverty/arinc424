@@ -353,24 +353,20 @@ def field_025(value, record):
 
 # 5.26 Outbound Magnetic Course (OB MAG CRS)
 def field_026(value, record):
-    value = value.strip()
+  value = value.strip()
 
-    # Handle the 'T' in the tenths position for degrees true
-    if value.endswith('T'):
-        value = value[:-1]  # Remove the 'T' character
-        is_true_course = True
-    else:
-        is_true_course = False
-
-    # Validate the remaining value
-    if len(value) > 0:
-        if value.isalnum() is False or len(value) > 4:
-            raise ValueError('Invalid Outbound Magnetic Course', value)
-        else:
-            magnetic_course = "{:.1f}".format(float(value) / 10)
-            return magnetic_course + "T" if is_true_course else magnetic_course
-
+  # Validate the value
+  if len(value) == 0:
     return value
+
+  if value.isalnum() is False or len(value) > 4:
+    raise ValueError('Invalid Outbound Magnetic Course', value)
+
+  # Handle the 'T' in the tenths position for degrees true
+  if value.endswith('T'):
+    return value
+  else:
+    return "{:.1f}".format(float(value) / 10)
 
 
 # 5.27 Route Distance From, Holding Distance/Time (RTE DIST FROM, HOLD DIST/TIME)
