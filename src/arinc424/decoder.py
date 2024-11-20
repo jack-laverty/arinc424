@@ -146,7 +146,7 @@ def field_007(value, record):
     d['S'] = 'FMS SID Enroute Transition'
     d['R'] = 'RNP SID Runway Transition'
     d['N'] = 'RNP SID or SID Common Route'
-    d['P'] = 'RNP SID Enroute Transition'    
+    d['P'] = 'RNP SID Enroute Transition'
     d['T'] = 'Vector SID Runway Transition'
     d['V'] = 'Vector SID Enroute Transition'
   elif record.ident == 'PE' or record.ident == 'HE':
@@ -307,12 +307,40 @@ def field_020(value, record):
 
 
 # 5.21 Path and Termination (PATH TERM)
-def field_021(value, record):
+LegTypeDesc = defaultdict(def_val)
+LegTypeDesc['IF'] = 'Initial Fix or IF Leg.'
+LegTypeDesc['TF'] = 'Track to a Fix or TF Leg.'
+LegTypeDesc['CF'] = 'Course to a Fix or CF Leg.'
+LegTypeDesc['DF'] = 'Direct to a Fix or DF Leg.'
+LegTypeDesc['FA'] = 'Fix to an Altitude or FA Leg.'
+LegTypeDesc['FC'] = 'Track from a Fix for a Distance or FC Leg.'
+LegTypeDesc['FD'] = 'Track from a Fix to a DME Distance or FD Leg.'
+LegTypeDesc['FM'] = 'From a Fix to a Manual termination or FM Leg.'
+LegTypeDesc['CA'] = 'Course to an Altitude or CA Leg.'
+LegTypeDesc['CD'] = 'Course to a DME Distance or CD Leg.'
+LegTypeDesc['CI'] = 'Course to an Intercept or CI Leg.'
+LegTypeDesc['CR'] = 'Course to a Radial termination or CR Leg.'
+LegTypeDesc['RF'] = 'Constant Radius Arc or RF Leg.'
+LegTypeDesc['AF'] = 'Arc to a Fix or AF Leg.'
+LegTypeDesc['VA'] = 'Heading to an Altitude termination or VA Leg.'
+LegTypeDesc['VD'] = 'Heading to a DME Distance termination or VD Leg.'
+LegTypeDesc['VI'] = 'Heading to an Intercept or VI Leg.'
+LegTypeDesc['VM'] = 'Heading to a Manual termination or VM Leg.'
+LegTypeDesc['VR'] = 'Heading to a Radial termination or VR Leg.'
+LegTypeDesc['PI'] = '045/180 Procedure Turn or PI Leg.'
+LegTypeDesc['HA'] = 'Holding pattern (Altitude Termination)'
+LegTypeDesc['HF'] = 'Holding pattern (Single circuit terminating at the fix)'
+LegTypeDesc['HM'] = 'Holding pattern (Manual Termination)'
+
+def field_021(value: str, record):
   value = value.strip()
-  if len(value) > 0:
-    if value.isalpha() is False:
-      raise ValueError("Invalid Path and Termination:", value)
-  return value
+  if len(value) == 0:
+    return value
+
+  if not value.isalpha():
+    raise ValueError("Invalid Path and Termination:", value)
+
+  return LegTypeDesc[value]
 
 
 # 5.22 Turn Direction Valid (TDV)
