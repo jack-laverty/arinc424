@@ -1,4 +1,5 @@
 from collections import defaultdict
+import io
 import string
 
 
@@ -253,34 +254,79 @@ def field_016(value, record):
 
 
 # 5.17 Waypoint Description Code (DESC CODE)
-def field_017(value, record):
-  s = ''
+def field_017(value: str, record):
+  s = io.StringIO()
   match value[0]:
     case 'A':
-      s += ('Airport as Fix')
+      s.write('Airport as Waypoint\n')
     case 'E':
-      s += ('Essential Waypoint')
+      s.write('Essential Waypoint\n')
     case 'F':
-      s += ('Off Airway Floating Waypoint')
+      s.write('Off Airway Waypoint\n')
     case 'G':
-      s += ('Runway/Helipad as Fix')
+      s.write('Runway/Helipad as Waypoint\n')
     case 'H':
-      s += ('Heliport as Waypoint')
+      s.write('Heliport as Waypoint\n')
     case 'N':
-      s += ('NDB Navaid as Waypoint')
+      s.write('NDB Navaid as Waypoint\n')
     case 'P':
-      s += ('Phantom Waypoint')
+      s.write('Phantom Waypoint\n')
     case 'R':
-      s += ('Non-Essential Waypoint')
+      s.write('Non-Essential Waypoint\n')
     case 'T':
-      s += ('Transition Essential Waypoint')
+      s.write('Transition Essential Waypoint\n')
     case 'V':
-      s += ('VHF Navaid As Fix')
-    case _:
-      pass
-  # TODO: finish this
+      s.write('VHF Navaid as Waypoint\n')
 
-  return s
+  match value[1]:
+    case 'B':
+      s.write('Flyover Waypoint: End of SID/STAR Route Type, APCH Transition or Final Approach\n')
+    case 'E':
+      s.write('End of Enroute Airway or Terminal Procedure Route Type\n')
+    case 'U':
+      s.write('Uncharted Airway Intersection\n')
+    case 'Y':
+      s.write('Fly-Over Waypoint\n')
+
+  match value[2]:
+    case 'A':
+      s.write('Unnamed Stepdown Fix After Final Approach Fix\n')
+    case 'B':
+      s.write('Unnamed Stepdown Fix Before Final Approach Fix\n')
+    case 'C':
+      s.write('ATC Compulsory Waypoint\n')
+    case 'G':
+      s.write('Oceanic Gateway Waypoint\n')
+    case 'M':
+      s.write('First Leg of Missed Approach Procedure\n')
+    case 'P':
+      s.write('Path Point Fix\n')
+    case 'R':
+      s.write('Fix used for turning final approach\n')
+    case 'S':
+      s.write('Named Stepdown Fix\n')
+
+  match value[3]:
+    case 'A':
+      s.write('Initial Approach Fix\n')
+    case 'B':
+      s.write('Intermediate Approach Fix\n')
+    case 'C':
+      s.write('Initial Approach Fix with Holding\n')
+    case 'D':
+      s.write('Initial Approach Fix with Final Approach Course Fix\n')
+    case 'E':
+      s.write('Final End Point Fix\n')
+    case 'F':
+      s.write('Published Final Approach Fix or Database Final Approach Fix\n')
+    case 'H':
+      s.write('Holding Fix\n')
+    case 'I':
+      s.write('Final Approach Course Fix\n')
+    case 'M':
+      s.write('Published Missed Approach Point Fix\n')
+
+  return s.getvalue().strip()
 
 
 # 5.18 Boundary Code (BDY CODE)
