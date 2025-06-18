@@ -38,7 +38,7 @@ arinc424.parse("SUSAP KSEAK1ASEA     110000119Y N47265700W122182910E019900429250
 foo@bar:~$ python3 parse_example.py
 
 +---------------------------------+----------------------------------+--------------------------------+
-| Field                           | Value                              | Decoded                      |
+| Field                           | Value                            | Decoded                        |
 +---------------------------------+----------------------------------+--------------------------------+
 | Record Type                     | 'S'                              | Standard                       |
 | Customer / Area Code            | 'USA'                            | United States of America       |
