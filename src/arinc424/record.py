@@ -1,7 +1,5 @@
 import json
-import arinc424.decoder as decoder
 from collections import defaultdict
-from arinc424.decoder import Field
 from prettytable import PrettyTable
 
 from arinc424.definitions.GridMORA import GridMORA
@@ -22,7 +20,6 @@ from arinc424.definitions.MSA import MSA
 from arinc424.definitions.HeliportCommunications import HeliportCommunications
 from arinc424.definitions.Airport import Airport
 from arinc424.definitions.AirportGate import AirportGate
-from arinc424.definitions.Waypoint import Waypoint
 from arinc424.definitions.Runway import Runway
 from arinc424.definitions.LocalizerGlideslope import LocalizerGlideslope
 from arinc424.definitions.LocalizerMarker import LocalizerMarker
@@ -39,8 +36,11 @@ from arinc424.definitions.FIRUIR import FIRUIR
 from arinc424.definitions.RestrictiveAirspace import RestrictiveAirspace
 from arinc424.definitions.MLS import MLS
 
+
 def def_val():
   return False
+
+
 records = defaultdict(def_val)
 records['AS'] = GridMORA()
 records['D '] = VHFNavaid()
@@ -85,6 +85,7 @@ records['UC'] = ControlledAirspace()
 records['UF'] = FIRUIR()
 records['UR'] = RestrictiveAirspace()
 
+
 class Record():
 
   def __init__(self):
@@ -124,22 +125,22 @@ class Record():
 
     identifier_1 = line[4:6]
     identifier_2 = line[4] + line[12]
-    
+
     if identifier_1 in records:
       self.ident = identifier_1
     elif identifier_2 in records:
       self.ident = identifier_2
     else:
       return False
-    
+
     self.definition = records[self.ident]
-    
+
     # validate the continuation record number
     if hasattr(self.definition, 'cont_idx'):
       self.continuation = self.raw[self.definition.cont_idx]
       if self.continuation.isalnum() == False:
         print(f'Unsupported {self.definition.name} Continuation Record Number: "{self.continuation}"')
-        print(f'Valid Continuation Record Numbers are 0, 1, 2 (through 9) A, B, C (through Z)')
+        print('Valid Continuation Record Numbers are 0, 1, 2 (through 9) A, B, C (through Z)')
         print(f'Record: {self.raw}')
         return False
 
@@ -179,7 +180,7 @@ class Record():
       data = json.dumps(d)
     else:
       data = json.dumps(d, sort_keys=True, indent=4, separators=(',', ': '))
-    
+
     if output is True:
       print(data)
 

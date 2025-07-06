@@ -91,7 +91,7 @@ import arinc424
 
 record = arinc424.Record()
 record.read("SUSAP KSEAK1ASEA     110000119Y N47265700W122182910E019900429250SEA K11800018000CU00Y NAS    SEATTLE-TACOMA INTL           045698808")
-record.decode()
+record.decode() # returns decocded record in a table as a string. Prints the table to console by default, output=False to stop this.
 ```
 
 ### Writing a Record to a File

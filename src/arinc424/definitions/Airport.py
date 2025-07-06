@@ -19,7 +19,7 @@ class Airport():
       return self.read_primary(line)
 
     application = line[self.app_idx]
-    match line[self.app_idx]:
+    match application:
       case 'A':
         return self.read_cont(line)
       case 'P':
@@ -146,3 +146,4 @@ class Airport():
       Field("File Record No",                          r[123:128],    decoder.field_031),
       Field("Cycle Date",                              r[128:132],    decoder.field_032)
     ]
+  
