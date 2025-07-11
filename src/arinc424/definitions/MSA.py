@@ -38,7 +38,7 @@ class MSA():
       Field("Section Code",                        r[4]+r[12],    decoder.field_004),
       Field(self.id_name,                          r[6:10],       decoder.field_006),
       Field("ICAO Code",                           r[10:12],      decoder.field_014),
-      Field("MSA Center",                          r[13:17],      decoder.field_144),
+      Field("MSA Center",                          r[13:18],      decoder.field_144),
       Field("ICAO Code (2)",                       r[18:20],      decoder.field_014),
       Field("Section Code (2)",                    r[20:22],      decoder.field_004),
       Field("Multiple Code",                       r[22],         decoder.field_130),
