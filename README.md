@@ -1,6 +1,7 @@
 # ARINC-424
 
 [![build](https://github.com/jack-laverty/arinc424/actions/workflows/build.yml/badge.svg)](https://github.com/jack-laverty/arinc424/actions/workflows/build.yml)
+[![benchmark](https://img.shields.io/badge/benchmark-github%20pages-blue)](https://jack-laverty.github.io/arinc424/)
 
 
 A python library for parsing and decoding ARINC-424, the international standard file format for aircraft navigation data.
