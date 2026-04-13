@@ -123,10 +123,3 @@ record.hasCont()
 #NOTE: both of these functions will return False if the record object has not been initialised with ARINC-424 data
 
 ```
-
-### TODO
-
-* more data
-* timing benchmarks
-* friendly CLI
-* provide summary on bulk reads, maybe a table with total records read, and types of recordsa
