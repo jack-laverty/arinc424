@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1776076009536,
+  "lastUpdate": 1776076891872,
   "repoUrl": "https://github.com/jack-laverty/arinc424",
   "entries": {
     "Benchmark": [
@@ -173,6 +173,65 @@ window.BENCHMARK_DATA = {
             "unit": "iter/sec",
             "range": "stddev: 0.13294795778187127",
             "extra": "mean: 24.977179940999996 sec\nrounds: 5"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "jacktlaverty@gmail.com",
+            "name": "Jack Laverty",
+            "username": "jack-laverty"
+          },
+          "committer": {
+            "email": "jacktlaverty@gmail.com",
+            "name": "Jack Laverty",
+            "username": "jack-laverty"
+          },
+          "distinct": true,
+          "id": "f8c65377e38551c15d6429658bdfde891af1c01c",
+          "message": "its not fast",
+          "timestamp": "2026-04-13T20:38:50+10:00",
+          "tree_id": "a7887e65eb4fe8868f86a857867cd4331cf1be2b",
+          "url": "https://github.com/jack-laverty/arinc424/commit/f8c65377e38551c15d6429658bdfde891af1c01c"
+        },
+        "date": 1776076891575,
+        "tool": "pytest",
+        "benches": [
+          {
+            "name": "tests/test_benchmark.py::test_read_benchmark",
+            "value": 154033.2642896148,
+            "unit": "iter/sec",
+            "range": "stddev: 0.0000010082346542510767",
+            "extra": "mean: 6.492104186792994 usec\nrounds: 14474"
+          },
+          {
+            "name": "tests/test_benchmark.py::test_json_benchmark",
+            "value": 89745.2401369155,
+            "unit": "iter/sec",
+            "range": "stddev: 0.0000011532253001550184",
+            "extra": "mean: 11.142652228401174 usec\nrounds: 22348"
+          },
+          {
+            "name": "tests/test_benchmark.py::test_decode_benchmark",
+            "value": 1301.5723540377062,
+            "unit": "iter/sec",
+            "range": "stddev: 0.00002139779499864621",
+            "extra": "mean: 768.3015061727643 usec\nrounds: 81"
+          },
+          {
+            "name": "tests/test_benchmark.py::test_read_file_benchmark",
+            "value": 829.9559783827755,
+            "unit": "iter/sec",
+            "range": "stddev: 0.00007583128117446224",
+            "extra": "mean: 1.204883181814735 msec\nrounds: 11"
+          },
+          {
+            "name": "tests/test_benchmark.py::test_faacifp_benchmark",
+            "value": 0.056146642583120666,
+            "unit": "iter/sec",
+            "range": "stddev: 0.02353870339515237",
+            "extra": "mean: 17.810503958800012 sec\nrounds: 5"
           }
         ]
       }
