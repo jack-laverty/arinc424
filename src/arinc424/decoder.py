@@ -1,4 +1,3 @@
-from collections import defaultdict
 import io
 import string
 import re
@@ -18,8 +17,228 @@ class Field():
 # This file decodes fields within records based on
 # Chapter 5 - Field Definitions
 
-def def_val():
-  return "<UNKNOWN>"
+_SECTIONS = {
+  'AS': 'Grid MORA',
+  'D ': 'VHF Navaid',
+  'DB': 'NDB Navaid',
+  'EA': 'Waypoint',
+  'EM': 'Airways Marker',
+  'EP': 'Holding Pattern',
+  'ER': 'Airways and Route',
+  'ET': 'Preferred Route',
+  'EU': 'Airway Restrictions',
+  'EV': 'Enroute Communication',
+  'HA': 'Heliport Pads',
+  'HC': 'Heliport Terminal Waypoint',
+  'HD': 'Heliport SID',
+  'HE': 'Heliport STAR',
+  'HF': 'Heliport Approach Procedure',
+  'HK': 'Heliport TAA',
+  'HS': 'Heliport MSA',
+  'HV': 'Heliport Communication',
+  'PA': 'Airport Reference Point',
+  'PB': 'Airport Gates',
+  'PC': 'Airport Terminal Waypoint',
+  'PD': 'Airport SID',
+  'PE': 'Airport STAR',
+  'PF': 'Airport Approach Procedure',
+  'PG': 'Airport Runway',
+  'PI': 'Airport Localizer/Glideslope',
+  'PK': 'Airport TAA',
+  'PL': 'Airport MLS',
+  'PM': 'Airport Localizer Marker',
+  'PN': 'Airport Terminal',
+  'PP': 'Airport Path',
+  'PR': 'Airport Flt Planning ARR/DEP',
+  'PS': 'Airport MSA',
+  'PT': 'Airport GLS Station',
+  'PV': 'Airport Communication',
+  'R ': 'Company Route',
+  'RA': 'Alternate Record',
+  'TC': 'Cruising Table',
+  'TG': 'Geographical Reference',
+  'TN': 'RNAV Name Table',
+  'UC': 'Controller Airspace',
+  'UF': 'Airspace FIR/UIR',
+  'UR': 'Restrictive Airspace'
+}
+
+_SERVICE_INDICATORS = {
+  'A  ': 'Airport Advisory Serivce (AAS)',
+  'C  ': 'Community Aerodrome Radio Station (CARS)',
+  'D  ': 'Departure Service (Other than Departure Control Unit)',
+  'F  ': 'Flight Information Serivce (FIS)',
+  'I  ': 'Initial Contact (IC)',
+  'L  ': 'Arrival Service (Other than Arrival Control Unit)',
+  'P  ': 'Pre-Departure Clearance (Data Link Service)',
+  'S  ': 'Aerodrome Flight Information Service (AFIS)',
+  'T  ': 'Terminal Area Control (Other than dedicated Terminal Control Unit)',
+  ' A ': 'Aerodrome Traffic Frequency (ATF)',
+  ' C ': 'Common Traffic Advisory Frequency (CTAF)',
+  ' M ': 'Mandatory Frequency (MF)',
+  ' R ': 'Air/Air',
+  ' S ': 'Secondary Frequency',
+  '  A': 'Air/Ground',
+  '  D': 'VHF Direction Finding Service (VDF)',
+  '  G': 'Remote Communications Air to Ground (RCAG)',
+  '  L': 'Language other than English',
+  '  M': 'Military Use Frequency',
+  '  P': 'Pilot Controlled Light (PCL)',
+  '  R': 'Remote Communications Outlet (RCO)',
+}
+
+_COMM_TYPES = {
+  'ACC': 'Area Control Center',
+  'ACP': 'Airlift Command Post',
+  'AIR': 'Air to Air',
+  'APP': 'Approach Control',
+  'ARR': 'Arrival Control',
+  'ASO': 'Automatic Surface Observing System (ASOS)',
+  'ATI': 'Automatic Terminal Info Service (ATIS)',
+  'AWI': 'Airport Weather Information Broadcast (AWIB)',
+  'AWO': 'Automatic Weather Observing Service (AWOS)',
+  'AWS': 'Aerodrome Weather Information Services (AWIS)',
+  'CLD': 'Clearance Delivery',
+  'CPT': 'Clearance, Pre-Taxi',
+  'CTA': 'Control Area (Terminal)',
+  'CTL': 'Control',
+  'DEP': 'Departure Control',
+  'DIR': 'Director (Approach Control Radar)',
+  'EFS': 'Enroute Flight Advisory Service (EFAS)',
+  'EMR': 'Emergency',
+  'FSS': 'Flight Service Station',
+  'GCO': 'Ground Comm Outlet',
+  'GND': 'Ground Control',
+  'GTE': 'Gate Control',
+  'HEL': 'Helicopter Frequency',
+  'INF': 'Information',
+  'MIL': 'Military Frequency',
+  'MUL': 'Multicom',
+  'OPS': 'Operations',
+  'PAL': 'Pilot Activated Lighting (Note 1)',
+  'RDO': 'Radio',
+  'RDR': 'Radar',
+  'RFS': 'Remote Flight Service Station (RFSS)',
+  'RMP': 'Ramp/Taxi Control',
+  'RSA': 'Airport Radar Service Area (ARSA)',
+  'TCA': 'Terminal Control Area',
+  'TMA': 'Terminal Control Area',
+  'TML': 'Terminal',
+  'TRS': 'Terminal Radar Service Area (TRSA)',
+  'TWE': 'Transcribe Weather Broadcast (TWEB)',
+  'TWR': 'Tower, Air Traffic Control',
+  'UAC': 'Upper Area Control',
+  'UNI': 'Unicom',
+  'VOL': 'Volmet',
+}
+
+_ROUTE_TYPES = {
+  'ER': {
+    'A': 'Airline Airway (Tailored Data)',
+    'C': 'Control',
+    'D': 'Direct Route',
+    'H': 'Helicopter Airways',
+    'O': 'Officially Designated Airways',
+    'R': 'RNAV Airways',
+    'S': 'Undesignated ATS Route',
+  },
+  'ET': {
+    'C': 'North American Routes for North Atlantic Traffic Common Portion',
+    'D': 'Preferential Routes',
+    'J': 'Pacific Oceanic Transition Routes (PACOTS)',
+    'M': 'RNAV Airways',
+    'N': 'Undesignated ATS Route',
+  },
+  'SID': {
+    '0': 'Engine Out SID',
+    '1': 'SID Runway Transition',
+    '2': 'SID or SID Common Route',
+    '3': 'SID Enroute Transition',
+    '4': 'RNAV SID Runway Transition',
+    '5': 'RNAV SID or SID Common Route',
+    '6': 'RNAV SID Enroute Transition',
+    'F': 'FMS SID Runway Transition',
+    'M': 'FMS SID or SID Common Route',
+    'S': 'FMS SID Enroute Transition',
+    'R': 'RNP SID Runway Transition',
+    'N': 'RNP SID or SID Common Route',
+    'P': 'RNP SID Enroute Transition',
+    'T': 'Vector SID Runway Transition',
+    'V': 'Vector SID Enroute Transition',
+  },
+  'STAR': {
+    '1': 'STAR Enroute Transition',
+    '2': 'STAR or STAR Common Route',
+    '3': 'STAR Runway Transition',
+    '4': 'RNAV STAR Enroute Transition',
+    '5': 'RNAV STAR or STAR Common Route',
+    '6': 'RNAV STAR Runway Transition',
+    '7': 'Profile Descent Enroute Transition',
+    '8': 'Profile Descent Common Route',
+    '9': 'Profile Descent Runway Transition',
+    'F': 'FMS STAR Enroute Transition',
+    'M': 'FMS STAR or STAR Common Route',
+    'S': 'FMS STAR Runway Transition',
+    'R': 'RNP STAR Enroute Transition',
+    'N': 'RNP STAR or STAR Common Route',
+    'P': 'RNP STAR Runway Transition',
+  },
+  'APPR': {
+    'A': 'Approach Transition',
+    'B': 'Localizer/Backcourse Approach',
+    'D': 'VORDME Approach',
+    'F': 'Flight Management System (FMS) Approach',
+    'G': 'Instrument Guidance System (IGS) Approach',
+    'H': 'Area Navigation (RNAV) Approach with Required Navigation Performance (RNP) Approach',
+    'I': 'Instrument Landing System (ILS) Approach',
+    'J': 'GNSS Landing System (GLS) Approach',
+    'L': 'Localizer Only (LOC) Approach',
+    'M': 'Microwave Landing System (MLS) Approach',
+    'N': 'Non-Directional Beacon (NDB) Approach',
+    'P': 'Global Position System (GPS) Approach',
+    'Q': 'Non-Directional Beacon + DME (NDB+DME) Approach',
+    'R': 'Area Navigation (RNAV) Approach (Note 1)',
+    'S': 'VOR Approach using VORDME/VORTAC',
+    'T': 'TACAN Approach',
+    'U': 'Simplified Directional Facility (SDF) Approach',
+    'V': 'VOR Approach',
+    'W': 'Microwave Landing System (MLS), Type A Approach',
+    'X': 'Localizer Directional Aid (LDA) Approach',
+    'Y': 'Microwave Landing System (MLS), Type B and C Approach',
+    'Z': 'Missed Approach',
+  },
+}
+
+_LEG_TYPES = {
+  'IF': 'Initial Fix or IF Leg.',
+  'TF': 'Track to a Fix or TF Leg.',
+  'CF': 'Course to a Fix or CF Leg.',
+  'DF': 'Direct to a Fix or DF Leg.',
+  'FA': 'Fix to an Altitude or FA Leg.',
+  'FC': 'Track from a Fix for a Distance or FC Leg.',
+  'FD': 'Track from a Fix to a DME Distance or FD Leg.',
+  'FM': 'From a Fix to a Manual termination or FM Leg.',
+  'CA': 'Course to an Altitude or CA Leg.',
+  'CD': 'Course to a DME Distance or CD Leg.',
+  'CI': 'Course to an Intercept or CI Leg.',
+  'CR': 'Course to a Radial termination or CR Leg.',
+  'RF': 'Constant Radius Arc or RF Leg.',
+  'AF': 'Arc to a Fix or AF Leg.',
+  'VA': 'Heading to an Altitude termination or VA Leg.',
+  'VD': 'Heading to a DME Distance termination or VD Leg.',
+  'VI': 'Heading to an Intercept or VI Leg.',
+  'VM': 'Heading to a Manual termination or VM Leg.',
+  'VR': 'Heading to a Radial termination or VR Leg.',
+  'PI': '045/180 Procedure Turn or PI Leg.',
+  'HA': 'Holding pattern (Altitude Termination)',
+  'HF': 'Holding pattern (Single circuit terminating at the fix)',
+  'HM': 'Holding pattern (Manual Termination)',
+}
+
+# PD and HD share the same table, as do PE/HE and PF/HF
+_ROUTE_TYPES['PD'] = _ROUTE_TYPES['HD'] = _ROUTE_TYPES['SID']
+_ROUTE_TYPES['PE'] = _ROUTE_TYPES['HE'] = _ROUTE_TYPES['STAR']
+_ROUTE_TYPES['PF'] = _ROUTE_TYPES['HF'] = _ROUTE_TYPES['APPR']
 
 
 # 5.2 Record Type
@@ -63,51 +282,7 @@ def field_003(value, record):
 def field_004(value, record):
   if (value.strip() == ''):
     return value
-  sections = defaultdict(def_val)
-  sections['AS'] = 'Grid MORA'
-  sections['D '] = 'VHF Navaid'
-  sections['DB'] = 'NDB Navaid'
-  sections['EA'] = 'Waypoint'
-  sections['EM'] = 'Airways Marker'
-  sections['EP'] = 'Holding Pattern'
-  sections['ER'] = 'Airways and Route'
-  sections['ET'] = 'Preferred Route'
-  sections['EU'] = 'Airway Restrictions'
-  sections['EV'] = 'Enroute Communication'
-  sections['HA'] = 'Heliport Pads'
-  sections['HC'] = 'Heliport Terminal Waypoint'
-  sections['HD'] = 'Heliport SID'
-  sections['HE'] = 'Heliport STAR'
-  sections['HF'] = 'Heliport Approach Procedure'
-  sections['HK'] = 'Heliport TAA'
-  sections['HS'] = 'Heliport MSA'
-  sections['HV'] = 'Heliport Communication'
-  sections['PA'] = 'Airport Reference Point'
-  sections['PB'] = 'Airport Gates'
-  sections['PC'] = 'Airport Terminal Waypoint'
-  sections['PD'] = 'Airport SID'
-  sections['PE'] = 'Airport STAR'
-  sections['PF'] = 'Airport Approach Procedure'
-  sections['PG'] = 'Airport Runway'
-  sections['PI'] = 'Airport Localizer/Glideslope'
-  sections['PK'] = 'Airport TAA'
-  sections['PL'] = 'Airport MLS'
-  sections['PM'] = 'Airport Localizer Marker'
-  sections['PN'] = 'Airport Terminal'
-  sections['PP'] = 'Airport Path'
-  sections['PR'] = 'Airport Flt Planning ARR/DEP'
-  sections['PS'] = 'Airport MSA'
-  sections['PT'] = 'Airport GLS Station'
-  sections['PV'] = 'Airport Communication'
-  sections['R '] = 'Company Route'
-  sections['RA'] = 'Alternate Record'
-  sections['TC'] = 'Cruising Table'
-  sections['TG'] = 'Geographical Reference'
-  sections['TN'] = 'RNAV Name Table'
-  sections['UC'] = 'Controller Airspace'
-  sections['UF'] = 'Airspace FIR/UIR'
-  sections['UR'] = 'Restrictive Airspace'
-  return sections[value]
+  return _SECTIONS.get(value, '<UNKNOWN')
 
 
 # 5.6 Airport/Heliport Identifier (ARPT/HELI IDENT)
@@ -117,82 +292,10 @@ def field_006(value, record):
 
 # 5.7 Route Type
 def field_007(value, record):
-  d = defaultdict(def_val)
-  if record.ident == 'ER':
-    # Enroute Airway Records (ER)
-    d['A'] = 'Airline Airway (Tailored Data)'
-    d['C'] = 'Control'
-    d['D'] = 'Direct Route'
-    d['H'] = 'Helicopter Airways'
-    d['O'] = 'Officially Designated Airways'
-    d['R'] = 'RNAV Airways'
-    d['S'] = 'Undesignated ATS Route'
-  elif record.ident == 'ET':
-    # Preferred Route Records (ET)
-    d['C'] = 'North American Routes for North Atlantic Traffic Common Portion'
-    d['D'] = 'Preferential Routes'
-    d['J'] = 'Pacific Oceanic Transition Routes (PACOTS)'
-    d['M'] = 'RNAV Airways'
-    d['N'] = 'Undesignated ATS Route'
-  elif record.ident == 'PD' or record.ident == 'HD':
-    # Airport SID (PD) and Heliport SID (HD) Records
-    d['0'] = 'Engine Out SID'
-    d['1'] = 'SID Runway Transition'
-    d['2'] = 'SID or SID Common Route'
-    d['3'] = 'SID Enroute Transition'
-    d['4'] = 'RNAV SID Runway Transition'
-    d['5'] = 'RNAV SID or SID Common Route'
-    d['6'] = 'RNAV SID Enroute Transition'
-    d['F'] = 'FMS SID Runway Transition'
-    d['M'] = 'FMS SID or SID Common Route'
-    d['S'] = 'FMS SID Enroute Transition'
-    d['R'] = 'RNP SID Runway Transition'
-    d['N'] = 'RNP SID or SID Common Route'
-    d['P'] = 'RNP SID Enroute Transition'
-    d['T'] = 'Vector SID Runway Transition'
-    d['V'] = 'Vector SID Enroute Transition'
-  elif record.ident == 'PE' or record.ident == 'HE':
-    # Airport STAR (PE) and Heliport STAR (HE) Records
-    d['1'] = 'STAR Enroute Transition'
-    d['2'] = 'STAR or STAR Common Route'
-    d['3'] = 'STAR Runway Transition'
-    d['4'] = 'RNAV STAR Enroute Transition'
-    d['5'] = 'RNAV STAR or STAR Common Route'
-    d['6'] = 'RNAV STAR Runway Transition'
-    d['7'] = 'Profile Descent Enroute Transition'
-    d['8'] = 'Profile Descent Common Route'
-    d['9'] = 'Profile Descent Runway Transition'
-    d['F'] = 'FMS STAR Enroute Transition'
-    d['M'] = 'FMS STAR or STAR Common Route'
-    d['S'] = 'FMS STAR Runway Transition'
-    d['R'] = 'RNP STAR Enroute Transition'
-    d['N'] = 'RNP STAR or STAR Common Route'
-    d['P'] = 'RNP STAR Runway Transition'
-  elif record.ident == 'PF' or record.ident == 'HF':
-    # Airport Approach (PF) and Heliport Approach (HF) Records
-    d['A'] = 'Approach Transition'
-    d['B'] = 'Localizer/Backcourse Approach'
-    d['D'] = 'VORDME Approach'
-    d['F'] = 'Flight Management System (FMS) Approach'
-    d['G'] = 'Instrument Guidance System (IGS) Approach'
-    d['H'] = 'Area Navigation (RNAV) Approach with Required Navigation Performance (RNP) Approach'
-    d['I'] = 'Instrument Landing System (ILS) Approach'
-    d['J'] = 'GNSS Landing System (GLS) Approach'
-    d['L'] = 'Localizer Only (LOC) Approach'
-    d['M'] = 'Microwave Landing System (MLS) Approach'
-    d['N'] = 'Non-Directional Beacon (NDB) Approach'
-    d['P'] = 'Global Position System (GPS) Approach'
-    d['Q'] = 'Non-Directional Beacon + DME (NDB+DME) Approach'
-    d['R'] = 'Area Navigation (RNAV) Approach (Note 1)'
-    d['S'] = 'VOR Approach using VORDME/VORTAC'
-    d['T'] = 'TACAN Approach'
-    d['U'] = 'Simplified Directional Facility (SDF) Approach'
-    d['V'] = 'VOR Approach'
-    d['W'] = 'Microwave Landing System (MLS), Type A Approach'
-    d['X'] = 'Localizer Directional Aid (LDA) Approach'
-    d['Y'] = 'Microwave Landing System (MLS), Type B and C Approach'
-    d['Z'] = 'Missed Approach'
-  return d[value] if d[value] != "bad value" else value + " - BAD VALUE"
+  routes = _ROUTE_TYPES.get(record.ident)
+  if routes is None:
+    return f'<UNKNOWN RECORD TYPE: {record.ident}>'
+  return routes.get(value, f'<UNKNOWN: {value}>')
 
 
 # 5.8 Route Identifier (ROUTE IDENT)
@@ -356,40 +459,13 @@ def field_020(value, record):
 
 
 # 5.21 Path and Termination (PATH TERM)
-LegTypeDesc = defaultdict(def_val)
-LegTypeDesc['IF'] = 'Initial Fix or IF Leg.'
-LegTypeDesc['TF'] = 'Track to a Fix or TF Leg.'
-LegTypeDesc['CF'] = 'Course to a Fix or CF Leg.'
-LegTypeDesc['DF'] = 'Direct to a Fix or DF Leg.'
-LegTypeDesc['FA'] = 'Fix to an Altitude or FA Leg.'
-LegTypeDesc['FC'] = 'Track from a Fix for a Distance or FC Leg.'
-LegTypeDesc['FD'] = 'Track from a Fix to a DME Distance or FD Leg.'
-LegTypeDesc['FM'] = 'From a Fix to a Manual termination or FM Leg.'
-LegTypeDesc['CA'] = 'Course to an Altitude or CA Leg.'
-LegTypeDesc['CD'] = 'Course to a DME Distance or CD Leg.'
-LegTypeDesc['CI'] = 'Course to an Intercept or CI Leg.'
-LegTypeDesc['CR'] = 'Course to a Radial termination or CR Leg.'
-LegTypeDesc['RF'] = 'Constant Radius Arc or RF Leg.'
-LegTypeDesc['AF'] = 'Arc to a Fix or AF Leg.'
-LegTypeDesc['VA'] = 'Heading to an Altitude termination or VA Leg.'
-LegTypeDesc['VD'] = 'Heading to a DME Distance termination or VD Leg.'
-LegTypeDesc['VI'] = 'Heading to an Intercept or VI Leg.'
-LegTypeDesc['VM'] = 'Heading to a Manual termination or VM Leg.'
-LegTypeDesc['VR'] = 'Heading to a Radial termination or VR Leg.'
-LegTypeDesc['PI'] = '045/180 Procedure Turn or PI Leg.'
-LegTypeDesc['HA'] = 'Holding pattern (Altitude Termination)'
-LegTypeDesc['HF'] = 'Holding pattern (Single circuit terminating at the fix)'
-LegTypeDesc['HM'] = 'Holding pattern (Manual Termination)'
-
 def field_021(value: str, record):
   value = value.strip()
   if len(value) == 0:
     return value
-
   if not value.isalpha():
     raise ValueError("Invalid Path and Termination:", value)
-
-  return LegTypeDesc[value]
+  return _LEG_TYPES.get(value, f'<UNKNOWN: {value}>')
 
 
 # 5.22 Turn Direction Valid (TDV)
@@ -506,7 +582,7 @@ def field_034(value, record):
 # 5.35 NAVAID Class (CLASS)
 def field_035(value, record):
   # elif facility.contains(field):
-  #   d = defaultdict(def_val)
+  #   d = {}
   #   d['V'] = 'VOR'
   #   d[' '] = ''
   #   d['D'] = 'DME'
@@ -517,7 +593,7 @@ def field_035(value, record):
   #   d['P'] = 'MLS/DME/P'
   #   return ' '.join([d[val[0]], d[val[1]]]).strip()
   # elif power.contains(field):
-  #   d = defaultdict(def_val)
+  #   d = {}
   #   d['T'] = 'Terminal'
   #   d['L'] = 'Low Altitude'
   #   d['H'] = 'High Altitude'
@@ -525,7 +601,7 @@ def field_035(value, record):
   #   d['C'] = 'ILS/TACAN'
   #   return str(d[val])
   # elif field == "Class Info":
-  #   d = defaultdict(def_val)
+  #   d = {}
   #   d['D'] = 'Biased ILS/DME or ILS/TACAN'
   #   d['A'] = 'Automatic Transcribed Weather Broadcast'
   #   d['B'] = 'Scheduled Weather Broadcast'
@@ -749,7 +825,12 @@ def field_063(value, record):
 
 # 5.64 Leg Length (LEG LENGTH)
 def field_064(value, record):
-  return value
+  if value.strip() == '':
+    return value
+  try:
+    return "{:.1f} nm".format(float(value) / 10)
+  except ValueError:
+    return f'Invalid Value: "{value}"'
 
 
 # 5.65 Leg Time (LEG TIME)
@@ -987,50 +1068,7 @@ def field_100(value, record):
 
 # 5.101 Communications Type (COMM TYPE)
 def field_101(value, record):
-  d = defaultdict(def_val)
-  d['ACC'] = 'Area Control Center'
-  d['ACP'] = 'Airlift Command Post'
-  d['AIR'] = 'Air to Air'
-  d['APP'] = 'Approach Control'
-  d['ARR'] = 'Arrival Control'
-  d['ASO'] = 'Automatic Surface Observing System (ASOS)'
-  d['ATI'] = 'Automatic Terminal Info Service (ATIS)'
-  d['AWI'] = 'Airport Weather Information Broadcast (AWIB)'
-  d['AWO'] = 'Automatic Weather Observing Service (AWOS)'
-  d['AWS'] = 'Aerodrome Weather Information Services (AWIS)'
-  d['CLD'] = 'Clearance Delivery'
-  d['CPT'] = 'Clearance, Pre-Taxi'
-  d['CTA'] = 'Control Area (Terminal)'
-  d['CTL'] = 'Control'
-  d['DEP'] = 'Departure Control'
-  d['DIR'] = 'Director (Approach Control Radar)'
-  d['EFS'] = 'Enroute Flight Advisory Service (EFAS)'
-  d['EMR'] = 'Emergency'
-  d['FSS'] = 'Flight Service Station'
-  d['GCO'] = 'Ground Comm Outlet'
-  d['GND'] = 'Ground Control'
-  d['GTE'] = 'Gate Control'
-  d['HEL'] = 'Helicopter Frequency'
-  d['INF'] = 'Information'
-  d['MIL'] = 'Military Frequency'
-  d['MUL'] = 'Multicom'
-  d['OPS'] = 'Operations'
-  d['PAL'] = 'Pilot Activated Lighting (Note 1)'
-  d['RDO'] = 'Radio'
-  d['RDR'] = 'Radar'
-  d['RFS'] = 'Remote Flight Service Station (RFSS)'
-  d['RMP'] = 'Ramp/Taxi Control'
-  d['RSA'] = 'Airport Radar Service Area (ARSA)'
-  d['TCA'] = 'Terminal Control Area'
-  d['TMA'] = 'Terminal Control Area'
-  d['TML'] = 'Terminal'
-  d['TRS'] = 'Terminal Radar Service Area (TRSA)'
-  d['TWE'] = 'Transcribe Weather Broadcast (TWEB)'
-  d['TWR'] = 'Tower, Air Traffic Control'
-  d['UAC'] = 'Upper Area Control'
-  d['UNI'] = 'Unicom'
-  d['VOL'] = 'Volmet'
-  return d[value] if d[value] != "bad value" else value + "BAD VALUE"
+  return _COMM_TYPES.get(value, f'<UNKNOWN: {value}>')
 
 
 # 5.102 Radar (RADAR)
@@ -1054,7 +1092,7 @@ def field_103(value, record):
 
 # 5.104 Frequency Units (FREQ UNIT)
 def field_104(value, record):
-  d = defaultdict(def_val)
+  d = {}
   d['H'] = 'High Frequency (3000 kHz - 30,000 kHz)'
   d['V'] = 'Very High Frequency (30,000 kHz - 200 MHz)'
   d['U'] = 'Ultra High Frequency (200 MHz - 3000 MHz)'
@@ -1071,29 +1109,7 @@ def field_105(value, record):
 def field_106(value, record):
   if (value.strip() == ''):
     return value
-  sections = defaultdict(def_val)
-  sections['A  '] = 'Airport Advisory Serivce (AAS)'
-  sections['C  '] = 'Community Aerodrome Radio Station (CARS)'
-  sections['D  '] = 'Departure Service (Other than Departure Control Unit)'
-  sections['F  '] = 'Flight Information Serivce (FIS)'
-  sections['I  '] = 'Initial Contact (IC)'
-  sections['L  '] = 'Arrival Service (Other than Arrival Control Unit)'
-  sections['P  '] = 'Pre-Departure Clearance (Data Link Service)'
-  sections['S  '] = 'Aerodrome Flight Information Service (AFIS)'
-  sections['T  '] = 'Terminal Area Control (Other than dedicated Terminal Control Unit)'
-  sections[' A '] = 'Aerodrome Traffic Frequency (ATF)'
-  sections[' C '] = 'Common Traffic Advisory Frequency (CTAF)'
-  sections[' M '] = 'Mandatory Frequency (MF) '
-  sections[' R '] = 'Air/Air'
-  sections[' S '] = 'Secondary Frequency'
-  sections['  A'] = 'Air/Ground'
-  sections['  D'] = 'VHF Direction Finding Service (VDF)'
-  sections['  G'] = 'Remote Communications Air to Ground (RCAG)'
-  sections['  L'] = 'Language other than English'
-  sections['  M'] = 'Military Use Frequency'
-  sections['  P'] = 'Pilot Controlled Light (PCL)'
-  sections['  R'] = 'Remote Communications Outlet (RCO)'
-  return sections[value]
+  return _SERVICE_INDICATORS.get(value, f'<UNKNOWN: {value}>')
 
 
 # 5.107 ATAMIATA Designator (ATA/IATA)
@@ -1540,7 +1556,7 @@ def field_180(value, record):
 
 # 5.181 H24 Indicator (H24)
 def field_181(value, record):
-  d = defaultdict(def_val)
+  d = {}
   d['Y'] = '24-Hour Availability'
   d['N'] = 'Part-time Availability'
   return d[value] if d[value] != "bad value" else value + "BAD VALUE"
@@ -1671,7 +1687,7 @@ def field_197(value, record):
 
 # 5.198 Modulation (MODULN)
 def field_198(value, record):
-  d = defaultdict(def_val)
+  d = {}
   d['A'] = 'Amplitude Modulated'
   d['F'] = 'Frequency Modulated'
   return d[value] if d[value] != "bad value" else value + "BAD VALUE"
@@ -1681,7 +1697,7 @@ def field_198(value, record):
 def field_199(value, record):
   if value.strip() == '':
     return value
-  d = defaultdict(def_val)
+  d = {}
   d['3'] = 'Double Sideband (A3) '
   d['A'] = 'Single sideband, reduced carrier (A3A) '
   d['B'] = 'Two Independent sidebands (A3B)'

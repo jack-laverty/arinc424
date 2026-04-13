@@ -1,6 +1,9 @@
 from termcolor import colored
 from .record import Record
+from prettytable import PrettyTable
+from collections import Counter
 import os
+from tqdm import tqdm
 
 
 def parse(line, output=True):
@@ -22,8 +25,9 @@ def search(file, filters):
   """
   with open(file) as f:
     count = 0
+    r = Record()
     for line in f.readlines():
-      r = Record()
+      r.reset()
       if r.read(line) is False:
         continue
       if isinstance(filters, str):
@@ -38,17 +42,31 @@ def search(file, filters):
 
 
 def read_file(path, output=True):
-  """
-  Parse all ARINC-424 records within a file.
-  """
-  with open(path) as f:
-    for line in f.readlines():
-      parse(line, output)
+    """
+    Parse all ARINC-424 records within a file.
+    """
+    good, bad = 0, 0
+    counts = Counter()
+    with open(path) as f:
+        lines = f.readlines()
 
+    r = Record()
+    with tqdm(total=len(lines), unit='rec', desc=os.path.basename(path)) as pbar:
+        for line in lines:
+            r.reset()
+            if r.read(line):
+                counts[r.definition.name] += 1
+                if output:
+                    r.decode(output)
+                good += 1
+            else:
+                bad += 1
+            pbar.update(1)
+            pbar.set_postfix(good=good, bad=bad)
 
-def read_folder(path):
-  """
-  Parse all ARINC-424 records for every file in a given folder.
-  """
-  for file in os.scandir(path):
-    read_file(os.path.join(path, file.name))
+    table = PrettyTable(field_names=['Name', 'Count'])
+    table.align = 'l'
+    for name, count in sorted(counts.items(), key=lambda x: -x[1]):
+        table.add_row([name, count])
+    print(table)
+    print(f'Total: {good} records ({bad} bad)')

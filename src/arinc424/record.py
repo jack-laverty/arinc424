@@ -1,102 +1,101 @@
 import json
-from collections import defaultdict
 from prettytable import PrettyTable
 
-from arinc424.definitions.GridMORA import GridMORA
-from arinc424.definitions.VHFNavaid import VHFNavaid
-from arinc424.definitions.NDBNavaid import NDBNavaid
-from arinc424.definitions.Waypoint import Waypoint
-from arinc424.definitions.AirwaysMarker import AirwaysMarker
-from arinc424.definitions.HoldingPattern import HoldingPattern
-from arinc424.definitions.PreferredRoute import PreferredRoute
-from arinc424.definitions.EnrouteAirways import EnrouteAirways
-from arinc424.definitions.EnrouteAirwaysRestriction import EnrouteAirwaysRestriction
-from arinc424.definitions.EnrouteCommunications import EnrouteCommunications
-from arinc424.definitions.Heliport import Heliport
-from arinc424.definitions.HeliportTerminalWaypoint import HeliportTerminalWaypoint
-from arinc424.definitions.SIDSTARApproach import SIDSTARApproach
-from arinc424.definitions.TAA import TAA
-from arinc424.definitions.MSA import MSA
-from arinc424.definitions.HeliportCommunications import HeliportCommunications
-from arinc424.definitions.Airport import Airport
-from arinc424.definitions.AirportGate import AirportGate
-from arinc424.definitions.Runway import Runway
-from arinc424.definitions.LocalizerGlideslope import LocalizerGlideslope
-from arinc424.definitions.LocalizerMarker import LocalizerMarker
-from arinc424.definitions.PathPoint import PathPoint
-from arinc424.definitions.FlightPlanning import FlightPlanning
-from arinc424.definitions.GLS import GLS
-from arinc424.definitions.AirportCommunication import AirportCommunication
-from arinc424.definitions.CompanyRoute import CompanyRoute
-from arinc424.definitions.Alternate import Alternate
-from arinc424.definitions.CruisingTables import CruisingTables
-from arinc424.definitions.GeoReferenceTable import GeoReferenceTable
-from arinc424.definitions.ControlledAirspace import ControlledAirspace
-from arinc424.definitions.FIRUIR import FIRUIR
-from arinc424.definitions.RestrictiveAirspace import RestrictiveAirspace
-from arinc424.definitions.MLS import MLS
+from arinc424.definitions.grid_mora import GridMORA
+from arinc424.definitions.vhf_navaid import VHFNavaid
+from arinc424.definitions.ndb_navaid import NDBNavaid
+from arinc424.definitions.waypoint import Waypoint
+from arinc424.definitions.airways_marker import AirwaysMarker
+from arinc424.definitions.holding_pattern import HoldingPattern
+from arinc424.definitions.preferred_route import PreferredRoute
+from arinc424.definitions.enroute_airways import EnrouteAirways
+from arinc424.definitions.enroute_airways_restricted import EnrouteAirwaysRestriction
+from arinc424.definitions.enroute_communications import EnrouteCommunications
+from arinc424.definitions.heliport import Heliport
+from arinc424.definitions.heliport_terminal_waypoint import HeliportTerminalWaypoint
+from arinc424.definitions.sid_star_approach import SIDSTARApproach
+from arinc424.definitions.taa import TAA
+from arinc424.definitions.msa import MSA
+from arinc424.definitions.heliport_communications import HeliportCommunications
+from arinc424.definitions.airport import Airport
+from arinc424.definitions.airport_gate import AirportGate
+from arinc424.definitions.runway import Runway
+from arinc424.definitions.localizer_glideslope import LocalizerGlideslope
+from arinc424.definitions.localizer_marker import LocalizerMarker
+from arinc424.definitions.pathpoint import PathPoint
+from arinc424.definitions.flight_planning import FlightPlanning
+from arinc424.definitions.gls import GLS
+from arinc424.definitions.airport_communication import AirportCommunication
+from arinc424.definitions.company_route import CompanyRoute
+from arinc424.definitions.alternate import Alternate
+from arinc424.definitions.cruising_tables import CruisingTables
+from arinc424.definitions.geo_reference_table import GeoReferenceTable
+from arinc424.definitions.controlled_airspace import ControlledAirspace
+from arinc424.definitions.fir_uir import FIRUIR
+from arinc424.definitions.restrictive_airspace import RestrictiveAirspace
+from arinc424.definitions.mls import MLS
 
 
-def def_val():
-  return False
-
-
-records = defaultdict(def_val)
-records['AS'] = GridMORA()
-records['D '] = VHFNavaid()
-records['DB'] = NDBNavaid()
-records['EA'] = Waypoint(True)
-records['EM'] = AirwaysMarker()
-records['EP'] = HoldingPattern()
-records['ER'] = EnrouteAirways()
-records['ET'] = PreferredRoute()
-records['EU'] = EnrouteAirwaysRestriction()
-records['EV'] = EnrouteCommunications()
-records['HA'] = Heliport()
-records['HC'] = HeliportTerminalWaypoint()
-records['HD'] = SIDSTARApproach()
-records['HE'] = SIDSTARApproach()
-records['HF'] = SIDSTARApproach()
-records['HK'] = TAA(True)
-records['HS'] = MSA(True)
-records['HV'] = HeliportCommunications()
-records['PA'] = Airport()
-records['PB'] = AirportGate()
-records['PC'] = Waypoint(False)
-records['PD'] = SIDSTARApproach()
-records['PE'] = SIDSTARApproach()
-records['PF'] = SIDSTARApproach()
-records['PG'] = Runway()
-records['PI'] = LocalizerGlideslope()
-records['PK'] = TAA()
-records['PL'] = MLS()
-records['PM'] = LocalizerMarker()
-records['PN'] = NDBNavaid()
-records['PP'] = PathPoint()
-records['PR'] = FlightPlanning()
-records['PS'] = MSA(False)
-records['PT'] = GLS()
-records['PV'] = AirportCommunication()
-records['R '] = CompanyRoute()
-records['RA'] = Alternate()
-records['TC'] = CruisingTables()
-records['TG'] = GeoReferenceTable()
-records['UC'] = ControlledAirspace()
-records['UF'] = FIRUIR()
-records['UR'] = RestrictiveAirspace()
+records = {
+  'AS': GridMORA(),
+  'D ': VHFNavaid(),
+  'DB': NDBNavaid(),
+  'EA': Waypoint(True),
+  'EM': AirwaysMarker(),
+  'EP': HoldingPattern(),
+  'ER': EnrouteAirways(),
+  'ET': PreferredRoute(),
+  'EU': EnrouteAirwaysRestriction(),
+  'EV': EnrouteCommunications(),
+  'HA': Heliport(),
+  'HC': HeliportTerminalWaypoint(),
+  'HD': SIDSTARApproach(),
+  'HE': SIDSTARApproach(),
+  'HF': SIDSTARApproach(),
+  'HK': TAA(True),
+  'HS': MSA(True),
+  'HV': HeliportCommunications(),
+  'PA': Airport(),
+  'PB': AirportGate(),
+  'PC': Waypoint(False),
+  'PD': SIDSTARApproach(),
+  'PE': SIDSTARApproach(),
+  'PF': SIDSTARApproach(),
+  'PG': Runway(),
+  'PI': LocalizerGlideslope(),
+  'PK': TAA(),
+  'PL': MLS(),
+  'PM': LocalizerMarker(),
+  'PN': NDBNavaid(),
+  'PP': PathPoint(),
+  'PR': FlightPlanning(),
+  'PS': MSA(False),
+  'PT': GLS(),
+  'PV': AirportCommunication(),
+  'R ': CompanyRoute(),
+  'RA': Alternate(),
+  'TC': CruisingTables(),
+  'TG': GeoReferenceTable(),
+  'UC': ControlledAirspace(),
+  'UF': FIRUIR(),
+  'UR': RestrictiveAirspace()
+}
 
 
 class Record():
 
+  def reset(self):
+      self.ident = ''
+      self.raw = ''
+      self.continuation = ''
+      self.fields = []
+      self.definition = None
+
   def __init__(self):
-    self.ident = ''
-    self.raw = ''
-    self.continuation = ''
-    self.fields = []
-    self.definition = -1
+      self.reset()
 
   def primary(self):
-    if self.definition == -1:
+    if self.definition is None:
       return False
     return self.continuation == '0' or self.continuation == '1'
 
@@ -126,19 +125,16 @@ class Record():
     identifier_1 = line[4:6]
     identifier_2 = line[4] + line[12]
 
-    if identifier_1 in records:
-      self.ident = identifier_1
-    elif identifier_2 in records:
-      self.ident = identifier_2
-    else:
-      return False
-
-    self.definition = records[self.ident]
+    # After
+    self.definition = records.get(identifier_1) or records.get(identifier_2)
+    if self.definition is None:
+        return False
+    self.ident = identifier_1 if identifier_1 in records else identifier_2
 
     # validate the continuation record number
     if hasattr(self.definition, 'cont_idx'):
       self.continuation = self.raw[self.definition.cont_idx]
-      if self.continuation.isalnum() == False:
+      if self.continuation.isalnum() is False:
         print(f'Unsupported {self.definition.name} Continuation Record Number: "{self.continuation}"')
         print('Valid Continuation Record Numbers are 0, 1, 2 (through 9) A, B, C (through Z)')
         print(f'Record: {self.raw}')
@@ -164,12 +160,13 @@ class Record():
     return True
 
   def decode(self, output=True):
+    if not output:
+        return ''
     table = PrettyTable(field_names=['Field', 'Value', 'Decoded'])
     table.align = 'l'
     for field in self.fields:
-      table.add_row([field.name, "'{}'".format(field.value), field.decode(self)])
-    if output is True:
-      print(table)
+        table.add_row([field.name, "'{}'".format(field.value), field.decode(self)])
+    print(table)
     return table.get_string()
 
   def json(self, output=True, single_line=True):
