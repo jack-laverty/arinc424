@@ -17,8 +17,9 @@ classifiers = [
     "Operating System :: OS Independent",
 ]
 dependencies = [
-  "prettytable==3.9.0",
-  "termcolor==2.3.0",
+  "prettytable>=3.9.0",
+  "termcolor>=2.3.0",
+  "tqdm>=4.67.3",
 ]
 
 [project.urls]
