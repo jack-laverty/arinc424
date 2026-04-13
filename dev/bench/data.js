@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1776073960661,
+  "lastUpdate": 1776074417633,
   "repoUrl": "https://github.com/jack-laverty/arinc424",
   "entries": {
     "Benchmark": [
@@ -76,6 +76,44 @@ window.BENCHMARK_DATA = {
             "unit": "iter/sec",
             "range": "stddev: 0.00010532319968802071",
             "extra": "mean: 1.248032099999108 msec\nrounds: 10"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "jacktlaverty@gmail.com",
+            "name": "Jack Laverty",
+            "username": "jack-laverty"
+          },
+          "committer": {
+            "email": "jacktlaverty@gmail.com",
+            "name": "Jack Laverty",
+            "username": "jack-laverty"
+          },
+          "distinct": true,
+          "id": "284b9c2cd7d30a358880a47f345222826f2349ce",
+          "message": "todone",
+          "timestamp": "2026-04-13T19:59:39+10:00",
+          "tree_id": "96dca9108735756bb43f41e99493a16e544a9d3f",
+          "url": "https://github.com/jack-laverty/arinc424/commit/284b9c2cd7d30a358880a47f345222826f2349ce"
+        },
+        "date": 1776074417303,
+        "tool": "pytest",
+        "benches": [
+          {
+            "name": "tests/test_benchmark.py::test_decode_airport_benchmark",
+            "value": 3860001.618182924,
+            "unit": "iter/sec",
+            "range": "stddev: 1.0044994871833259e-7",
+            "extra": "mean: 259.0672489072025 nsec\nrounds: 71964"
+          },
+          {
+            "name": "tests/test_benchmark.py::test_read_file_benchmark",
+            "value": 636.8696582563563,
+            "unit": "iter/sec",
+            "range": "stddev: 0.00008027759204833023",
+            "extra": "mean: 1.5701799999984838 msec\nrounds: 9"
           }
         ]
       }
