@@ -1,281 +1,164 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1, user-scalable=yes" />
-    <style>
-      html {
-        font-family: BlinkMacSystemFont,-apple-system,"Segoe UI",Roboto,Oxygen,Ubuntu,Cantarell,"Fira Sans","Droid Sans","Helvetica Neue",Helvetica,Arial,sans-serif;
-        -webkit-font-smoothing: antialiased;
-        background-color: #fff;
-        font-size: 16px;
-      }
-      body {
-        color: #4a4a4a;
-        margin: 8px;
-        font-size: 1em;
-        font-weight: 400;
-      }
-      header {
-        margin-bottom: 8px;
-        display: flex;
-        flex-direction: column;
-      }
-      main {
-        width: 100%;
-        display: flex;
-        flex-direction: column;
-      }
-      a {
-        color: #3273dc;
-        cursor: pointer;
-        text-decoration: none;
-      }
-      a:hover {
-        color: #000;
-      }
-      button {
-        color: #fff;
-        background-color: #3298dc;
-        border-color: transparent;
-        cursor: pointer;
-        text-align: center;
-      }
-      button:hover {
-        background-color: #2793da;
-        flex: none;
-      }
-      .spacer {
-        flex: auto;
-      }
-      .small {
-        font-size: 0.75rem;
-      }
-      footer {
-        margin-top: 16px;
-        display: flex;
-        align-items: center;
-      }
-      .header-label {
-        margin-right: 4px;
-      }
-      .benchmark-set {
-        margin: 8px 0;
-        width: 100%;
-        display: flex;
-        flex-direction: column;
-      }
-      .benchmark-title {
-        font-size: 3rem;
-        font-weight: 600;
-        word-break: break-word;
-        text-align: center;
-      }
-      .benchmark-graphs {
-        display: flex;
-        flex-direction: row;
-        justify-content: space-around;
-        align-items: center;
-        flex-wrap: wrap;
-        width: 100%;
-      }
-      .benchmark-chart {
-        max-width: 1000px;
-      }
-    </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Benchmarks</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Departure+Mono&display=swap" rel="stylesheet" />
+    <style>
+      *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+      body {
+        font-family: 'Departure Mono', monospace;
+        padding: 2rem 1.5rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .inner { width: 100%; max-width: 680px; }
+
+      .metrics { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 12px; margin-bottom: 2.5rem; }
+      .metric { background: #f5f5f2; border-radius: 8px; padding: 1.25rem 1.5rem; }
+      .metric-label { font-size: 13px; color: #888780; margin-bottom: 0.5rem; }
+      .metric-value { font-size: 2.5rem; color: #1a1a18; }
+      .metric-unit { font-size: 13px; color: #5f5e5a; margin-top: 0.25rem; }
+
+      .graph-label { font-size: 13px; color: #888780; margin-bottom: 0.75rem; }
+      .chart-wrap { position: relative; width: 100%; height: 200px; margin-bottom: 2rem; }
+    </style>
   </head>
-
   <body>
-    <header id="header">
-      <div class="header-item">
-        <strong class="header-label">Last Update:</strong>
-        <span id="last-update"></span>
+    <div class="inner">
+      <div class="metrics">
+        <div class="metric">
+          <div class="metric-label">total parse time</div>
+          <div class="metric-value" id="val-time">—</div>
+          <div class="metric-unit">faacifp dataset</div>
+        </div>
+        <div class="metric">
+          <div class="metric-label">throughput</div>
+          <div class="metric-value" id="val-iters">—</div>
+          <div class="metric-unit">iter/sec</div>
+        </div>
       </div>
-      <div class="header-item">
-        <strong class="header-label">Repository:</strong>
-        <a id="repository-link" rel="noopener"></a>
-      </div>
-    </header>
-    <main id="main"></main>
-    <footer>
-      <button id="dl-button">Download data as JSON</button>
-      <div class="spacer"></div>
-      <div class="small">Powered by <a rel="noopener" href="https://github.com/marketplace/actions/continuous-benchmark">github-action-benchmark</a></div>
-    </footer>
 
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.2/dist/Chart.min.js"></script>
+      <div class="graph-label">total parse time</div>
+      <div class="chart-wrap"><canvas id="chart-time"></canvas></div>
+      <div class="graph-label">iter/sec</div>
+      <div class="chart-wrap"><canvas id="chart-iters"></canvas></div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
     <script src="data.js"></script>
-    <script id="main-script">
-      'use strict';
-      (function() {
-        // Colors from https://github.com/github/linguist/blob/master/lib/linguist/languages.yml
-        const toolColors = {
-          cargo: '#dea584',
-          go: '#00add8',
-          benchmarkjs: '#f1e05a',
-          benchmarkluau: '#000080',
-          pytest: '#3572a5',
-          googlecpp: '#f34b7d',
-          catch2: '#f34b7d',
-          julia: '#a270ba',
-          jmh: '#b07219',
-          benchmarkdotnet: '#178600',
-          customBiggerIsBetter: '#38ff38',
-          customSmallerIsBetter: '#ff3838',
-          _: '#333333'
-        };
+    <script>
+    (function () {
+      const TARGET = 'test_faacifp_benchmark';
+      const RAW = window.BENCHMARK_DATA;
 
-        function init() {
-          function collectBenchesPerTestCase(entries) {
-            const map = new Map();
-            for (const entry of entries) {
-              const {commit, date, tool, benches} = entry;
-              for (const bench of benches) {
-                const result = { commit, date, tool, bench };
-                const arr = map.get(bench.name);
-                if (arr === undefined) {
-                  map.set(bench.name, [result]);
-                } else {
-                  arr.push(result);
-                }
-              }
+      function parseMean(extra) {
+        if (!extra) return null;
+        const m = extra.match(/mean:\s*([\d.e+\-]+)\s*(nsec|usec|msec|sec)/);
+        if (!m) return null;
+        const v = parseFloat(m[1]), u = m[2];
+        if (u === 'nsec') return v / 1e9;
+        if (u === 'usec') return v / 1e6;
+        if (u === 'msec') return v / 1e3;
+        return v;
+      }
+
+      function fmtSec(v) {
+        if (v === null || isNaN(v)) return '—';
+        if (v < 0.001) return (v * 1e6).toFixed(1) + ' µs';
+        if (v < 1)     return (v * 1000).toFixed(1) + ' ms';
+        return v.toFixed(2) + ' s';
+      }
+
+      function fmtIter(v) {
+        if (v === null || isNaN(v)) return '—';
+        if (v >= 1e6) return (v / 1e6).toFixed(2) + 'M';
+        if (v >= 1e3) return (v / 1e3).toFixed(2) + 'k';
+        return v.toFixed(3);
+      }
+
+      function avg(arr) {
+        const v = arr.filter(x => x !== null && !isNaN(x));
+        return v.length ? v.reduce((a, b) => a + b, 0) / v.length : null;
+      }
+
+      const allEntries = Object.values(RAW.entries).flat();
+      const labels = [], timeVals = [], iterVals = [];
+      const seen = new Set();
+
+      for (const entry of allEntries) {
+        const id = entry.commit.id;
+        if (seen.has(id)) continue;
+        const bench = entry.benches.find(b => b.name.includes(TARGET));
+        if (!bench) continue;
+        seen.add(id);
+        labels.push(id.slice(0, 7));
+        timeVals.push(parseMean(bench.extra));
+        iterVals.push(bench.value ?? null);
+      }
+
+      document.getElementById('val-time').textContent  = fmtSec(avg(timeVals));
+      document.getElementById('val-iters').textContent = fmtIter(avg(iterVals));
+
+      const chartDefaults = (data, fmtFn) => ({
+        type: 'line',
+        data: {
+          labels,
+          datasets: [{
+            data,
+            borderColor: '#888780',
+            backgroundColor: 'rgba(136,135,128,0.07)',
+            pointBackgroundColor: '#888780',
+            pointRadius: 5,
+            pointHoverRadius: 7,
+            borderWidth: 1.5,
+            tension: 0.3,
+            fill: true,
+            spanGaps: true,
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: { display: false },
+            tooltip: {
+              callbacks: {
+                title: items => items[0].label,
+                label: item => ' ' + (item.raw !== null ? fmtFn(item.raw) : '—')
+              },
+              bodyFont: { family: 'Departure Mono' },
+              titleFont: { family: 'Departure Mono' },
+              backgroundColor: 'rgba(0,0,0,0.75)',
+              padding: 10,
+              cornerRadius: 4,
             }
-            return map;
-          }
-
-          const data = window.BENCHMARK_DATA;
-
-          // Render header
-          document.getElementById('last-update').textContent = new Date(data.lastUpdate).toString();
-          const repoLink = document.getElementById('repository-link');
-          repoLink.href = data.repoUrl;
-          repoLink.textContent = data.repoUrl;
-
-          // Render footer
-          document.getElementById('dl-button').onclick = () => {
-            const dataUrl = 'data:,' + JSON.stringify(data, null, 2);
-            const a = document.createElement('a');
-            a.href = dataUrl;
-            a.download = 'benchmark_data.json';
-            a.click();
-          };
-
-          // Prepare data points for charts
-          return Object.keys(data.entries).map(name => ({
-            name,
-            dataSet: collectBenchesPerTestCase(data.entries[name]),
-          }));
-        }
-
-        function renderAllChars(dataSets) {
-
-          function renderGraph(parent, name, dataset) {
-            const canvas = document.createElement('canvas');
-            canvas.className = 'benchmark-chart';
-            parent.appendChild(canvas);
-
-            const color = toolColors[dataset.length > 0 ? dataset[0].tool : '_'];
-            const data = {
-              labels: dataset.map(d => d.commit.id.slice(0, 7)),
-              datasets: [
-                {
-                  label: name,
-                  data: dataset.map(d => d.bench.value),
-                  borderColor: color,
-                  backgroundColor: color + '60', // Add alpha for #rrggbbaa
-                }
-              ],
-            };
-            const options = {
-              scales: {
-                xAxes: [
-                  {
-                    scaleLabel: {
-                      display: true,
-                      labelString: 'commit',
-                    },
-                  }
-                ],
-                yAxes: [
-                  {
-                    scaleLabel: {
-                      display: true,
-                      labelString: dataset.length > 0 ? dataset[0].bench.unit : '',
-                    },
-                    ticks: {
-                      beginAtZero: true,
-                    }
-                  }
-                ],
-              },
-              tooltips: {
-                callbacks: {
-                  afterTitle: items => {
-                    const {index} = items[0];
-                    const data = dataset[index];
-                    return '\n' + data.commit.message + '\n\n' + data.commit.timestamp + ' committed by @' + data.commit.committer.username + '\n';
-                  },
-                  label: item => {
-                    let label = item.value;
-                    const { range, unit } = dataset[item.index].bench;
-                    label += ' ' + unit;
-                    if (range) {
-                      label += ' (' + range + ')';
-                    }
-                    return label;
-                  },
-                  afterLabel: item => {
-                    const { extra } = dataset[item.index].bench;
-                    return extra ? '\n' + extra : '';
-                  }
-                }
-              },
-              onClick: (_mouseEvent, activeElems) => {
-                if (activeElems.length === 0) {
-                  return;
-                }
-                // XXX: Undocumented. How can we know the index?
-                const index = activeElems[0]._index;
-                const url = dataset[index].commit.url;
-                window.open(url, '_blank');
-              },
-            };
-
-            new Chart(canvas, {
-              type: 'line',
-              data,
-              options,
-            });
-          }
-
-          function renderBenchSet(name, benchSet, main) {
-            const setElem = document.createElement('div');
-            setElem.className = 'benchmark-set';
-            main.appendChild(setElem);
-
-            const nameElem = document.createElement('h1');
-            nameElem.className = 'benchmark-title';
-            nameElem.textContent = name;
-            setElem.appendChild(nameElem);
-
-            const graphsElem = document.createElement('div');
-            graphsElem.className = 'benchmark-graphs';
-            setElem.appendChild(graphsElem);
-
-            for (const [benchName, benches] of benchSet.entries()) {
-              renderGraph(graphsElem, benchName, benches)
+          },
+          scales: {
+            x: {
+              ticks: { font: { family: 'Departure Mono', size: 12 }, color: '#888780', autoSkip: false },
+              grid: { color: 'rgba(136,135,128,0.12)' },
+              border: { color: 'rgba(136,135,128,0.2)' }
+            },
+            y: {
+              ticks: { font: { family: 'Departure Mono', size: 12 }, color: '#888780', callback: v => fmtFn(v) },
+              grid: { color: 'rgba(136,135,128,0.12)' },
+              border: { color: 'rgba(136,135,128,0.2)' },
+              beginAtZero: true
             }
           }
-
-          const main = document.getElementById('main');
-          for (const {name, dataSet} of dataSets) {
-            renderBenchSet(name, dataSet, main);
-          }
         }
+      });
 
-        renderAllChars(init()); // Start
-      })();
+      new Chart(document.getElementById('chart-time'),  chartDefaults(timeVals, fmtSec));
+      new Chart(document.getElementById('chart-iters'), chartDefaults(iterVals, fmtIter));
+    })();
     </script>
   </body>
 </html>
