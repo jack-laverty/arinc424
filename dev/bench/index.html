@@ -36,27 +36,28 @@
         <div class="metric">
           <div class="metric-label">total parse time</div>
           <div class="metric-value" id="val-time">—</div>
-          <div class="metric-unit">faacifp dataset</div>
+          <div class="metric-unit">faacifp dataset (385K records)</div>
         </div>
         <div class="metric">
           <div class="metric-label">throughput</div>
-          <div class="metric-value" id="val-iters">—</div>
-          <div class="metric-unit">iter/sec</div>
+          <div class="metric-value" id="val-recs">—</div>
+          <div class="metric-unit">records/sec</div>
         </div>
       </div>
 
       <div class="graph-label">total parse time</div>
       <div class="chart-wrap"><canvas id="chart-time"></canvas></div>
-      <div class="graph-label">iter/sec</div>
-      <div class="chart-wrap"><canvas id="chart-iters"></canvas></div>
+      <div class="graph-label">records/sec</div>
+      <div class="chart-wrap"><canvas id="chart-recs"></canvas></div>
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
     <script src="data.js"></script>
     <script>
     (function () {
-      const TARGET = 'test_faacifp_benchmark';
-      const RAW = window.BENCHMARK_DATA;
+      const TARGET  = 'test_faacifp_benchmark';
+      const RECORDS = 385597;
+      const RAW     = window.BENCHMARK_DATA;
 
       function parseMean(extra) {
         if (!extra) return null;
@@ -76,20 +77,15 @@
         return v.toFixed(2) + ' s';
       }
 
-      function fmtIter(v) {
+      function fmtRecs(v) {
         if (v === null || isNaN(v)) return '—';
         if (v >= 1e6) return (v / 1e6).toFixed(2) + 'M';
-        if (v >= 1e3) return (v / 1e3).toFixed(2) + 'k';
-        return v.toFixed(3);
-      }
-
-      function avg(arr) {
-        const v = arr.filter(x => x !== null && !isNaN(x));
-        return v.length ? v.reduce((a, b) => a + b, 0) / v.length : null;
+        if (v >= 1e3) return (v / 1e3).toFixed(1) + 'k';
+        return v.toFixed(0);
       }
 
       const allEntries = Object.values(RAW.entries).flat();
-      const labels = [], timeVals = [], iterVals = [];
+      const labels = [], timeVals = [], recVals = [];
       const seen = new Set();
 
       for (const entry of allEntries) {
@@ -98,13 +94,17 @@
         const bench = entry.benches.find(b => b.name.includes(TARGET));
         if (!bench) continue;
         seen.add(id);
+        const t = parseMean(bench.extra);
         labels.push(id.slice(0, 7));
-        timeVals.push(parseMean(bench.extra));
-        iterVals.push(bench.value ?? null);
+        timeVals.push(t);
+        recVals.push(t !== null ? RECORDS / t : null);
       }
 
-      document.getElementById('val-time').textContent  = fmtSec(avg(timeVals));
-      document.getElementById('val-iters').textContent = fmtIter(avg(iterVals));
+      const latestTime = timeVals[timeVals.length - 1];
+      const latestRecs = recVals[recVals.length - 1];
+
+      document.getElementById('val-time').textContent = fmtSec(latestTime);
+      document.getElementById('val-recs').textContent = fmtRecs(latestRecs);
 
       const chartDefaults = (data, fmtFn) => ({
         type: 'line',
@@ -156,8 +156,8 @@
         }
       });
 
-      new Chart(document.getElementById('chart-time'),  chartDefaults(timeVals, fmtSec));
-      new Chart(document.getElementById('chart-iters'), chartDefaults(iterVals, fmtIter));
+      new Chart(document.getElementById('chart-time'), chartDefaults(timeVals, fmtSec));
+      new Chart(document.getElementById('chart-recs'), chartDefaults(recVals,  fmtRecs));
     })();
     </script>
   </body>
